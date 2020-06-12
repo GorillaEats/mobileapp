@@ -1,0 +1,20 @@
+name: Develop CI
+
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-actions@v1
+        with:
+          flutter-version: '1.17.2'
+      - run: flutter pub get
+      - run: flutter formate --set-exit-if-changed .
+      - run: flutter analyze .
+      - run: flutter test
