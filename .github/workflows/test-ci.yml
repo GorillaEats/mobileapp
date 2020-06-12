@@ -3,7 +3,7 @@ name: Test
 on: [ push ]
 
 env:
-  flutter_version: "1.x"
+  flutter_version: "1.17.x"
   java_version: "12.x"
 
 jobs:
