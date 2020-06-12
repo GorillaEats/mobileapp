@@ -1,6 +1,9 @@
-name: Develop CI
+name: APK CI
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - develop
 
 env:
   flutter_version: "1.17.2"
