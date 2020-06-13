@@ -21,11 +21,14 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def apiKey = localProperties.getProperty('ANDROID_API_KEY')
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
+
     compileSdkVersion 28
 
     sourceSets {
@@ -43,7 +46,7 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders = [androidApiKey: "$System.env.ANDROID_API_KEY"]
+        manifestPlaceholders = [androidApiKey: apiKey]
     }
 
     buildTypes {
