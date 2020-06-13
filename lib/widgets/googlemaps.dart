@@ -3,6 +3,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../data/userlocation.dart';
 import '../screens/loading.dart';
 
+const double zoomLevel = 15;
+
 class GoogleMaps extends StatefulWidget {
   @override
   _GoogleMapsState createState() => _GoogleMapsState();
@@ -31,7 +33,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
               myLocationEnabled: true,
               initialCameraPosition: CameraPosition(
                 target: _initialPosition,
-                zoom: 15,
+                zoom: zoomLevel,
               ),
               markers: _markers.values.toSet(),
             ),
