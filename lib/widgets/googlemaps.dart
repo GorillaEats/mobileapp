@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../data/nearbyplaces.dart';
+import '../data/locations.dart';
 import '../data/userlocation.dart';
 import '../screens/loading.dart';
 

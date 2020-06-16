@@ -1,9 +1,11 @@
 import 'dart:async' show Future;
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'dbaccess.dart';
 
-part 'nearbyplaces.g.dart';
+part 'locations.g.dart';
+
+const connection = 'lib/data/starbucks.json';
 
 @JsonSerializable()
 class Location {
@@ -17,16 +19,20 @@ class Location {
   final String name;
 }
 
-T cast<T>(dynamic x) => x is T ? x : null;
-
 Future<List<Location>> getNearbyLocations() async {
   final dynamic parsed = await getDBLocations();
   // ignore: omit_local_variable_types
   final List<Location> locations = [];
   for (dynamic item in parsed) {
-    final mapItem = cast<Map<String, dynamic>>(item);
+    final mapItem = item as Map<String, dynamic>;
     final locationItem = Location.fromJson(mapItem);
     locations.add(locationItem);
   }
   return locations;
+}
+
+Future<dynamic> getDBLocations() async {
+  final jsonString = await rootBundle.loadString(connection);
+  final dynamic decoded = json.decode(jsonString);
+  return decoded;
 }
