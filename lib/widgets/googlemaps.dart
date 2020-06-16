@@ -14,7 +14,6 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   final Map<String, Marker> _markers = {};
   static LatLng _initialPosition;
-  static LatLng _searchPosition;
 
   @override
   void initState() {
@@ -22,7 +21,6 @@ class _GoogleMapsState extends State<GoogleMaps> {
     getUserLocation().then((position) {
       setState(() {
         _initialPosition = position;
-        _searchPosition = position;
       });
     });
   }
