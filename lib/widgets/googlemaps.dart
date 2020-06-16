@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../data/locations.dart';
-import '../data/userlocation.dart';
-import '../screens/loading.dart';
+import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/userlocation.dart';
+import 'package:gorilla_eats/screens/loading.dart';
 
 const double zoomLevel = 15;
 
