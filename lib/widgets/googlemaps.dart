@@ -32,10 +32,6 @@ class _GoogleMapsState extends State<GoogleMaps> {
     setState(() {
       _markers.clear();
       for (final location in nearbyLocations) {
-        print(location.name);
-        print(location.lat);
-        print(location.lng);
-        print(location.address);
         final marker = Marker(
           markerId: MarkerId(location.address),
           position: LatLng(location.lat, location.lng),
