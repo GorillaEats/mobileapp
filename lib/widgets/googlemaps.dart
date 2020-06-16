@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../data/nearbyplaces.dart';
 import '../data/userlocation.dart';
 import '../screens/loading.dart';
 
@@ -13,6 +14,7 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   final Map<String, Marker> _markers = {};
   static LatLng _initialPosition;
+  static LatLng _searchPosition;
 
   @override
   void initState() {
@@ -20,7 +22,30 @@ class _GoogleMapsState extends State<GoogleMaps> {
     getUserLocation().then((position) {
       setState(() {
         _initialPosition = position;
+        _searchPosition = position;
       });
+    });
+  }
+
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    final nearbyLocations = await getNearbyLocations(_searchPosition);
+    setState(() {
+      _markers.clear();
+      for (final location in nearbyLocations) {
+        print(location.name);
+        print(location.lat);
+        print(location.lng);
+        print(location.address);
+        final marker = Marker(
+          markerId: MarkerId(location.address),
+          position: LatLng(location.lat, location.lng),
+          infoWindow: InfoWindow(
+            title: location.name,
+            snippet: location.address,
+          ),
+        );
+        _markers[location.address] = marker;
+      }
     });
   }
 
@@ -30,6 +55,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
       body: _initialPosition == null
           ? LoadingScreen()
           : GoogleMap(
+              onMapCreated: _onMapCreated,
               myLocationEnabled: true,
               initialCameraPosition: CameraPosition(
                 target: _initialPosition,
