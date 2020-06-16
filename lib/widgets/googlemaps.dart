@@ -28,7 +28,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
   }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final nearbyLocations = await getNearbyLocations(_searchPosition);
+    final nearbyLocations = await getNearbyLocations();
     setState(() {
       _markers.clear();
       for (final location in nearbyLocations) {

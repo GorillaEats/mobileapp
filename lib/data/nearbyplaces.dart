@@ -19,8 +19,8 @@ class Location {
 
 T cast<T>(dynamic x) => x is T ? x : null;
 
-Future<List<Location>> getNearbyLocations(LatLng position) async {
-  final dynamic parsed = await getDBLocations(position);
+Future<List<Location>> getNearbyLocations() async {
+  final dynamic parsed = await getDBLocations();
   // ignore: omit_local_variable_types
   final List<Location> locations = [];
   for (dynamic item in parsed) {
