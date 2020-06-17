@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:gorilla_eats/widgets/restaurant_banner.dart';
+import 'package:gorilla_eats/widgets/foodcategory.dart';
 
-class RestaurantScreen extends StatelessWidget{
+class RestaurantScreen extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: RestaurantBanner(),
+      backgroundColor: Colors.white,
+      body: Column(
+        children: <Widget>[
+          RestaurantBanner(),
+          FoodCategory(),
+        ],
+      ),
     );
   }
 }
