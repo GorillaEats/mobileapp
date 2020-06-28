@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MapScreen(),
-      }
+      },
+      theme: ThemeData(),
     );
   }
 }
