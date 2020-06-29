@@ -8,10 +8,7 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +35,30 @@ class _SearchState extends State<Search> {
       height: 40.0,
       margin: EdgeInsets.all(10.0),
       child: TextField(
+        controller: _textController,
+        onSubmitted: (value) => print('onSubmit:' + value),
+        onChanged: (value) {
+          setState(() {});
+        },
         textInputAction: TextInputAction.search,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           border: InputBorder.none,
           prefixIcon: Icon(Icons.search, size: 20.0),
           hintText: 'Enter Location',
+          suffixIcon: _textController.text.isNotEmpty
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _textController.clear();
+                    });
+                  },
+                  icon: Icon(
+                    Icons.clear,
+                    color: Colors.grey,
+                  ),
+                )
+              : null,
         ),
       ),
       decoration: BoxDecoration(
