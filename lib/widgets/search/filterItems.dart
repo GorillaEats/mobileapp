@@ -2,6 +2,8 @@ library filter_items;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gorilla_eats/widgets/modalBottomSheet/selectBottomSheet.dart';
+import 'package:gorilla_eats/widgets/modalBottomSheet/multiSelectBottomSheet.dart';
 
 abstract class FilterItem {
   String key;
@@ -79,69 +81,11 @@ class Select extends FilterItem {
     final isSelectedList =
         List<bool>.generate(options.length, (index) => index == _value);
 
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                key,
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              FlatButton(
-                child: Text(
-                  'Reset Filter',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
-                ),
-                onPressed: () {
-                  onUpdate(-1);
-                  Navigator.pop(context);
-                },
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Container(
-            height: 40.0,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return ToggleButtons(
-                  selectedColor: Colors.red,
-                  fillColor: Colors.red[100],
-                  children: options
-                      .map(
-                        (option) => Container(
-                          alignment: Alignment.center,
-                          width: constraints.maxWidth / options.length - 1.5,
-                          child: Text(
-                            option,
-                            style: TextStyle(fontSize: 16.0),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  isSelected: isSelectedList,
-                  onPressed: (index) {
-                    onUpdate(index);
-                    Navigator.pop(context);
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-      margin: EdgeInsets.all(15.0),
+    return SelectBottomModal(
+      onUpdate: onUpdate,
+      options: options,
+      isSelectedList: isSelectedList,
+      title: key,
     );
   }
 
@@ -200,8 +144,10 @@ class MultiSelect extends FilterItem {
   String getDisplayValue() {
     if (active) {
       var displayValue = '';
-      for (var i = 0; i < _value.length; i++) {
-        displayValue += options[_value[i]] + ',';
+      for(var i = 0; i < options.length; i++){
+        if(_value.contains(i)){
+          displayValue += options[i] + ',';
+        }
       }
 
       return displayValue.substring(0, displayValue.length - 1);
@@ -238,7 +184,19 @@ class MultiSelect extends FilterItem {
 
     return super._buildChip(
       context: context,
-      onPressed: () => {print('MultiSelect')},
+      onPressed: () => {
+        showModalBottomSheet<void>(
+          context: context,
+          builder: (context) {
+            return MultiSelectBottomSheet(
+              options: options,
+              onUpdate: onUpdate,
+              title: key,
+              value: _value,
+            );
+          },
+        )
+      },
       children: buttonChildren,
       padding: EdgeInsets.fromLTRB(10.0, 3.0, 0.0, 3.0),
       active: active,
