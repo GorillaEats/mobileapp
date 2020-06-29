@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/widgets/search/filterItems.dart' as filter_items;
 import 'package:provider/provider.dart';
 import 'package:gorilla_eats/widgets/search/searchModel.dart';
 
