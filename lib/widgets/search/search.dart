@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:gorilla_eats/widgets/search/searchModel.dart';
+import 'package:gorilla_eats/data/models/search.dart';
 
 class Search extends StatefulWidget {
   @override
