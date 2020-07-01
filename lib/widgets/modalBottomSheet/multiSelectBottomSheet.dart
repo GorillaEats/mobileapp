@@ -49,7 +49,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
               ),
               FlatButton(
                 child: Text(
-                  'Reset Filter',
+                  'Reset',
                 ),
                 onPressed: () {
                   widget.onUpdate(<int>[]);

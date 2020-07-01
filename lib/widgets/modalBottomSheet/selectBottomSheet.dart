@@ -33,7 +33,7 @@ class SelectBottomSheet extends StatelessWidget {
               ),
               FlatButton(
                 child: Text(
-                  'Reset Filter',
+                  'Reset',
                 ),
                 onPressed: () {
                   onUpdate(-1);
