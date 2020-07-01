@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/widgets/fooditems.dart';
+import 'package:gorilla_eats/widgets/categorybody.dart';
 
-class FoodCategory extends StatelessWidget {
+class CategoryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,6 +21,7 @@ class FoodCategory extends StatelessWidget {
             ),
           ),
           Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
             width: 350,
             child: Divider(
               color: Colors.black,
@@ -28,7 +29,7 @@ class FoodCategory extends StatelessWidget {
               thickness: 2,
             ),
           ),
-          FoodItems()
+          CategoryBody(),
         ],
       ),
     );
