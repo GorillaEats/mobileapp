@@ -99,7 +99,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
             children: [
               FlatButton(
                 child: Text('Cancel'),
-                onPressed: () => {Navigator.pop(context)},
+                onPressed: () => Navigator.pop(context),
               ),
               FlatButton(
                 child: Text('Okay'),
