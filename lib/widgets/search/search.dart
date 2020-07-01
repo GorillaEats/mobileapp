@@ -55,7 +55,7 @@ class _SearchState extends State<Search> {
                   },
                   icon: Icon(
                     Icons.clear,
-                    color: Colors.grey,
+                    color: Theme.of(context).buttonTheme.colorScheme.secondary,
                   ),
                 )
               : null,
@@ -63,12 +63,7 @@ class _SearchState extends State<Search> {
       ),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(18.0),
-          topRight: Radius.circular(18.0),
-          bottomLeft: Radius.circular(18.0),
-          bottomRight: Radius.circular(18.0),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(18.0)),
         boxShadow: [
           BoxShadow(
             blurRadius: 3.0,

@@ -14,7 +14,20 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => MapScreen(),
       },
-      theme: ThemeData(),
+      theme: ThemeData(
+        buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.accent,
+          colorScheme: Theme.of(context)
+              .colorScheme
+              .copyWith(secondary: Colors.grey[700]),
+        ),
+        toggleButtonsTheme: ToggleButtonsThemeData(
+          color: Colors.grey[700],
+          selectedColor: Colors.red,
+          fillColor: Colors.red[100],
+          disabledColor: Colors.white,
+        ),
+      ),
     );
   }
 }

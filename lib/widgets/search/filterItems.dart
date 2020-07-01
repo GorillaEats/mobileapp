@@ -23,6 +23,9 @@ abstract class FilterItem {
   }) {
     padding ??= EdgeInsets.fromLTRB(10.0, 3.0, 10.0, 3.0);
 
+    final fillColor = Theme.of(context).toggleButtonsTheme.fillColor;
+    final disabledColor = Theme.of(context).toggleButtonsTheme.disabledColor;
+
     return Container(
       margin: EdgeInsets.fromLTRB(3.0, 0.0, 3.0, 0.0),
       child: MaterialButton(
@@ -31,7 +34,7 @@ abstract class FilterItem {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
         ),
-        color: active ? Colors.red[100] : Colors.white,
+        color: active ? fillColor : disabledColor,
         onPressed: onPressed,
         child: children != null
             ? Row(
@@ -94,18 +97,21 @@ class Select extends FilterItem {
     @required BuildContext context,
     @required Function(dynamic) onUpdate,
   }) {
+    final selectedColor = Theme.of(context).toggleButtonsTheme.selectedColor;
+    final unSelectedColor = Theme.of(context).buttonTheme.colorScheme.secondary;
+
     final buttonChildren = <Widget>[
       Text(
         getDisplayValue(),
         style: TextStyle(
           fontSize: 13.0,
-          color: active ? Colors.red : Colors.grey[700],
+          color: active ? selectedColor : unSelectedColor,
         ),
       ),
       Icon(
         Icons.arrow_drop_down,
         size: 20.0,
-        color: active ? Colors.red : Colors.grey[700],
+        color: active ? selectedColor : unSelectedColor,
       ),
     ];
 
@@ -144,8 +150,8 @@ class MultiSelect extends FilterItem {
   String getDisplayValue() {
     if (active) {
       var displayValue = '';
-      for(var i = 0; i < options.length; i++){
-        if(_value.contains(i)){
+      for (var i = 0; i < options.length; i++) {
+        if (_value.contains(i)) {
           displayValue += options[i] + ',';
         }
       }
@@ -167,18 +173,21 @@ class MultiSelect extends FilterItem {
     @required BuildContext context,
     @required Function(dynamic) onUpdate,
   }) {
+    final selectedColor = Theme.of(context).toggleButtonsTheme.selectedColor;
+    final unSelectedColor = Theme.of(context).buttonTheme.colorScheme.secondary;
+
     final buttonChildren = <Widget>[
       Text(
         getDisplayValue(),
         style: TextStyle(
           fontSize: 13.0,
-          color: active ? Colors.red : Colors.grey[700],
+          color: active ? selectedColor : unSelectedColor,
         ),
       ),
       Icon(
         Icons.arrow_drop_down,
         size: 20.0,
-        color: active ? Colors.red : Colors.grey[700],
+        color: active ? selectedColor : unSelectedColor,
       ),
     ];
 
@@ -230,12 +239,15 @@ class Bool extends FilterItem {
     @required BuildContext context,
     @required Function(dynamic) onUpdate,
   }) {
+    final selectedColor = Theme.of(context).toggleButtonsTheme.selectedColor;
+    final unSelectedColor = Theme.of(context).buttonTheme.colorScheme.secondary;
+
     final buttonChildren = <Widget>[
       Text(
         getDisplayValue(),
         style: TextStyle(
           fontSize: 13.0,
-          color: active ? Colors.red : Colors.grey[700],
+          color: active ? selectedColor : unSelectedColor,
         ),
       ),
     ];

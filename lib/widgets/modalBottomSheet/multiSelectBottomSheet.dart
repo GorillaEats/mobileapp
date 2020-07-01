@@ -50,9 +50,6 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
               FlatButton(
                 child: Text(
                   'Reset Filter',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
                 ),
                 onPressed: () {
                   widget.onUpdate(<int>[]);
@@ -69,8 +66,6 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return ToggleButtons(
-                  selectedColor: Colors.red,
-                  fillColor: Colors.red[100],
                   children: widget.options
                       .map(
                         (option) => Container(

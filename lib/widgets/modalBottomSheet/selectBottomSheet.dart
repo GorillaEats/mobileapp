@@ -33,9 +33,6 @@ class SelectBottomModal extends StatelessWidget {
               FlatButton(
                 child: Text(
                   'Reset Filter',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
                 ),
                 onPressed: () {
                   onUpdate(-1);
@@ -52,8 +49,6 @@ class SelectBottomModal extends StatelessWidget {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 return ToggleButtons(
-                  selectedColor: Colors.red,
-                  fillColor: Colors.red[100],
                   children: options
                       .map(
                         (option) => Container(
