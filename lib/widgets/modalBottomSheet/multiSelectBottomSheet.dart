@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MultiSelectBottomSheet extends StatefulWidget {
   final List<String> options;
   final String title;
-  final Function(dynamic) onUpdate;
+  final Function(List<int>) onUpdate;
   final List<int> value;
 
   MultiSelectBottomSheet({
