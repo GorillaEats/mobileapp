@@ -7,16 +7,16 @@ part 'locations.g.dart';
 
 @JsonSerializable()
 class Location {
-  Location({this.lat, this.lng, this.address, this.name});
-
-  factory Location.fromJson(Map<String, dynamic> json) =>
-      _$LocationFromJson(json);
-
   static const connection = 'lib/data/starbucks.json';
   final double lat;
   final double lng;
   final String address;
   final String name;
+  
+  Location({this.lat, this.lng, this.address, this.name});
+
+  factory Location.fromJson(Map<String, dynamic> json) =>
+      _$LocationFromJson(json);
 
   static Future<List<Location>> getNearbyLocations() async {
     final jsonString = await rootBundle.loadString(connection);
