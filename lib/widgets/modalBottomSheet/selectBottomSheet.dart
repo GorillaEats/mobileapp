@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SelectBottomModal extends StatelessWidget {
-  final Function(dynamic) onUpdate;
+class SelectBottomSheet extends StatelessWidget {
+  final Function(int) onUpdate;
   final List<bool> isSelectedList;
   final List<String> options;
   final String title;
 
-  SelectBottomModal({
+  SelectBottomSheet({
     @required this.onUpdate,
     @required this.options,
     @required this.isSelectedList,

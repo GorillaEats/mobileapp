@@ -84,7 +84,7 @@ class Select extends FilterItem {
     final isSelectedList =
         List<bool>.generate(options.length, (index) => index == _value);
 
-    return SelectBottomModal(
+    return SelectBottomSheet(
       onUpdate: onUpdate,
       options: options,
       isSelectedList: isSelectedList,
