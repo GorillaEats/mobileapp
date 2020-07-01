@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/widgets/fooditem.dart';
+import 'package:gorilla_eats/widgets/fooditems.dart';
 
 class FoodCategory extends StatelessWidget {
   @override
@@ -28,7 +28,7 @@ class FoodCategory extends StatelessWidget {
               thickness: 2,
             ),
           ),
-          FoodItem()
+          FoodItems()
         ],
       ),
     );

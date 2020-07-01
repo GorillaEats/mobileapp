@@ -1,0 +1,17 @@
+[
+    {
+        "foodName": "Crunchwrap Supreme",
+        "subtitle": "2 modifications",
+        "modifications": [
+            "Sub beans for beef",
+            "Fresco style"
+        ]
+    },
+    {
+        "foodName": "7 Layer Burrito",
+        "subtitle": "1 modification",
+        "modifications": [
+            "Fresco style"
+        ]
+    }
+]
