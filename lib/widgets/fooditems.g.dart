@@ -12,7 +12,8 @@ FoodItem _$FoodItemFromJson(Map<String, dynamic> json) {
     subtitle: json['subtitle'] as String,
     modifications: (json['modifications'] as List)
         ?.map((dynamic e) => e as String)
-        ?.toList(),
+        ?.toList()
+        .join('\n'),
   );
 }
 
