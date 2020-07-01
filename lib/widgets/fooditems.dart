@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gorilla_eats/screens/loading.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'fooditems.g.dart';
@@ -13,7 +14,7 @@ class FoodItem {
   final String foodName;
   final String subtitle;
   final String modifications;
-  bool _isExpanded = false;
+  bool isExpanded = false;
 
   FoodItem({this.foodName, this.subtitle, this.modifications});
 
@@ -34,10 +35,8 @@ class FoodItem {
   }
 }
 
-Future<List<ExpansionPanel>> _buildCard() async {
-  List<FoodItem> _allFoodItems = await FoodItem.getFoodItems();
-
-  return _allFoodItems
+List<ExpansionPanel> _buildCard(List<FoodItem> allFoodItems) {
+  return allFoodItems
       .map<ExpansionPanel>((fooditem) => ExpansionPanel(
             headerBuilder: (context, isExpanded) {
               return ListTile(
@@ -45,10 +44,11 @@ Future<List<ExpansionPanel>> _buildCard() async {
                 subtitle: Text(fooditem.subtitle),
               );
             },
-            isExpanded: fooditem._isExpanded,
             body: ListTile(
               title: Text(fooditem.modifications),
             ),
+            canTapOnHeader: true,
+            isExpanded: fooditem.isExpanded,
           ))
       .toList();
 }
@@ -59,22 +59,35 @@ class FoodItems extends StatefulWidget {
 }
 
 class _FoodItemsState extends State<FoodItems> {
-  final Future<List<ExpansionPanel>> _allPanels = _buildCard();
+  List<FoodItem> _allFoodItems;
+  List<ExpansionPanel> _allCards;
+
+  @override
+  void initState() {
+    super.initState();
+    FoodItem.getFoodItems().then((value) {
+      setState(() {
+        _allFoodItems = value;
+      });
+    });
+  }
 
   @override
   Widget build(context) {
+    if (_allFoodItems != null) {
+      _allCards = _buildCard(_allFoodItems);
+    }
     return Container(
-      child: FutureBuilder(
-          future: _allPanels,
-          builder: (context, snapshot) {
-            Widget widget;
-            if (snapshot.hasData) {
-              widget = Text('loaded');
-            } else {
-              widget = Text('not loaded');
-            }
-            return widget;
-          }),
-    );
+        child: _allFoodItems == null
+            ? LoadingScreen()
+            : ExpansionPanelList(
+                expansionCallback: (panelIndex, isExpanded) {
+                  setState(() {
+                    _allFoodItems.elementAt(panelIndex).isExpanded =
+                        !isExpanded;
+                  });
+                },
+                children: _allCards,
+              ));
   }
 }
