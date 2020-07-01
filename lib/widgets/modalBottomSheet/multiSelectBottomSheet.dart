@@ -12,7 +12,7 @@ class MultiSelectBottomSheet extends StatefulWidget {
     @required this.onUpdate,
     @required this.title,
     @required this.value,
-  });
+  }) : super(key: key);
 
   @override
   _MultiSelectBottomSheetState createState() => _MultiSelectBottomSheetState();

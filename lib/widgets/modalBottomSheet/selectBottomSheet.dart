@@ -7,11 +7,12 @@ class SelectBottomSheet extends StatelessWidget {
   final String title;
 
   SelectBottomSheet({
+    Key key,
     @required this.onUpdate,
     @required this.options,
     @required this.isSelectedList,
     @required this.title,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
