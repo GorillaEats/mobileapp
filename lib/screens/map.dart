@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/widgets/search/search.dart';
 import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
+import 'package:gorilla_eats/widgets/search/search.dart';
 import 'package:gorilla_eats/widgets/googlemaps.dart';
 
 class MapScreen extends StatelessWidget {
