@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gorilla_eats/widgets/restaurant_banner.dart';
-import 'package:gorilla_eats/widgets/categoryheader.dart';
+import 'package:gorilla_eats/widgets/categories.dart';
 
 class RestaurantScreen extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class RestaurantScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           RestaurantBanner(),
-          CategoryHeader(),
+          Categories(),
         ],
       ),
     );

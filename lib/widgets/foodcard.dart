@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gorilla_eats/data/fooditems.dart';
 
-Widget header(bool _isExpanded) {
+Widget cardHeader(bool _isExpanded, FoodItem foodItem) {
   return Card(
     elevation: 0,
     margin: EdgeInsets.fromLTRB(30, 30, 30, 30),
@@ -13,10 +14,10 @@ Widget header(bool _isExpanded) {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
-              child: Text('FoodName',
+              child: Text(foodItem.foodName,
                   style: TextStyle(fontWeight: FontWeight.w600)),
             ),
-            Text('Subtitle'),
+            Text(foodItem.subtitle),
           ],
         ),
         Padding(
@@ -24,9 +25,10 @@ Widget header(bool _isExpanded) {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
-              Icon(
-                _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-              )
+              if (foodItem.modifications.isNotEmpty)
+                Icon(
+                  _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                ),
             ],
           ),
         ),
@@ -35,39 +37,33 @@ Widget header(bool _isExpanded) {
   );
 }
 
-Widget body() {
+Widget cardBody(FoodItem foodItem) {
   return Card(
     elevation: 0,
     child: Padding(
       padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
       child: Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.brightness_1, size: 6),
-              Padding(
-                padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                child: Text('point 1'),
-              ),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Icon(Icons.brightness_1, size: 6),
-              Padding(
-                padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                child: Text('point 2'),
-              ),
-            ],
-          ),
-        ],
-      ),
+          children: foodItem.modifications.map((modification) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.brightness_1, size: 6),
+            Padding(
+              padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+              child: Text(modification),
+            ),
+          ],
+        );
+      }).toList()),
     ),
   );
 }
 
 class FoodCard extends StatefulWidget {
+  final FoodItem foodItem;
+
+  FoodCard({@required this.foodItem});
+
   @override
   _FoodCardState createState() => _FoodCardState();
 }
@@ -94,8 +90,9 @@ class _FoodCardState extends State<FoodCard> {
         margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
         child: Column(
           children: <Widget>[
-            header(_isExpanded),
-            if (_isExpanded) body(),
+            cardHeader(_isExpanded, widget.foodItem),
+            if (_isExpanded && widget.foodItem.modifications.isNotEmpty)
+              cardBody(widget.foodItem),
           ],
         ),
       ),
