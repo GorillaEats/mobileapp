@@ -8,7 +8,7 @@ class MapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return FocusWatcher(
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: [
             GoogleMaps(),
