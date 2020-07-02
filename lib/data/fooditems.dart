@@ -33,13 +33,12 @@ class FoodCategory {
   static Future<List<dynamic>> getFoods() async {
     final jsonString = await rootBundle.loadString(connection);
     final dynamic decoded = json.decode(jsonString);
-    // ignore: omit_local_variable_types
-    final List<dynamic> categories = <dynamic>[];
+    final categories = <dynamic>[];
 
     for (dynamic category in decoded) {
       final foodCategoryJson = category as Map<String, dynamic>;
       final foodCategory = FoodCategory.fromJson(foodCategoryJson);
-      final List<FoodItem> foods = [];
+      final foods = <FoodItem>[];
 
       for (dynamic food in category['foods']) {
         final foodItemJson = food as Map<String, dynamic>;
