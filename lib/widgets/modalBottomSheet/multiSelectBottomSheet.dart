@@ -33,6 +33,7 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
         widget.options.length, (index) => value.contains(index));
 
     return Container(
+      margin: EdgeInsets.all(15.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -112,7 +113,6 @@ class _MultiSelectBottomSheetState extends State<MultiSelectBottomSheet> {
           ),
         ],
       ),
-      margin: EdgeInsets.all(15.0),
     );
   }
 }
