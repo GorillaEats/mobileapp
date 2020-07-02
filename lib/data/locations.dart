@@ -12,7 +12,7 @@ class Location {
   final double lng;
   final String address;
   final String name;
-  
+
   Location({this.lat, this.lng, this.address, this.name});
 
   factory Location.fromJson(Map<String, dynamic> json) =>
@@ -21,8 +21,7 @@ class Location {
   static Future<List<Location>> getNearbyLocations() async {
     final jsonString = await rootBundle.loadString(connection);
     final dynamic decoded = json.decode(jsonString);
-    // ignore: omit_local_variable_types
-    final List<Location> locations = [];
+    final locations = <Location>[];
     for (dynamic item in decoded) {
       final mapItem = item as Map<String, dynamic>;
       final locationItem = Location.fromJson(mapItem);
