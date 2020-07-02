@@ -268,16 +268,7 @@ class Open extends Bool {
 }
 
 class VeganRating extends Select {
-  VeganRating() : super('Vegan Rating', ['2.5', '3.5', '4.5'], -1);
-
-  @override
-  String getDisplayValue() {
-    if (active) {
-      return super.getDisplayValue() + '+';
-    } else {
-      return super.getDisplayValue();
-    }
-  }
+  VeganRating() : super('Vegan Rating', ['3.5+', '4.0+', '4.5+'], -1);
 }
 
 class Price extends MultiSelect {
