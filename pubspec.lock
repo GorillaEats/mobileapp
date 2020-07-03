@@ -201,7 +201,7 @@ packages:
     source: sdk
     version: "0.0.0"
   geolocator:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: geolocator
       url: "https://pub.dartlang.org"
@@ -222,7 +222,7 @@ packages:
     source: hosted
     version: "2.0.4"
   google_maps_flutter:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
