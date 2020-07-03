@@ -1,0 +1,370 @@
+[
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc54"
+        },
+        "telephone": "9797741480",
+        "hours": [
+            [
+                480,
+                1200
+            ],
+            [
+                1920,
+                2640
+            ],
+            [
+                3360,
+                4080
+            ],
+            [
+                4800,
+                5520
+            ],
+            [
+                6240,
+                6960
+            ],
+            [
+                7680,
+                8400
+            ],
+            [
+                9120,
+                9840
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "Bryan",
+            "streetAddress": "3061 Wildflower Dr",
+            "postalCode": "77802",
+            "latitude": 30.66423,
+            "longitude": -96.325286
+        },
+        "name": "Starbucks"
+    },
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc57"
+        },
+        "telephone": "979-774-8399",
+        "hours": [
+            [
+                360,
+                1260
+            ],
+            [
+                1800,
+                2700
+            ],
+            [
+                3240,
+                4140
+            ],
+            [
+                4680,
+                5580
+            ],
+            [
+                6120,
+                7020
+            ],
+            [
+                7560,
+                8460
+            ],
+            [
+                9000,
+                9900
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "Bryan",
+            "streetAddress": "NE Corner of Hwy 6 & Booneville Road",
+            "postalCode": "77801",
+            "latitude": 30.674295,
+            "longitude": -96.336604
+        },
+        "name": "Starbucks"
+    },
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc59"
+        },
+        "telephone": "(979)821-2420",
+        "hours": [
+            [
+                360,
+                1350
+            ],
+            [
+                1770,
+                2790
+            ],
+            [
+                3210,
+                4230
+            ],
+            [
+                4650,
+                5670
+            ],
+            [
+                6090,
+                7110
+            ],
+            [
+                7530,
+                8580
+            ],
+            [
+                8970,
+                9960
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "Bryan",
+            "streetAddress": "601 E Villa Maria Road, 100",
+            "postalCode": "77802",
+            "latitude": 30.643543,
+            "longitude": -96.352871
+        },
+        "name": "Starbucks"
+    },
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc5b"
+        },
+        "telephone": "979-696-9592",
+        "hours": [
+            [
+                330,
+                1230
+            ],
+            [
+                1770,
+                2670
+            ],
+            [
+                3210,
+                4110
+            ],
+            [
+                4650,
+                5550
+            ],
+            [
+                6090,
+                6990
+            ],
+            [
+                7530,
+                8430
+            ],
+            [
+                8970,
+                9870
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "College Station",
+            "streetAddress": "1929 Texas Avenue South",
+            "postalCode": "77840",
+            "latitude": 30.613447,
+            "longitude": -96.316121
+        },
+        "name": "Starbucks"
+    },
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc5d"
+        },
+        "telephone": "979-693-8400",
+        "hours": [
+            [
+                480,
+                1200
+            ],
+            [
+                1920,
+                2640
+            ],
+            [
+                3360,
+                4080
+            ],
+            [
+                4800,
+                5520
+            ],
+            [
+                6240,
+                6960
+            ],
+            [
+                7680,
+                8400
+            ],
+            [
+                9120,
+                9840
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "College Station",
+            "streetAddress": "2100 Texas Ave S",
+            "postalCode": "77840",
+            "latitude": 30.610551,
+            "longitude": -96.314914
+        },
+        "name": "Starbucks"
+    },
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc5f"
+        },
+        "telephone": "9796933139",
+        "hours": [
+            [
+                300,
+                1260
+            ],
+            [
+                1740,
+                2700
+            ],
+            [
+                3180,
+                4140
+            ],
+            [
+                4620,
+                5580
+            ],
+            [
+                6060,
+                7020
+            ],
+            [
+                7500,
+                8460
+            ],
+            [
+                8940,
+                9900
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "College Station",
+            "streetAddress": "3985 State Highway 6 South",
+            "postalCode": "77845",
+            "latitude": 30.585946,
+            "longitude": -96.283856
+        },
+        "name": "Starbucks"
+    },
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc61"
+        },
+        "telephone": "979-485-8772",
+        "hours": [
+            [
+                330,
+                1260
+            ],
+            [
+                1770,
+                2730
+            ],
+            [
+                3210,
+                4170
+            ],
+            [
+                4650,
+                5610
+            ],
+            [
+                6090,
+                7050
+            ],
+            [
+                7530,
+                8460
+            ],
+            [
+                8970,
+                9900
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "College Station",
+            "streetAddress": "3535 Longmire Dr",
+            "postalCode": "77845",
+            "latitude": 30.581765,
+            "longitude": -96.285912
+        },
+        "name": "Starbucks"
+    },
+    {
+        "_id": {
+            "$oid": "5ed1a728a8c8c772d087bc63"
+        },
+        "telephone": "9794461358",
+        "hours": [
+            [
+                330,
+                1260
+            ],
+            [
+                1740,
+                2700
+            ],
+            [
+                3180,
+                4140
+            ],
+            [
+                4620,
+                5580
+            ],
+            [
+                6060,
+                7020
+            ],
+            [
+                7500,
+                8460
+            ],
+            [
+                8940,
+                9900
+            ]
+        ],
+        "location": {
+            "addressCountry": "US",
+            "addressRegion": "TX",
+            "addressLocality": "College Station",
+            "streetAddress": "895 William D. Fitch Parkway, 100",
+            "postalCode": "77845",
+            "latitude": 30.555355,
+            "longitude": -96.264186
+        },
+        "name": "Starbucks"
+    }
+]
