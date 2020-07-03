@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "5.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.10"
+    version: "0.39.11"
   archive:
     dependency: transitive
     description:
@@ -285,14 +285,14 @@ packages:
     source: hosted
     version: "0.6.2"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
   json_serializable:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: json_serializable
       url: "https://pub.dartlang.org"
@@ -305,6 +305,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0+1"
+  logger:
+    dependency: "direct dev"
+    description:
+      name: logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.1"
   logging:
     dependency: transitive
     description:
@@ -416,7 +423,7 @@ packages:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.5"
+    version: "0.7.7"
   shelf_web_socket:
     dependency: transitive
     description:
