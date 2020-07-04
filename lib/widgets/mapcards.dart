@@ -1,28 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-List<Color> colors = [
-  Colors.red[100],
-  Colors.red[200],
-  Colors.red[300],
-  Colors.red[400],
-  Colors.red[500]
-];
+import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/widgets/restaurantcard.dart';
 
 class MapCards extends StatelessWidget {
-  Widget _card(Color givenColor) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: SizedBox(
-        width: 300,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: givenColor,
-          ),
-        ),
-      ),
-    );
-  }
+  final List<Location> locations;
+
+  MapCards({@required this.locations});
 
   @override
   Widget build(context) {
@@ -30,12 +14,14 @@ class MapCards extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-        height: 200,
+        height: 150,
         child: ListView(
-          itemExtent: 300,
+          itemExtent: MediaQuery.of(context).size.width * .9,
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
           scrollDirection: Axis.horizontal,
-          children: colors.map((color) => _card(color)).toList(),
+          children: locations
+              .map((location) => RestaurantCard(location: location))
+              .toList(),
         ),
       ),
     );
