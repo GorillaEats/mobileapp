@@ -45,18 +45,16 @@ class _GoogleMapsState extends State<GoogleMaps> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _initialPosition == null
-          ? LoadingScreen()
-          : GoogleMap(
+    return _initialPosition == null
+        ? LoadingScreen()
+        : GoogleMap(
               onMapCreated: _onMapCreated,
-              myLocationEnabled: true,
-              initialCameraPosition: CameraPosition(
-                target: _initialPosition,
-                zoom: zoomLevel,
-              ),
-              markers: _markers.values.toSet(),
+            myLocationEnabled: true,
+            initialCameraPosition: CameraPosition(
+              target: _initialPosition,
+              zoom: zoomLevel,
             ),
-    );
+            markers: _markers.values.toSet(),
+          );
   }
 }
