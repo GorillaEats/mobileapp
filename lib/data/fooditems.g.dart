@@ -15,20 +15,8 @@ FoodItem _$FoodItemFromJson(Map<String, dynamic> json) {
           ?.toList());
 }
 
-Map<String, dynamic> _$FoodItemToJson(FoodItem instance) => <String, dynamic>{
-      'foodName': instance.foodName,
-      'subtitle': instance.subtitle,
-      'modifications': instance.modifications,
-      'isExpanded': instance.isExpanded,
-    };
-
 FoodCategory _$FoodCategoryFromJson(Map<String, dynamic> json) {
   return FoodCategory(
     category: json['category'] as String,
   );
 }
-
-Map<String, dynamic> _$FoodCategoryToJson(FoodCategory instance) =>
-    <String, dynamic>{
-      'category': instance.category,
-    };
