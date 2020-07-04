@@ -11,6 +11,8 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
     lat: (json['location']['latitude'] as num)?.toDouble(),
     lng: (json['location']['longitude'] as num)?.toDouble(),
     address: json['location']['streetAddress'] as String,
+    rating: json['rating'] as double,
+    price: json['price'] as String,
     name: json['name'] as String,
   );
 }

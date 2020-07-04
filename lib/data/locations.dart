@@ -11,9 +11,12 @@ class Location {
   final double lat;
   final double lng;
   final String address;
+  final double rating;
+  final String price;
   final String name;
 
-  Location({this.lat, this.lng, this.address, this.name});
+  Location(
+      {this.lat, this.lng, this.address, this.rating, this.price, this.name});
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);

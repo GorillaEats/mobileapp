@@ -43,6 +43,8 @@
             "latitude": 30.66423,
             "longitude": -96.325286
         },
+        "rating": 4.2,
+        "price": "$",
         "name": "Starbucks"
     },
     {
@@ -89,6 +91,8 @@
             "latitude": 30.674295,
             "longitude": -96.336604
         },
+        "rating": 4.0,
+        "price": "$",
         "name": "Starbucks"
     },
     {
@@ -135,6 +139,8 @@
             "latitude": 30.643543,
             "longitude": -96.352871
         },
+        "rating": 3.5,
+        "price": "$",
         "name": "Starbucks"
     },
     {
@@ -181,6 +187,8 @@
             "latitude": 30.613447,
             "longitude": -96.316121
         },
+        "rating": 3.1,
+        "price": "$",
         "name": "Starbucks"
     },
     {
@@ -227,6 +235,8 @@
             "latitude": 30.610551,
             "longitude": -96.314914
         },
+        "rating": 4.6,
+        "price": "$",
         "name": "Starbucks"
     },
     {
@@ -273,6 +283,8 @@
             "latitude": 30.585946,
             "longitude": -96.283856
         },
+        "rating": 2.9,
+        "price": "$",
         "name": "Starbucks"
     },
     {
@@ -319,6 +331,8 @@
             "latitude": 30.581765,
             "longitude": -96.285912
         },
+        "rating": 3.0,
+        "price": "$",
         "name": "Starbucks"
     },
     {
@@ -365,6 +379,8 @@
             "latitude": 30.555355,
             "longitude": -96.264186
         },
+        "rating": 3.1,
+        "price": "$",
         "name": "Starbucks"
     }
 ]
