@@ -51,6 +51,14 @@ class _RestaurantCardState extends State<RestaurantCard> {
   @override
   Widget build(context) {
     return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+              builder: (context) =>
+                  RestaurantScreen(location: widget.location)),
+        );
+      },
       child: Card(
         elevation: 2,
         child: Row(

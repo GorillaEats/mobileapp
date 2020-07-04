@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gorilla_eats/data/locations.dart';
 
 class RestaurantBanner extends StatelessWidget {
+  Location location;
+
+  RestaurantBanner({this.location});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -26,7 +31,7 @@ class RestaurantBanner extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: Text('Taco Bell',
+                  child: Text(location.name,
                       style: TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.bold,
@@ -51,7 +56,7 @@ class RestaurantBanner extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(22, 3, 0, 0),
                   child: Text(
-                    '3501 E 29th St, Bryan, TX 77802',
+                    location.address,
                     style: TextStyle(fontSize: 17, color: Colors.white),
                   ),
                 ),
