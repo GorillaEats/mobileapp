@@ -91,15 +91,20 @@ class _SearchState extends State<Search> {
     return ChangeNotifierProvider(
       create: (context) => SearchModel(),
       child: Container(
+        color: _activelySearching ? Colors.white : Colors.transparent,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _buildSearchBar(context),
-            Consumer<SearchModel>(
-              builder: (context, searchModel, child) {
-                return _buildFilterItems(context, searchModel);
-              },
+            SizedBox(
+              height: MediaQuery.of(context).padding.top,
             ),
+            _buildSearchBar(context),
+            if (!_activelySearching)
+              Consumer<SearchModel>(
+                builder: (context, searchModel, child) {
+                  return _buildFilterItems(context, searchModel);
+                },
+              ),
           ],
         ),
       ),
@@ -107,71 +112,70 @@ class _SearchState extends State<Search> {
   }
 
   Widget _buildSearchBar(BuildContext context) {
-    final stackChildren = <Widget>[
-      TextField(
-        controller: _textController,
-        onSubmitted: (value) => {FocusScope.of(context).unfocus()},
-        onChanged: _handleTextChange,
-        onTap: () {
-          setState(() {
-            _activelySearching = true;
-          });
-        },
-        textInputAction: TextInputAction.search,
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          prefixIcon:
-              _activelySearching ? SizedBox() : Icon(Icons.search, size: 20.0),
-          hintText: 'Enter Location',
-          suffixIcon: _textController.text.isNotEmpty
-              ? IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _textController.clear();
-                    });
-                  },
-                  icon: Icon(
-                    Icons.clear,
-                    color: Theme.of(context).buttonTheme.colorScheme.secondary,
-                  ),
-                )
-              : null,
-        ),
-      ),
-    ];
-
-    if (_activelySearching) {
-      stackChildren.add(
-        IconButton(
-          icon: Icon(Icons.arrow_back, size: 20.0),
-          onPressed: () {
-            setState(() {
-              FocusScope.of(context).unfocus();
-              _activelySearching = false;
-            });
-          },
-        ),
-      );
-    }
-
     return Container(
       height: 40.0,
       margin: EdgeInsets.all(10.0),
       child: Stack(
         alignment: Alignment.centerLeft,
-        children: stackChildren,
+        children: [
+          TextField(
+            controller: _textController,
+            onSubmitted: (value) => {FocusScope.of(context).unfocus()},
+            onChanged: _handleTextChange,
+            onTap: () {
+              setState(() {
+                _activelySearching = true;
+              });
+            },
+            textInputAction: TextInputAction.search,
+            textAlignVertical: TextAlignVertical.center,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              prefixIcon: _activelySearching
+                  ? SizedBox()
+                  : Icon(Icons.search, size: 20.0),
+              hintText: 'Enter Location',
+              suffixIcon: _textController.text.isNotEmpty
+                  ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _textController.clear();
+                        });
+                      },
+                      icon: Icon(
+                        Icons.clear,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.secondary,
+                      ),
+                    )
+                  : null,
+            ),
+          ),
+          if (_activelySearching)
+            IconButton(
+              icon: Icon(Icons.arrow_back, size: 20.0),
+              onPressed: () {
+                setState(() {
+                  FocusScope.of(context).unfocus();
+                  _activelySearching = false;
+                });
+              },
+            ),
+        ],
       ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(18.0)),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 3.0,
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 3.0,
-          )
-        ],
+        border: Border.all(color: _activelySearching ? Colors.grey[300] : Colors.transparent),
+        boxShadow: _activelySearching
+            ? null
+            : [
+                BoxShadow(
+                  blurRadius: 3.0,
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 3.0,
+                )
+              ],
       ),
     );
   }
