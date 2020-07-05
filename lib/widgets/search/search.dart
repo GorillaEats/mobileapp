@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:gorilla_eats/data/models/search.dart';
+import 'package:gorilla_eats/credentials.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -8,7 +10,31 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
-  final _textController = TextEditingController();
+  TextEditingController _textController;
+  GoogleMapsPlaces _places;
+
+  @override
+  void initState() {
+    super.initState();
+    
+    _textController = TextEditingController();
+    _places = GoogleMapsPlaces(
+      apiKey: PLACES_API_KEY,
+    );
+  }
+
+  Future<void> _handleTextChange(String value) async {
+    final res = await _places.autocomplete(
+      value,
+      types: ['address']
+    );
+
+    print('predictions1');
+    print(res.errorMessage);
+    for(var i = 0; i < res.predictions.length; i++){
+      print(res.predictions[i].description);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +63,7 @@ class _SearchState extends State<Search> {
       child: TextField(
         controller: _textController,
         onSubmitted: (value) => print('onSubmit:' + value),
-        onChanged: (value) {
-          setState(() {});
-        },
+        onChanged: _handleTextChange,
         textInputAction: TextInputAction.search,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
