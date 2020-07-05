@@ -44,6 +44,7 @@ class _SearchState extends State<Search> {
       value,
       types: ['address'],
       sessionToken: sessionId,
+      components: [Component('country', 'us')]
     );
 
     print('predictions');
