@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/credentials.dart';
+
+const sessionTimeOut = 1 * 60 * 1000;
+final uuid = Uuid();
 
 class Search extends StatefulWidget {
   @override
@@ -12,28 +16,44 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   TextEditingController _textController;
   GoogleMapsPlaces _places;
+  String sessionId;
+  int lastSessionUse;
 
   @override
   void initState() {
     super.initState();
-    
+
     _textController = TextEditingController();
     _places = GoogleMapsPlaces(
-      apiKey: PLACES_API_KEY,
+      apiKey: googlePlacesApiKey,
     );
+    sessionId = uuid.v4();
+    lastSessionUse = 0;
   }
 
   Future<void> _handleTextChange(String value) async {
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+
+    if(currentTime - lastSessionUse > sessionTimeOut){
+      sessionId = uuid.v4();
+    }
+
+    lastSessionUse = currentTime;
+
     final res = await _places.autocomplete(
       value,
-      types: ['address']
+      types: ['address'],
+      sessionToken: sessionId,
     );
 
-    print('predictions1');
+    print('predictions');
+    print(sessionId);
     print(res.errorMessage);
-    for(var i = 0; i < res.predictions.length; i++){
+    for (var i = 0; i < res.predictions.length; i++) {
       print(res.predictions[i].description);
     }
+
+    setState(() {});
   }
 
   @override
@@ -62,7 +82,7 @@ class _SearchState extends State<Search> {
       margin: EdgeInsets.all(10.0),
       child: TextField(
         controller: _textController,
-        onSubmitted: (value) => print('onSubmit:' + value),
+        onSubmitted: (value) => {FocusScope.of(context).unfocus()},
         onChanged: _handleTextChange,
         textInputAction: TextInputAction.search,
         textAlignVertical: TextAlignVertical.center,
