@@ -44,6 +44,7 @@ class _SearchState extends State<Search> {
       value,
       types: ['address'],
       sessionToken: sessionId,
+      language: 'en',
       components: [Component('country', 'us')]
     );
 
