@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -5,7 +6,13 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/credentials.dart';
 
+// Time of Inactivity before a new session id is created for autocomplete requests
+// Inactivity is defined as not typing in search bar
 const sessionTimeOut = 1 * 60 * 1000;
+
+// Time of Inactivity needed before a request for suggestions are made
+const debounceTimeOut = 300;
+
 final uuid = Uuid();
 
 class Search extends StatefulWidget {
@@ -16,8 +23,9 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   TextEditingController _textController;
   GoogleMapsPlaces _places;
-  String sessionId;
-  int lastSessionUse;
+  String _sessionId;
+  int _lastSessionUse;
+  Timer _debounce;
 
   @override
   void initState() {
@@ -27,35 +35,45 @@ class _SearchState extends State<Search> {
     _places = GoogleMapsPlaces(
       apiKey: googlePlacesApiKey,
     );
-    sessionId = uuid.v4();
-    lastSessionUse = DateTime.now().millisecondsSinceEpoch;
+    _sessionId = uuid.v4();
+    _lastSessionUse = DateTime.now().millisecondsSinceEpoch;
+    _debounce = Timer(Duration(milliseconds: 0), () {});
   }
 
-  Future<void> _handleTextChange(String value) async {
-    final currentTime = DateTime.now().millisecondsSinceEpoch;
-
-    if(currentTime - lastSessionUse > sessionTimeOut){
-      sessionId = uuid.v4();
-    }
-
-    lastSessionUse = currentTime;
-
+  Future<void> _handleDebounceTimeOut(String value) async {
     final res = await _places.autocomplete(
       value,
       types: ['address'],
-      sessionToken: sessionId,
+      sessionToken: _sessionId,
       language: 'en',
-      components: [Component('country', 'us')]
+      components: [Component('country', 'us')],
     );
 
     print('predictions');
-    print(sessionId);
+    print(_sessionId);
     print(res.errorMessage);
     for (var i = 0; i < res.predictions.length; i++) {
       print(res.predictions[i].description);
     }
+  }
 
-    setState(() {});
+  void _handleTextChange(String value) {
+    setState(() {
+      final currentTime = DateTime.now().millisecondsSinceEpoch;
+
+      if (currentTime - _lastSessionUse > sessionTimeOut) {
+        _sessionId = uuid.v4();
+      }
+
+      _lastSessionUse = currentTime;
+
+      _debounce.cancel();
+
+      _debounce = Timer(
+        Duration(milliseconds: debounceTimeOut),
+        () => {_handleDebounceTimeOut(value)},
+      );
+    });
   }
 
   @override
