@@ -28,7 +28,7 @@ class _SearchState extends State<Search> {
       apiKey: googlePlacesApiKey,
     );
     sessionId = uuid.v4();
-    lastSessionUse = 0;
+    lastSessionUse = DateTime.now().millisecondsSinceEpoch;
   }
 
   Future<void> _handleTextChange(String value) async {
