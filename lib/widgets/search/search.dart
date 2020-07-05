@@ -26,6 +26,8 @@ class _SearchState extends State<Search> {
   String _sessionId;
   int _lastSessionUse;
   Timer _debounce;
+  bool _activelySearching;
+  List<Prediction> _predictions;
 
   @override
   void initState() {
@@ -38,6 +40,8 @@ class _SearchState extends State<Search> {
     _sessionId = uuid.v4();
     _lastSessionUse = DateTime.now().millisecondsSinceEpoch;
     _debounce = Timer(Duration(milliseconds: 0), () {});
+    _predictions = [];
+    _activelySearching = false;
   }
 
   Future<void> _handleDebounceTimeOut(String value) async {
@@ -54,6 +58,12 @@ class _SearchState extends State<Search> {
     print(res.errorMessage);
     for (var i = 0; i < res.predictions.length; i++) {
       print(res.predictions[i].description);
+    }
+
+    if (res.isOkay || res.hasNoResults) {
+      setState(() {
+        _predictions = res.predictions;
+      });
     }
   }
 
@@ -97,18 +107,22 @@ class _SearchState extends State<Search> {
   }
 
   Widget _buildSearchBar(BuildContext context) {
-    return Container(
-      height: 40.0,
-      margin: EdgeInsets.all(10.0),
-      child: TextField(
+    final stackChildren = <Widget>[
+      TextField(
         controller: _textController,
         onSubmitted: (value) => {FocusScope.of(context).unfocus()},
         onChanged: _handleTextChange,
+        onTap: () {
+          setState(() {
+            _activelySearching = true;
+          });
+        },
         textInputAction: TextInputAction.search,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           border: InputBorder.none,
-          prefixIcon: Icon(Icons.search, size: 20.0),
+          prefixIcon:
+              _activelySearching ? SizedBox() : Icon(Icons.search, size: 20.0),
           hintText: 'Enter Location',
           suffixIcon: _textController.text.isNotEmpty
               ? IconButton(
@@ -124,6 +138,29 @@ class _SearchState extends State<Search> {
                 )
               : null,
         ),
+      ),
+    ];
+
+    if (_activelySearching) {
+      stackChildren.add(
+        IconButton(
+          icon: Icon(Icons.arrow_back, size: 20.0),
+          onPressed: () {
+            setState(() {
+              FocusScope.of(context).unfocus();
+              _activelySearching = false;
+            });
+          },
+        ),
+      );
+    }
+
+    return Container(
+      height: 40.0,
+      margin: EdgeInsets.all(10.0),
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: stackChildren,
       ),
       decoration: BoxDecoration(
         color: Colors.white,
