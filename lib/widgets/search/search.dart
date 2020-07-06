@@ -80,6 +80,37 @@ class _SearchState extends State<Search> {
     });
   }
 
+  void _handleSetLocation(Prediction prediction) {
+    setState(() {
+      FocusScope.of(context).unfocus();
+      _predictions = [];
+      _debounce.cancel();
+    });
+  }
+
+  void _handleSearchClear() {
+    setState(() {
+      _predictions = [];
+      _textController.clear();
+      _debounce.cancel();
+    });
+  }
+
+  void _handleSearchActive() {
+    setState(() {
+      _activelySearching = true;
+    });
+  }
+
+  void _handleSearchCancel() {
+    setState(() {
+      FocusScope.of(context).unfocus();
+      _predictions = [];
+      _debounce.cancel();
+      _activelySearching = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -145,11 +176,7 @@ class _SearchState extends State<Search> {
             controller: _textController,
             onSubmitted: (value) => {FocusScope.of(context).unfocus()},
             onChanged: _handleTextChange,
-            onTap: () {
-              setState(() {
-                _activelySearching = true;
-              });
-            },
+            onTap: _handleSearchActive(),
             textInputAction: TextInputAction.search,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
@@ -160,12 +187,7 @@ class _SearchState extends State<Search> {
               hintText: 'Enter Location',
               suffixIcon: _textController.text.isNotEmpty
                   ? IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _predictions = [];
-                          _textController.clear();
-                        });
-                      },
+                      onPressed: _handleSearchClear,
                       icon: Icon(
                         Icons.clear,
                         color:
@@ -178,14 +200,7 @@ class _SearchState extends State<Search> {
           if (_activelySearching)
             IconButton(
               icon: Icon(Icons.arrow_back, size: 20.0),
-              onPressed: () {
-                setState(() {
-                  FocusScope.of(context).unfocus();
-                  _textController.clear();
-                  _predictions = [];
-                  _activelySearching = false;
-                });
-              },
+              onPressed: _handleSearchCancel,
             ),
         ],
       ),
@@ -243,7 +258,7 @@ class _SearchState extends State<Search> {
         itemCount: _predictions.length,
         itemBuilder: (context, index) {
           return FlatButton(
-              onPressed: () => print(_predictions[index].description),
+              onPressed: () => {_handleSetLocation(_predictions[index])},
               child: Container(
                 alignment: Alignment.centerLeft,
                 child: Text(_predictions[index].description),
