@@ -119,6 +119,8 @@ class _SearchState extends State<Search> {
 
       if(_selectedPrediction != null){
         _textController.text = _selectedPrediction.description;
+      }else{
+        _textController.clear();
       }
     });
   }
