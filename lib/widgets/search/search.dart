@@ -192,10 +192,13 @@ class _SearchState extends State<Search> {
             textInputAction: TextInputAction.search,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.all(0),
               border: InputBorder.none,
               prefixIcon: _activelySearching
                   ? SizedBox()
                   : Icon(Icons.search, size: 20.0),
+              prefixIconConstraints: BoxConstraints(maxHeight: 40.0, minHeight: 40.0, maxWidth: 40.0, minWidth: 40.0),
               hintText: 'Enter Location',
               suffixIcon: _textController.text.isNotEmpty
                   ? IconButton(
