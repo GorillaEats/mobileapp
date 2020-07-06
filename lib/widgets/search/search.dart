@@ -227,4 +227,13 @@ class _SearchState extends State<Search> {
       ),
     );
   }
+
+  @override
+  void dispose(){
+    super.dispose();
+
+    _places.dispose();
+    _textController.dispose();
+    _debounce.cancel();
+  }
 }
