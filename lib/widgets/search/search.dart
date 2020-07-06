@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -81,60 +82,62 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    final searchBarHeight = 40.0;
-    final searchBarMargin = 10.0;
-    final searchBarTotalHeight = searchBarHeight +
-        2 * searchBarMargin +
-        MediaQuery.of(context).padding.top;
-
     return ChangeNotifierProvider(
       create: (context) => SearchModel(),
       child: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
-              color: _activelySearching ? Colors.white : Colors.transparent,
-            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).padding.top,
+                Container(
+                  decoration: BoxDecoration(
+                    color:
+                        _activelySearching ? Colors.white : Colors.transparent,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).padding.top,
+                      ),
+                      _buildSearchBar(context),
+                    ],
+                  ),
                 ),
-                _buildSearchBar(context, searchBarHeight, searchBarMargin),
                 if (!_activelySearching)
                   Consumer<SearchModel>(
                     builder: (context, searchModel, child) {
                       return _buildFilterItems(context, searchModel);
                     },
                   ),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Align(
+                        alignment: Alignment.bottomCenter,
+                        child: AnimatedContainer(
+                          duration: Duration(milliseconds: 300),
+                          height:
+                              _activelySearching ? constraints.maxHeight : 0.0,
+                          color: Colors.white,
+                          child: _buildPredictionResults(context),
+                        ),
+                      );
+                    },
+                  ),
+                )
               ],
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(height: searchBarHeight),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 200),
-                height: _activelySearching
-                    ? MediaQuery.of(context).size.height - searchBarTotalHeight
-                    : 0.0,
-                color: Colors.white,
-                child: _buildPredictionResults(context),
-              ),
-            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildSearchBar(
-      BuildContext context, double searchBarHeight, double searchBarMargin) {
+  Widget _buildSearchBar(BuildContext context) {
     return Container(
-      height: searchBarHeight,
-      margin: EdgeInsets.all(searchBarMargin),
+      height: 40.0,
+      margin: EdgeInsets.all(10.0),
       child: Stack(
         alignment: Alignment.centerLeft,
         children: [
@@ -236,18 +239,20 @@ class _SearchState extends State<Search> {
   Widget _buildPredictionResults(BuildContext context) {
     return Container(
       child: ListView.separated(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(0),
         itemCount: _predictions.length,
         itemBuilder: (context, index) {
-          return FlatButton(            
-            onPressed: () => print(_predictions[index].description),
-            child: Container(
-              alignment: Alignment.centerLeft,
-              child: Text(_predictions[index].description),
-            )
-          );
+          return FlatButton(
+              onPressed: () => print(_predictions[index].description),
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(_predictions[index].description),
+              ));
         },
-        separatorBuilder: (context, index) => Divider(height: 3.0, thickness: 1.0,),
+        separatorBuilder: (context, index) => Divider(
+          height: 3.0,
+          thickness: 1.0,
+        ),
       ),
     );
   }
