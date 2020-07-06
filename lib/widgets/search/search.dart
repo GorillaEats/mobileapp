@@ -180,8 +180,11 @@ class _SearchState extends State<Search> {
   }
 
   Widget _buildSearchBar(BuildContext context) {
+    const searchBarHeight = 40.0;
+    const searchBarIconSize = 20.0;
+
     return Container(
-      height: 40.0,
+      height: searchBarHeight,
       margin: EdgeInsets.all(10.0),
       child: Stack(
         alignment: Alignment.centerLeft,
@@ -199,8 +202,8 @@ class _SearchState extends State<Search> {
               border: InputBorder.none,
               prefixIcon: _activelySearching
                   ? SizedBox()
-                  : Icon(Icons.search, size: 20.0),
-              prefixIconConstraints: BoxConstraints(maxHeight: 40.0, minHeight: 40.0, maxWidth: 40.0, minWidth: 40.0),
+                  : Icon(Icons.search, size: searchBarIconSize),
+              prefixIconConstraints: BoxConstraints(minHeight: searchBarHeight, minWidth: searchBarHeight),
               hintText: 'Enter Location',
               suffixIcon: _textController.text.isNotEmpty
                   ? IconButton(
@@ -216,7 +219,7 @@ class _SearchState extends State<Search> {
           ),
           if (_activelySearching)
             IconButton(
-              icon: Icon(Icons.arrow_back, size: 20.0),
+              icon: Icon(Icons.arrow_back, size: searchBarIconSize),
               onPressed: _handleSearchCancel,
             ),
         ],
