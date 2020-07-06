@@ -90,23 +90,41 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => SearchModel(),
-      child: Container(
-        color: _activelySearching ? Colors.white : Colors.transparent,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).padding.top,
-            ),
-            _buildSearchBar(context),
-            if (!_activelySearching)
-              Consumer<SearchModel>(
-                builder: (context, searchModel, child) {
-                  return _buildFilterItems(context, searchModel);
-                },
+      child: Stack(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                color: Colors.white,
+                height: _activelySearching
+                    ? MediaQuery.of(context).size.height
+                    : 0.0,
               ),
-          ],
-        ),
+            ],
+          ),
+          Container(
+            decoration: BoxDecoration(
+              color: _activelySearching ? Colors.white : Colors.transparent,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).padding.top,
+                ),
+                _buildSearchBar(context),
+                if (!_activelySearching)
+                  Consumer<SearchModel>(
+                    builder: (context, searchModel, child) {
+                      return _buildFilterItems(context, searchModel);
+                    },
+                  ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -166,7 +184,8 @@ class _SearchState extends State<Search> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(18.0)),
-        border: Border.all(color: _activelySearching ? Colors.grey[300] : Colors.transparent),
+        border: Border.all(
+            color: _activelySearching ? Colors.grey[200] : Colors.transparent),
         boxShadow: _activelySearching
             ? null
             : [
