@@ -53,13 +53,6 @@ class _SearchState extends State<Search> {
       components: [Component('country', 'us')],
     );
 
-    print('predictions');
-    print(_sessionId);
-    print(res.errorMessage);
-    for (var i = 0; i < res.predictions.length; i++) {
-      print(res.predictions[i].description);
-    }
-
     if (res.isOkay || res.hasNoResults) {
       setState(() {
         _predictions = res.predictions;
@@ -88,22 +81,16 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
+    final searchBarHeight = 40.0;
+    final searchBarMargin = 10.0;
+    final searchBarTotalHeight = searchBarHeight +
+        2 * searchBarMargin +
+        MediaQuery.of(context).padding.top;
+
     return ChangeNotifierProvider(
       create: (context) => SearchModel(),
       child: Stack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                color: Colors.white,
-                height: _activelySearching
-                    ? MediaQuery.of(context).size.height
-                    : 0.0,
-              ),
-            ],
-          ),
           Container(
             decoration: BoxDecoration(
               color: _activelySearching ? Colors.white : Colors.transparent,
@@ -114,7 +101,7 @@ class _SearchState extends State<Search> {
                 SizedBox(
                   height: MediaQuery.of(context).padding.top,
                 ),
-                _buildSearchBar(context),
+                _buildSearchBar(context, searchBarHeight, searchBarMargin),
                 if (!_activelySearching)
                   Consumer<SearchModel>(
                     builder: (context, searchModel, child) {
@@ -124,15 +111,30 @@ class _SearchState extends State<Search> {
               ],
             ),
           ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(height: searchBarHeight),
+              AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                height: _activelySearching
+                    ? MediaQuery.of(context).size.height - searchBarTotalHeight
+                    : 0.0,
+                color: Colors.white,
+                child: _buildPredictionResults(context),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildSearchBar(BuildContext context) {
+  Widget _buildSearchBar(
+      BuildContext context, double searchBarHeight, double searchBarMargin) {
     return Container(
-      height: 40.0,
-      margin: EdgeInsets.all(10.0),
+      height: searchBarHeight,
+      margin: EdgeInsets.all(searchBarMargin),
       child: Stack(
         alignment: Alignment.centerLeft,
         children: [
@@ -157,6 +159,7 @@ class _SearchState extends State<Search> {
                   ? IconButton(
                       onPressed: () {
                         setState(() {
+                          _predictions = [];
                           _textController.clear();
                         });
                       },
@@ -175,6 +178,8 @@ class _SearchState extends State<Search> {
               onPressed: () {
                 setState(() {
                   FocusScope.of(context).unfocus();
+                  _textController.clear();
+                  _predictions = [];
                   _activelySearching = false;
                 });
               },
@@ -228,8 +233,14 @@ class _SearchState extends State<Search> {
     );
   }
 
+  Widget _buildPredictionResults(BuildContext context) {
+    return ListView(
+      children: _predictions.map((e) => Text(e.description)).toList(),
+    );
+  }
+
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
 
     _places.dispose();
