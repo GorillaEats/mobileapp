@@ -29,6 +29,7 @@ class _SearchState extends State<Search> {
   Timer _debounce;
   bool _activelySearching;
   List<Prediction> _predictions;
+  Prediction _selectedPrediction;
 
   @override
   void initState() {
@@ -84,7 +85,10 @@ class _SearchState extends State<Search> {
     setState(() {
       FocusScope.of(context).unfocus();
       _predictions = [];
+      _selectedPrediction = prediction;
       _debounce.cancel();
+      _activelySearching = false;
+      _textController.text = _selectedPrediction.description;
     });
   }
 
@@ -93,6 +97,10 @@ class _SearchState extends State<Search> {
       _predictions = [];
       _textController.clear();
       _debounce.cancel();
+
+      if(!_activelySearching){
+        _selectedPrediction = null;
+      }
     });
   }
 
@@ -108,6 +116,10 @@ class _SearchState extends State<Search> {
       _predictions = [];
       _debounce.cancel();
       _activelySearching = false;
+
+      if(_selectedPrediction != null){
+        _textController.text = _selectedPrediction.description;
+      }
     });
   }
 
@@ -176,7 +188,7 @@ class _SearchState extends State<Search> {
             controller: _textController,
             onSubmitted: (value) => {FocusScope.of(context).unfocus()},
             onChanged: _handleTextChange,
-            onTap: _handleSearchActive(),
+            onTap: _handleSearchActive,
             textInputAction: TextInputAction.search,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
