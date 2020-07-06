@@ -234,8 +234,21 @@ class _SearchState extends State<Search> {
   }
 
   Widget _buildPredictionResults(BuildContext context) {
-    return ListView(
-      children: _predictions.map((e) => Text(e.description)).toList(),
+    return Container(
+      child: ListView.separated(
+        padding: EdgeInsets.all(8),
+        itemCount: _predictions.length,
+        itemBuilder: (context, index) {
+          return FlatButton(            
+            onPressed: () => print(_predictions[index].description),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(_predictions[index].description),
+            )
+          );
+        },
+        separatorBuilder: (context, index) => Divider(height: 3.0, thickness: 1.0,),
+      ),
     );
   }
 
