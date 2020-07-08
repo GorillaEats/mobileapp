@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gorilla_eats/data/locations.dart';
 
 class RestaurantBanner extends StatelessWidget {
-  Location location;
+  final Location location;
 
   RestaurantBanner({this.location});
 

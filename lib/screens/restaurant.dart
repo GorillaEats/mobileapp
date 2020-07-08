@@ -4,7 +4,7 @@ import 'package:gorilla_eats/widgets/restaurant_banner.dart';
 import 'package:gorilla_eats/widgets/categories.dart';
 
 class RestaurantScreen extends StatelessWidget {
-  Location location;
+  final Location location;
 
   RestaurantScreen({this.location});
 
