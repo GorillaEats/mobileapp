@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:gorilla_eats/data/fooditems.dart';
@@ -9,19 +6,21 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('jsonFunction', () {
-    List<dynamic> decoded;
-
-    Future<void> getJson() async {
-      final jsonString = await rootBundle.loadString('test/fooditem_test.json');
-      decoded = json.decode(jsonString) as List<dynamic>;
-    }
-
-    setUp(() async {
-      await getJson();
-    });
+    var decoded = [
+      {
+        'category': 'Entrees',
+        'foods': [
+          {
+            'foodName': 'Crunchwrap Supreme',
+            'subtitle': '2 modifications',
+            'modifications': ['Sub beans for beef', 'Fresco style']
+          }
+        ]
+      }
+    ];
 
     test('category fromJson function should return proper object', () {
-      final jsonObj = decoded[0] as Map<String, dynamic>;
+      final jsonObj = decoded[0];
       final category = FoodCategory.fromJson(jsonObj);
 
       expect(category.category, 'Entrees');
