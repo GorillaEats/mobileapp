@@ -17,6 +17,7 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
     zipcode: json['address']['postalCode'] as String,
     rating: json['veganRating'] as double,
     price: json['priceRange'] as String,
+    numOfItems: json['menuMeta']['numOfItems'] as int,
     name: json['name'] as String,
   );
 }

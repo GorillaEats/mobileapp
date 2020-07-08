@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:gorilla_eats/data/locations.dart';
 import 'package:gorilla_eats/screens/restaurant.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 class RestaurantCard extends StatefulWidget {
   final Location location;
@@ -108,7 +107,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(70, 0, 0, 0),
                       child: Text(
-                        '3',
+                        widget.location.numOfItems.toString(),
                         style: TextStyle(color: Colors.grey[500]),
                       ),
                     ),

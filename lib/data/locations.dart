@@ -17,6 +17,7 @@ class Location {
   final String zipcode;
   final double rating;
   final String price;
+  final int numOfItems;
   final String name;
 
   Location(
@@ -29,6 +30,7 @@ class Location {
       this.zipcode,
       this.rating,
       this.price,
+      this.numOfItems,
       this.name});
 
   factory Location.fromJson(Map<String, dynamic> json) =>
