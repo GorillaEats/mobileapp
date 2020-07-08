@@ -9,14 +9,14 @@ part of 'locations.dart';
 Location _$LocationFromJson(Map<String, dynamic> json) {
   return Location(
     telephone: (json['telephone']) as String,
-    lat: (json['location']['latitude'] as num)?.toDouble(),
-    lng: (json['location']['longitude'] as num)?.toDouble(),
-    address: json['location']['streetAddress'] as String,
-    city: json['location']['addressLocality'] as String,
-    state: json['location']['addressRegion'] as String,
-    zipcode: json['location']['postalCode'] as String,
-    rating: json['rating'] as double,
-    price: json['price'] as String,
+    lat: (json['geo']['coordinates'][1] as num)?.toDouble(),
+    lng: (json['geo']['coordinates'][0] as num)?.toDouble(),
+    address: json['address']['streetAddress'] as String,
+    city: json['address']['addressLocality'] as String,
+    state: json['address']['addressRegion'] as String,
+    zipcode: json['address']['postalCode'] as String,
+    rating: json['veganRating'] as double,
+    price: json['priceRange'] as String,
     name: json['name'] as String,
   );
 }
