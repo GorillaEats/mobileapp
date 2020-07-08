@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import './screens/map.dart';
-import './screens/restaurant.dart';
 
 void main() {
   runApp(MyApp());
