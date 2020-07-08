@@ -39,7 +39,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
     );
   }
 
-  void _launchURL(String prefix, String postfix) async {
+  Future<void> _launchURL(String prefix, String postfix) async {
     if (await canLaunch(prefix + postfix)) {
       await launch(prefix + postfix);
     } else {
