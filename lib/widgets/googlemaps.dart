@@ -36,22 +36,11 @@ class _GoogleMapsState extends State<GoogleMaps> {
         final marker = Marker(
           markerId: MarkerId(location.address),
           position: LatLng(location.lat, location.lng),
-          infoWindow: InfoWindow(
-            title: location.name,
-            snippet: location.address,
-          ),
         );
         _markers[location.address] = marker;
       }
     });
   }
-
-  // Future<void> moveCamera(double lat, double lng) async {
-  //   print(lat);
-  //   print(lng);
-  //   CameraUpdate.newCameraPosition(CameraPosition(
-  //       target: LatLng(lat, lng), zoom: 15, tilt: 50, bearing: 45));
-  // }
 
   @override
   Widget build(BuildContext context) {
