@@ -44,7 +44,6 @@ class Location {
       final mapItem = item as Map<String, dynamic>;
       final locationItem = Location.fromJson(mapItem);
       locations.add(locationItem);
-      print(locationItem.lat);
     }
     return locations;
   }
