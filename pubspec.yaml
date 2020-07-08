@@ -58,6 +58,7 @@ flutter:
     - assets/fork.png
     - lib/data/fooditems.json
     - lib/data/starbucks.json
+    - test/fooditem_test.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
