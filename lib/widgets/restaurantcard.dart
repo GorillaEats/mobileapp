@@ -3,7 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gorilla_eats/data/locations.dart';
 import 'package:gorilla_eats/screens/restaurant.dart';
-import 'package:gorilla_eats/widgets/googlemaps.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class RestaurantCard extends StatefulWidget {
   final Location location;
@@ -15,16 +16,7 @@ class RestaurantCard extends StatefulWidget {
 }
 
 class _RestaurantCardState extends State<RestaurantCard> {
-  Color _getColor(double rating) {
-    if (rating <= 3.0) {
-      return Colors.red[900];
-    } else if (rating <= 3.5) {
-      return Colors.red[700];
-    } else if (rating <= 4.0) {
-      return Colors.red[600];
-    }
-    return Colors.red[400];
-  }
+  bool inFocus = false;
 
   RichText _getPrice(String price) {
     var emptyPrice = '';
@@ -46,6 +38,14 @@ class _RestaurantCardState extends State<RestaurantCard> {
         ],
       ),
     );
+  }
+
+  void _launchURL(String prefix, String postfix) async {
+    if (await canLaunch(prefix + postfix)) {
+      await launch(prefix + postfix);
+    } else {
+      throw 'Could not launch $prefix$postfix';
+    }
   }
 
   @override
@@ -71,7 +71,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
               height: 50,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: _getColor(widget.location.rating),
+                  color: Colors.red[400],
                 ),
                 child: Center(
                   child: Text(
@@ -128,12 +128,23 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
                       child: GestureDetector(
+                        onTap: () {
+                          _launchURL(
+                              'https://maps.google.com/?q=',
+                              widget.location.address +
+                                  ',' +
+                                  widget.location.city +
+                                  ',' +
+                                  widget.location.state +
+                                  ',' +
+                                  widget.location.zipcode);
+                        },
                         child: SizedBox(
                           width: 100,
                           height: 30,
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              color: _getColor(widget.location.rating),
+                              color: Colors.red[400],
                             ),
                             child: Center(
                               child: Text(
@@ -152,6 +163,9 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                       child: GestureDetector(
+                        onTap: () {
+                          _launchURL('tel:', widget.location.telephone);
+                        },
                         child: SizedBox(
                           width: 50,
                           height: 30,

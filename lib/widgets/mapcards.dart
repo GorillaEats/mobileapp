@@ -13,7 +13,7 @@ class MapCards extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
         height: 150,
         child: ListView(
           itemExtent: MediaQuery.of(context).size.width * .9,

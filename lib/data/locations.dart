@@ -8,15 +8,28 @@ part 'locations.g.dart';
 @JsonSerializable()
 class Location {
   static const connection = 'lib/data/starbucks.json';
+  final String telephone;
   final double lat;
   final double lng;
   final String address;
+  final String city;
+  final String state;
+  final String zipcode;
   final double rating;
   final String price;
   final String name;
 
   Location(
-      {this.lat, this.lng, this.address, this.rating, this.price, this.name});
+      {this.telephone,
+      this.lat,
+      this.lng,
+      this.address,
+      this.city,
+      this.state,
+      this.zipcode,
+      this.rating,
+      this.price,
+      this.name});
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
