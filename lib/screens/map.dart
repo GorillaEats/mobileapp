@@ -12,9 +12,7 @@ class MapScreen extends StatelessWidget {
         body: Stack(
           children: [
             GoogleMaps(),
-            SafeArea(
-              child: Search(),
-            )
+            Search(),
           ],
         ),
       ),
