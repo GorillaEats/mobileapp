@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gorilla_eats/data/locations.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
+import 'package:gorilla_eats/widgets/mapcards.dart';
 
 const double zoomLevel = 15;
 
@@ -14,6 +15,7 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   final Map<String, Marker> _markers = {};
   static LatLng _initialPosition;
+  static List<Location> _nearbyLocations = [];
 
   @override
   void initState() {
@@ -29,14 +31,11 @@ class _GoogleMapsState extends State<GoogleMaps> {
     final nearbyLocations = await Location.getNearbyLocations();
     setState(() {
       _markers.clear();
+      _nearbyLocations = nearbyLocations;
       for (final location in nearbyLocations) {
         final marker = Marker(
           markerId: MarkerId(location.address),
           position: LatLng(location.lat, location.lng),
-          infoWindow: InfoWindow(
-            title: location.name,
-            snippet: location.address,
-          ),
         );
         _markers[location.address] = marker;
       }
@@ -45,16 +44,26 @@ class _GoogleMapsState extends State<GoogleMaps> {
 
   @override
   Widget build(BuildContext context) {
-    return _initialPosition == null
-        ? LoadingScreen()
-        : GoogleMap(
-              onMapCreated: _onMapCreated,
-            myLocationEnabled: true,
-            initialCameraPosition: CameraPosition(
-              target: _initialPosition,
-              zoom: zoomLevel,
-            ),
-            markers: _markers.values.toSet(),
-          );
+    return Container(
+        child: _initialPosition == null
+            ? LoadingScreen()
+            : Stack(
+                children: <Widget>[
+                  GoogleMap(
+                    onMapCreated: _onMapCreated,
+                    myLocationEnabled: true,
+                    initialCameraPosition: CameraPosition(
+                      target: _initialPosition,
+                      zoom: zoomLevel,
+                    ),
+                    markers: _markers.values.toSet(),
+                  ),
+                  if (_nearbyLocations.isNotEmpty)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MapCards(locations: _nearbyLocations),
+                    ),
+                ],
+              ));
   }
 }
