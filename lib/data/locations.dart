@@ -15,7 +15,7 @@ class Location {
   final String city;
   final String state;
   final String zipcode;
-  final double rating;
+  final double veganRating;
   final String price;
   final int numOfItems;
   final String name;
@@ -28,7 +28,7 @@ class Location {
       this.city,
       this.state,
       this.zipcode,
-      this.rating,
+      this.veganRating,
       this.price,
       this.numOfItems,
       this.name});
