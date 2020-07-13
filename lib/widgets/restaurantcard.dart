@@ -74,7 +74,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                 ),
                 child: Center(
                   child: Text(
-                    widget.location.rating.toString(),
+                    widget.location.veganRating.toString(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 17,
