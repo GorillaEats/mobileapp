@@ -30,7 +30,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -48,7 +48,10 @@
                 30.66423
             ]
         },
-        "veganRating": 4.2,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "telephone": "9797741480",
         "menuMeta": {
             "numOfItems": 4
@@ -85,7 +88,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -102,7 +105,10 @@
                 30.674295
             ]
         },
-        "veganRating": 4.0,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "priceRange": "$",
         "name": "Starbucks",
         "menuMeta": {
@@ -140,7 +146,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -157,7 +163,10 @@
                 30.643543
             ]
         },
-        "veganRating": 3.5,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "priceRange": "$",
         "name": "Starbucks",
         "menuMeta": {
@@ -195,7 +204,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -212,7 +221,10 @@
                 30.613447
             ]
         },
-        "veganRating": 3.1,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "priceRange": "$",
         "name": "Starbucks",
         "menuMeta": {
@@ -250,7 +262,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -267,7 +279,10 @@
                 30.610551
             ]
         },
-        "veganRating": 4.6,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "priceRange": "$",
         "name": "Starbucks",
         "menuMeta": {
@@ -305,7 +320,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -324,7 +339,10 @@
                 30.585946
             ]
         },
-        "veganRating": 2.9,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "priceRange": "$",
         "name": "Starbucks",
         "menuMeta": {
@@ -362,7 +380,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -379,7 +397,10 @@
                 30.581765
             ]
         },
-        "veganRating": 3.0,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "priceRange": "$",
         "name": "Starbucks",
         "menuMeta": {
@@ -417,7 +438,7 @@
                 "end": 8400
             },
             {
-               "start": 9120,
+                "start": 9120,
                 "end": 9840
             }
         ],
@@ -434,7 +455,10 @@
                 30.555355
             ]
         },
-        "veganRating": 3.1,
+        "reviewMeta": {
+            "veganRatingTotal": 10,
+            "veganRatingCount": 2
+        },
         "priceRange": "$",
         "name": "Starbucks",
         "menuMeta": {
