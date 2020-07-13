@@ -15,8 +15,6 @@ class RestaurantCard extends StatefulWidget {
 }
 
 class _RestaurantCardState extends State<RestaurantCard> {
-  bool inFocus = false;
-
   RichText _getPrice(String price) {
     var emptyPrice = '';
 
