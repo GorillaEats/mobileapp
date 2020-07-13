@@ -10,19 +10,16 @@ class MapCards extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-        height: 150,
-        child: ListView(
-          itemExtent: MediaQuery.of(context).size.width * .9,
-          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-          scrollDirection: Axis.horizontal,
-          children: locations
-              .map((location) => RestaurantCard(location: location))
-              .toList(),
-        ),
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+      height: 150,
+      child: ListView(
+        itemExtent: MediaQuery.of(context).size.width * .9,
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        scrollDirection: Axis.horizontal,
+        children: locations
+            .map((location) => RestaurantCard(location: location))
+            .toList(),
       ),
     );
   }

@@ -59,7 +59,10 @@ class _GoogleMapsState extends State<GoogleMaps> {
                     markers: _markers.values.toSet(),
                   ),
                   if (_nearbyLocations.isNotEmpty)
-                    MapCards(locations: _nearbyLocations),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MapCards(locations: _nearbyLocations),
+                    ),
                 ],
               ));
   }
