@@ -35,7 +35,8 @@ class _GoogleMapsState extends State<GoogleMaps> {
     });
   }
 
-  Map<String, Marker> makeMarkers(String selected) {
+  Map<String, Marker> makeMarkers(
+      RestaurantCardSelectedModel model, String selected) {
     var markers = <String, Marker>{};
 
     for (final location in _nearbyLocations) {
@@ -48,10 +49,13 @@ class _GoogleMapsState extends State<GoogleMaps> {
         );
       } else {
         marker = Marker(
-          markerId: MarkerId(location.id),
-          position: LatLng(location.lat, location.lng),
-          icon: BitmapDescriptor.defaultMarkerWithHue(10),
-        );
+            markerId: MarkerId(location.id),
+            position: LatLng(location.lat, location.lng),
+            icon: BitmapDescriptor.defaultMarkerWithHue(10),
+            onTap: () {
+              print(location.id);
+              model.updateSelectedCard(location.id);
+            });
       }
 
       markers[marker.markerId.toString()] = marker;
@@ -78,10 +82,10 @@ class _GoogleMapsState extends State<GoogleMaps> {
                             target: _initialPosition,
                             zoom: zoomLevel,
                           ),
-                          markers:
-                              makeMarkers(restaurantCardSelectedModel.selected)
-                                  .values
-                                  .toSet(),
+                          markers: makeMarkers(restaurantCardSelectedModel,
+                                  restaurantCardSelectedModel.selected)
+                              .values
+                              .toSet(),
                         );
                       },
                     ),
