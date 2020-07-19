@@ -39,7 +39,8 @@ class _GoogleMapsState extends State<GoogleMaps> {
       RestaurantCardSelectedModel model, String selected) {
     var markers = <String, Marker>{};
 
-    for (final location in _nearbyLocations) {
+    for (var i = 0; i < _nearbyLocations.length; i++) {
+      var location = _nearbyLocations[i];
       Marker marker;
       if (location.id == selected) {
         marker = Marker(
@@ -53,8 +54,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
             position: LatLng(location.lat, location.lng),
             icon: BitmapDescriptor.defaultMarkerWithHue(10),
             onTap: () {
-              print(location.id);
-              model.updateSelectedCard(location.id);
+              model.updateSelectedCard(location.id, i);
             });
       }
 
@@ -67,35 +67,36 @@ class _GoogleMapsState extends State<GoogleMaps> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => RestaurantCardSelectedModel(),
-        child: Container(
-          child: _initialPosition == null
-              ? LoadingScreen()
-              : Stack(
-                  children: <Widget>[
-                    Consumer<RestaurantCardSelectedModel>(
-                      builder: (context, restaurantCardSelectedModel, child) {
-                        return GoogleMap(
-                          onMapCreated: _onMapCreated,
-                          myLocationEnabled: true,
-                          initialCameraPosition: CameraPosition(
-                            target: _initialPosition,
-                            zoom: zoomLevel,
-                          ),
-                          markers: makeMarkers(restaurantCardSelectedModel,
-                                  restaurantCardSelectedModel.selected)
-                              .values
-                              .toSet(),
-                        );
-                      },
+      create: (context) => RestaurantCardSelectedModel(),
+      child: Container(
+        child: _initialPosition == null
+            ? LoadingScreen()
+            : Stack(
+                children: <Widget>[
+                  Consumer<RestaurantCardSelectedModel>(
+                    builder: (context, restaurantCardSelectedModel, child) {
+                      return GoogleMap(
+                        onMapCreated: _onMapCreated,
+                        myLocationEnabled: true,
+                        initialCameraPosition: CameraPosition(
+                          target: _initialPosition,
+                          zoom: zoomLevel,
+                        ),
+                        markers: makeMarkers(restaurantCardSelectedModel,
+                                restaurantCardSelectedModel.selected)
+                            .values
+                            .toSet(),
+                      );
+                    },
+                  ),
+                  if (_nearbyLocations.isNotEmpty)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: MapCards(locations: _nearbyLocations),
                     ),
-                    if (_nearbyLocations.isNotEmpty)
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: MapCards(locations: _nearbyLocations),
-                      ),
-                  ],
-                ),
-        ));
+                ],
+              ),
+      ),
+    );
   }
 }

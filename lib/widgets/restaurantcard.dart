@@ -56,10 +56,10 @@ class _RestaurantCardState extends State<RestaurantCard> {
     return VisibilityDetector(
       key: Key(widget.location.id),
       onVisibilityChanged: (info) {
-        if (info.visibleFraction > .7) {
+        if (info.visibleFraction > .5) {
           onScreen = true;
           Provider.of<RestaurantCardSelectedModel>(context, listen: false)
-              .updateSelectedCard(widget.location.id);
+              .updateSelectedCard(widget.location.id, widget.idx);
         } else {
           onScreen = false;
         }
