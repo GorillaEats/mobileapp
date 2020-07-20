@@ -16,7 +16,6 @@ class MapCards extends StatefulWidget {
 
 class _MapCardsState extends State<MapCards> {
   ScrollController _scrollController;
-  var locationCards = <RestaurantCard>[];
 
   @override
   void initState() {
@@ -30,7 +29,16 @@ class _MapCardsState extends State<MapCards> {
     });
   }
 
-  void updateScroll(int idx) {
+  void updateScroll(String selected) {
+    var idx = 0;
+
+    for (var i = 0; i < widget.locations.length; i++) {
+      if (widget.locations[i].id == selected) {
+        idx = i;
+        break;
+      }
+    }
+
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
           (idx * MediaQuery.of(context).size.width * .9),
@@ -39,22 +47,11 @@ class _MapCardsState extends State<MapCards> {
     }
   }
 
-  void getLocationCards() {
-    setState(() {
-      for (var i = 0; i < widget.locations.length; i++) {
-        locationCards
-            .add(RestaurantCard(location: widget.locations[i], idx: i));
-      }
-    });
-  }
-
   @override
   Widget build(context) {
-    getLocationCards();
-
     return Consumer<RestaurantCardSelectedModel>(
       builder: (context, restaurantCardSelectedModel, child) {
-        updateScroll(restaurantCardSelectedModel.selectedIdx);
+        updateScroll(restaurantCardSelectedModel.selected);
         return Container(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
           height: 150,
@@ -63,7 +60,9 @@ class _MapCardsState extends State<MapCards> {
             itemExtent: MediaQuery.of(context).size.width * .9,
             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
             scrollDirection: Axis.horizontal,
-            children: locationCards,
+            children: widget.locations
+                .map((location) => RestaurantCard(location: location))
+                .toList(),
           ),
         );
       },

@@ -54,7 +54,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
             position: LatLng(location.lat, location.lng),
             icon: BitmapDescriptor.defaultMarkerWithHue(10),
             onTap: () {
-              model.updateSelectedCard(location.id, i);
+              model.updateSelectedCard(location.id);
             });
       }
 
