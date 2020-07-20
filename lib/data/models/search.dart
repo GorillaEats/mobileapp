@@ -4,7 +4,7 @@ import 'package:gorilla_eats/widgets/search/filterItems.dart' as filter_items;
 class SearchModel extends ChangeNotifier {
   List<filter_items.FilterItem> _filters;
 
-  SearchModel(){
+  SearchModel() {
     _filters = [
       filter_items.Open(),
       filter_items.VeganRating(),
