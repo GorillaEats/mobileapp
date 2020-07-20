@@ -49,7 +49,6 @@ class _SearchState extends State<Search> {
   Future<void> _handleDebounceTimeOut(String value) async {
     final res = await _places.autocomplete(
       value,
-      types: ['address'],
       sessionToken: _sessionId,
       language: 'en',
       components: [Component('country', 'us')],
@@ -98,7 +97,7 @@ class _SearchState extends State<Search> {
       _textController.clear();
       _debounce.cancel();
 
-      if(!_activelySearching){
+      if (!_activelySearching) {
         _selectedPrediction = null;
       }
     });
@@ -117,9 +116,9 @@ class _SearchState extends State<Search> {
       _debounce.cancel();
       _activelySearching = false;
 
-      if(_selectedPrediction != null){
+      if (_selectedPrediction != null) {
         _textController.text = _selectedPrediction.description;
-      }else{
+      } else {
         _textController.clear();
       }
     });
@@ -203,7 +202,8 @@ class _SearchState extends State<Search> {
               prefixIcon: _activelySearching
                   ? SizedBox()
                   : Icon(Icons.search, size: searchBarIconSize),
-              prefixIconConstraints: BoxConstraints(minHeight: searchBarHeight, minWidth: searchBarHeight),
+              prefixIconConstraints: BoxConstraints(
+                  minHeight: searchBarHeight, minWidth: searchBarHeight),
               hintText: 'Enter Location',
               suffixIcon: _textController.text.isNotEmpty
                   ? IconButton(
