@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gorilla_eats/data/locations.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
+import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
 import 'package:gorilla_eats/widgets/mapcards.dart';
@@ -17,6 +18,8 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   static LatLng _initialPosition;
   static List<Location> _nearbyLocations = [];
+  static bool _renderedMap = false;
+  static GoogleMapController _controller;
 
   @override
   void initState() {
@@ -31,6 +34,8 @@ class _GoogleMapsState extends State<GoogleMaps> {
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final nearbyLocations = await Location.getNearbyLocations();
     setState(() {
+      _renderedMap = true;
+      _controller = controller;
       _nearbyLocations = nearbyLocations;
     });
   }
@@ -64,6 +69,17 @@ class _GoogleMapsState extends State<GoogleMaps> {
     return markers;
   }
 
+  void moveCamera(SearchModel searchModel) {
+    if (_renderedMap) {
+      _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+        zoom: zoomLevel,
+        target: searchModel.selectedPlace != ''
+            ? searchModel.selectedLatLng
+            : _initialPosition,
+      )));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -87,6 +103,12 @@ class _GoogleMapsState extends State<GoogleMaps> {
                             .values
                             .toSet(),
                       );
+                    },
+                  ),
+                  Consumer<SearchModel>(
+                    builder: (context, searchModel, child) {
+                      moveCamera(searchModel);
+                      return Container();
                     },
                   ),
                   if (_nearbyLocations.isNotEmpty)

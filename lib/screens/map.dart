@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
+import 'package:provider/provider.dart';
 import 'package:gorilla_eats/widgets/search/search.dart';
+import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/widgets/googlemaps.dart';
 
 class MapScreen extends StatelessWidget {
@@ -9,11 +11,14 @@ class MapScreen extends StatelessWidget {
     return FocusWatcher(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            GoogleMaps(),
-            Search(),
-          ],
+        body: ChangeNotifierProvider(
+          create: (context) => SearchModel(),
+          child: Stack(
+            children: [
+              GoogleMaps(),
+              Search(),
+            ],
+          ),
         ),
       ),
     );
