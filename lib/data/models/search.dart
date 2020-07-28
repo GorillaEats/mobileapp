@@ -27,7 +27,7 @@ class SearchModel extends ChangeNotifier {
   Future<void> updateSelectedPlace(String placeID) async {
     _selectedPlace = placeID;
 
-    if (placeID != '') {
+    if (placeID != null) {
       final geocoding = GoogleMapsGeocoding(
         apiKey: googlePlacesApiKey,
       );
