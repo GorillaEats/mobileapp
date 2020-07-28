@@ -73,7 +73,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
     if (_renderedMap) {
       _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
         zoom: zoomLevel,
-        target: searchModel.selectedPlace != ''
+        target: searchModel.selectedPlace != null
             ? searchModel.selectedLatLng
             : _initialPosition,
       )));
