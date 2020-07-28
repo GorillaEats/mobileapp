@@ -18,7 +18,6 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   static LatLng _initialPosition;
   static List<Location> _nearbyLocations = [];
-  static GoogleMapController _controller;
 
   @override
   void initState() {
@@ -30,10 +29,12 @@ class _GoogleMapsState extends State<GoogleMaps> {
     });
   }
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+  Future<void> _onMapCreated(
+      GoogleMapController controller, SearchModel searchModel) async {
     final nearbyLocations = await Location.getNearbyLocations();
+    searchModel.updateController(controller);
+
     setState(() {
-      _controller = controller;
       _nearbyLocations = nearbyLocations;
     });
   }
@@ -67,17 +68,6 @@ class _GoogleMapsState extends State<GoogleMaps> {
     return markers;
   }
 
-  void moveCamera(SearchModel searchModel) {
-    if (_controller != null) {
-      _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        zoom: zoomLevel,
-        target: searchModel.selectedPlace != null
-            ? searchModel.selectedLatLng
-            : _initialPosition,
-      )));
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -87,10 +77,12 @@ class _GoogleMapsState extends State<GoogleMaps> {
             ? LoadingScreen()
             : Stack(
                 children: <Widget>[
-                  Consumer<RestaurantCardSelectedModel>(
-                    builder: (context, restaurantCardSelectedModel, child) {
+                  Consumer2<RestaurantCardSelectedModel, SearchModel>(
+                    builder: (context, restaurantCardSelectedModel, searchModel,
+                        child) {
                       return GoogleMap(
-                        onMapCreated: _onMapCreated,
+                        onMapCreated: (controller) =>
+                            _onMapCreated(controller, searchModel),
                         myLocationEnabled: true,
                         initialCameraPosition: CameraPosition(
                           target: _initialPosition,
@@ -101,12 +93,6 @@ class _GoogleMapsState extends State<GoogleMaps> {
                             .values
                             .toSet(),
                       );
-                    },
-                  ),
-                  Consumer<SearchModel>(
-                    builder: (context, searchModel, child) {
-                      moveCamera(searchModel);
-                      return Container();
                     },
                   ),
                   if (_nearbyLocations.isNotEmpty)

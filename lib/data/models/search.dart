@@ -8,6 +8,7 @@ class SearchModel extends ChangeNotifier {
   List<filter_items.FilterItem> _filters;
   String _selectedPlace;
   LatLng _selectedLatLng;
+  GoogleMapController _controller;
 
   SearchModel() {
     _filters = [
@@ -24,6 +25,10 @@ class SearchModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateController(GoogleMapController controller) {
+    _controller = controller;
+  }
+
   Future<void> updateSelectedPlace(String placeID) async {
     _selectedPlace = placeID;
 
@@ -37,10 +42,20 @@ class SearchModel extends ChangeNotifier {
           latLng.results[0].geometry.location.lng);
     }
 
+    moveCamera();
+
     notifyListeners();
+  }
+
+  void moveCamera() {
+    if (_controller != null) {
+      _controller.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(zoom: 15, target: _selectedLatLng)));
+    }
   }
 
   List<filter_items.FilterItem> get filters => _filters;
   String get selectedPlace => _selectedPlace;
   LatLng get selectedLatLng => _selectedLatLng;
+  GoogleMapController get googleMapController => _controller;
 }
