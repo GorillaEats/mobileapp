@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gorilla_eats/data/locations.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
+import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
 import 'package:gorilla_eats/widgets/mapcards.dart';
@@ -28,8 +29,11 @@ class _GoogleMapsState extends State<GoogleMaps> {
     });
   }
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
+  Future<void> _onMapCreated(
+      GoogleMapController controller, SearchModel searchModel) async {
     final nearbyLocations = await Location.getNearbyLocations();
+    searchModel.updateController(controller);
+
     setState(() {
       _nearbyLocations = nearbyLocations;
     });
@@ -73,10 +77,12 @@ class _GoogleMapsState extends State<GoogleMaps> {
             ? LoadingScreen()
             : Stack(
                 children: <Widget>[
-                  Consumer<RestaurantCardSelectedModel>(
-                    builder: (context, restaurantCardSelectedModel, child) {
+                  Consumer2<RestaurantCardSelectedModel, SearchModel>(
+                    builder: (context, restaurantCardSelectedModel, searchModel,
+                        child) {
                       return GoogleMap(
-                        onMapCreated: _onMapCreated,
+                        onMapCreated: (controller) =>
+                            _onMapCreated(controller, searchModel),
                         myLocationEnabled: true,
                         initialCameraPosition: CameraPosition(
                           target: _initialPosition,

@@ -80,7 +80,7 @@ class _SearchState extends State<Search> {
     });
   }
 
-  void _handleSetLocation(Prediction prediction) {
+  String _handleSetLocation(Prediction prediction) {
     setState(() {
       FocusScope.of(context).unfocus();
       _predictions = [];
@@ -89,6 +89,8 @@ class _SearchState extends State<Search> {
       _activelySearching = false;
       _textController.text = _selectedPrediction.description;
     });
+
+    return prediction.placeId;
   }
 
   void _handleSearchClear() {
@@ -126,55 +128,51 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => SearchModel(),
-      child: Stack(
-        children: [
-          Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color:
-                        _activelySearching ? Colors.white : Colors.transparent,
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).padding.top,
-                      ),
-                      _buildSearchBar(context),
-                    ],
-                  ),
+    return Stack(
+      children: [
+        Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: _activelySearching ? Colors.white : Colors.transparent,
                 ),
-                if (!_activelySearching)
-                  Consumer<SearchModel>(
-                    builder: (context, searchModel, child) {
-                      return _buildFilterItems(context, searchModel);
-                    },
-                  ),
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return Align(
-                        alignment: Alignment.bottomCenter,
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 300),
-                          height:
-                              _activelySearching ? constraints.maxHeight : 0.0,
-                          color: Colors.white,
-                          child: _buildPredictionResults(context),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).padding.top,
+                    ),
+                    _buildSearchBar(context),
+                  ],
+                ),
+              ),
+              if (!_activelySearching)
+                Consumer<SearchModel>(
+                  builder: (context, searchModel, child) {
+                    return _buildFilterItems(context, searchModel);
+                  },
+                ),
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Align(
+                      alignment: Alignment.bottomCenter,
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        height:
+                            _activelySearching ? constraints.maxHeight : 0.0,
+                        color: Colors.white,
+                        child: _buildPredictionResults(context),
+                      ),
+                    );
+                  },
+                ),
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -278,7 +276,11 @@ class _SearchState extends State<Search> {
         itemCount: _predictions.length,
         itemBuilder: (context, index) {
           return FlatButton(
-              onPressed: () => {_handleSetLocation(_predictions[index])},
+              onPressed: () {
+                var placeID = _handleSetLocation(_predictions[index]);
+                Provider.of<SearchModel>(context, listen: false)
+                    .updateSelectedPlace(placeID);
+              },
               child: Container(
                 alignment: Alignment.centerLeft,
                 child: Text(_predictions[index].description),
