@@ -42,14 +42,14 @@ class SearchModel extends ChangeNotifier {
           latLng.results[0].geometry.location.lng);
     }
 
-    moveCamera();
+    await moveCamera();
 
     notifyListeners();
   }
 
-  void moveCamera() {
+  Future<void> moveCamera() async {
     if (_controller != null) {
-      _controller.animateCamera(CameraUpdate.newCameraPosition(
+      await _controller.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(zoom: 15, target: _selectedLatLng)));
     }
   }
