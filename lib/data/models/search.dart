@@ -6,7 +6,7 @@ import 'package:gorilla_eats/credentials.dart';
 
 class SearchModel extends ChangeNotifier {
   List<filter_items.FilterItem> _filters;
-  String _selectedPlace = '';
+  String _selectedPlace;
   LatLng _selectedLatLng;
 
   SearchModel() {
@@ -24,7 +24,7 @@ class SearchModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateSelectedPlace(String placeID) async {
+  Future<void> updateSelectedPlace(String placeID) async {
     _selectedPlace = placeID;
 
     if (placeID != '') {
