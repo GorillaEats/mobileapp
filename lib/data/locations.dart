@@ -8,6 +8,8 @@ part 'locations.g.dart';
 @JsonSerializable()
 class Location {
   static const connection = 'lib/data/starbucks.json';
+
+  final String id;
   final String telephone;
   final double lat;
   final double lng;
@@ -21,7 +23,8 @@ class Location {
   final String name;
 
   Location(
-      {this.telephone,
+      {this.id,
+      this.telephone,
       this.lat,
       this.lng,
       this.address,
