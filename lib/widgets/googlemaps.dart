@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geodesy/geodesy.dart' as geodesy;
 import 'package:gorilla_eats/data/locations.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
+import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
 import 'package:gorilla_eats/widgets/mapcards.dart';
-import 'package:gorilla_eats/data/models/locationResults.dart';
 
 const double zoomLevel = 13;
 
@@ -18,7 +17,6 @@ class GoogleMaps extends StatefulWidget {
 
 class _GoogleMapsState extends State<GoogleMaps> {
   static LatLng _initialPosition;
-  GoogleMapController _googleMapController;
 
   @override
   void initState() {
@@ -31,32 +29,10 @@ class _GoogleMapsState extends State<GoogleMaps> {
   }
 
   Future<void> _onMapCreated(
-      GoogleMapController controller, LocationResultsModel model) async {
-    
-    setState(() {
-      _googleMapController = controller;
-    });
-    
-    final visibleRegion = await controller.getVisibleRegion();
-    final southwest = geodesy.LatLng(
-        visibleRegion.southwest.latitude, visibleRegion.southwest.longitude);
-    final northeast = geodesy.LatLng(
-        visibleRegion.northeast.latitude, visibleRegion.northeast.longitude);
-    final distance = geodesy.Geodesy().distanceBetweenTwoGeoPoints(
-      southwest,
-      northeast,
-    ).toDouble();
-    final radius = distance/2;
+      GoogleMapController controller, SearchModel searchModel) async {
+    searchModel.updateController(controller);
 
-    if (_initialPosition != null) {
-      await model.updateResults(
-        latitude: _initialPosition.latitude,
-        longitude: _initialPosition.longitude,
-        radius: radius,
-      );
-    } else {
-      await model.updateResults();
-    }
+    await searchModel.updateResults();
   }
 
   Map<String, Marker> makeMarkers(RestaurantCardSelectedModel model,
@@ -96,15 +72,15 @@ class _GoogleMapsState extends State<GoogleMaps> {
       child: Container(
         child: _initialPosition == null
             ? LoadingScreen()
-            : Consumer<LocationResultsModel>(
-                builder: (context, locationResultsModel, child) {
+            : Consumer<SearchModel>(
+                builder: (context, searchModel, child) {
                   return Stack(
                     children: <Widget>[
                       Consumer<RestaurantCardSelectedModel>(
                         builder: (context, restaurantCardSelectedModel, child) {
                           return GoogleMap(
                             onMapCreated: (controller) =>
-                                _onMapCreated(controller, locationResultsModel),
+                                _onMapCreated(controller, searchModel),
                             myLocationEnabled: true,
                             initialCameraPosition: CameraPosition(
                               target: _initialPosition,
@@ -113,16 +89,15 @@ class _GoogleMapsState extends State<GoogleMaps> {
                             markers: makeMarkers(
                               restaurantCardSelectedModel,
                               restaurantCardSelectedModel.selected,
-                              locationResultsModel.results,
+                              searchModel.results,
                             ).values.toSet(),
                           );
                         },
                       ),
-                      if (locationResultsModel.results.isNotEmpty)
+                      if (searchModel.results.isNotEmpty)
                         Align(
                           alignment: Alignment.bottomCenter,
-                          child:
-                              MapCards(locations: locationResultsModel.results),
+                          child: MapCards(locations: searchModel.results),
                         ),
                     ],
                   );

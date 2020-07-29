@@ -49,9 +49,11 @@ abstract class FilterItem {
     @required BuildContext context,
     @required Function(dynamic) onUpdate,
   });
+
+  void buildQuery(Map<String, dynamic> query);
 }
 
-class Select extends FilterItem {
+abstract class Select extends FilterItem {
   List<String> options;
   int _value;
 
@@ -135,7 +137,7 @@ class Select extends FilterItem {
   }
 }
 
-class MultiSelect extends FilterItem {
+abstract class MultiSelect extends FilterItem {
   List<String> options;
   List<int> _value;
 
@@ -213,7 +215,7 @@ class MultiSelect extends FilterItem {
   }
 }
 
-class Bool extends FilterItem {
+abstract class Bool extends FilterItem {
   bool _value;
 
   Bool(String key, this._value) : super(key);
@@ -265,12 +267,43 @@ class Bool extends FilterItem {
 
 class Open extends Bool {
   Open() : super('Open Now', false);
+
+  @override
+  void buildQuery(Map<String, dynamic> query) {
+    if (!active) {
+      return;
+    }
+
+    final now = DateTime.now();
+    final weekday = now.weekday % 7;
+    final hour = now.hour;
+    final minute = now.minute;
+
+    query['filter.open'] = ((weekday * 24 + hour) * 60 + minute).toString();
+  }
 }
 
 class VeganRating extends Select {
   VeganRating() : super('Vegan Rating', ['3.5+', '4.0+', '4.5+'], -1);
+
+  @override
+  void buildQuery(Map<String, dynamic> query) {
+    if (!active) {
+      return;
+    }
+
+    query['filter.veganRating'] =
+        options[_value].substring(0, options[_value].length - 1);
+  }
 }
 
 class Price extends MultiSelect {
   Price() : super('Price', ['\$', '\$\$', '\$\$\$', '\$\$\$\$'], []);
+
+  @override
+  void buildQuery(Map<String, dynamic> query) {
+    if (!active) {
+      return;
+    }
+  }
 }
