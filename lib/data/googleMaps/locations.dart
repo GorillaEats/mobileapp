@@ -7,7 +7,7 @@ part 'locations.g.dart';
 
 @JsonSerializable()
 class Location {
-  static const connection = 'lib/data/starbucks.json';
+  static const connection = 'lib/data/googleMaps/starbucks.json';
 
   final String id;
   final String telephone;

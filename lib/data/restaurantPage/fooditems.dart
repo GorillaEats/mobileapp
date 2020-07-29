@@ -7,7 +7,7 @@ part 'fooditems.g.dart';
 
 @JsonSerializable()
 class FoodItem {
-  static const connection = 'lib/data/foodItems.json';
+  static const connection = 'lib/data/restaurantPage/foodItems.json';
   final String foodName;
   final String subtitle;
   final List<String> modifications;
@@ -22,7 +22,7 @@ class FoodItem {
 
 @JsonSerializable()
 class FoodCategory {
-  static const connection = 'lib/data/foodItems.json';
+  static const connection = 'lib/data/restaurantPage/foodItems.json';
   final String category;
 
   FoodCategory({this.category});
