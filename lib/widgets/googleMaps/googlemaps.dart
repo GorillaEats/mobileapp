@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/googleMaps/locations.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:gorilla_eats/data/models/search.dart';
-import 'package:gorilla_eats/data/userlocation.dart';
+import 'package:gorilla_eats/data/googleMaps/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
-import 'package:gorilla_eats/widgets/mapcards.dart';
+import 'package:gorilla_eats/widgets/googleMaps/mapCards/mapcards.dart';
 import 'package:provider/provider.dart';
 
 const double zoomLevel = 15;

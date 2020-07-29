@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/googleMaps/locations.dart';
 
 class RestaurantBanner extends StatelessWidget {
   final Location location;

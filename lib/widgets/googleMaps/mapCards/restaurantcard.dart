@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/googleMaps/locations.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:gorilla_eats/screens/restaurant.dart';
 import 'package:provider/provider.dart';

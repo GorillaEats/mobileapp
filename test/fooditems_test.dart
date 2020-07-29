@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:gorilla_eats/data/fooditems.dart';
+import 'package:gorilla_eats/data/restaurantPage/fooditems.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

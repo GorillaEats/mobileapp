@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gorilla_eats/data/fooditems.dart';
+import 'package:gorilla_eats/data/restaurantPage/fooditems.dart';
 
 class FoodCard extends StatefulWidget {
   final FoodItem foodItem;

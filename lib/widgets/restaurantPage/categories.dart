@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/data/fooditems.dart';
+import 'package:gorilla_eats/data/restaurantPage/fooditems.dart';
 import 'package:gorilla_eats/screens/loading.dart';
-import 'package:gorilla_eats/widgets/foodcard.dart';
+import 'package:gorilla_eats/widgets/restaurantPage/foodcard.dart';
 
 class Categories extends StatefulWidget {
   @override

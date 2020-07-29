@@ -3,7 +3,7 @@ import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
 import 'package:provider/provider.dart';
 import 'package:gorilla_eats/widgets/search/search.dart';
 import 'package:gorilla_eats/data/models/search.dart';
-import 'package:gorilla_eats/widgets/googlemaps.dart';
+import 'package:gorilla_eats/widgets/googleMaps/googlemaps.dart';
 
 class MapScreen extends StatelessWidget {
   @override

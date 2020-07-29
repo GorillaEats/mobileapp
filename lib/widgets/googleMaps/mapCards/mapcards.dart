@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/googleMaps/locations.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
-import 'package:gorilla_eats/widgets/restaurantcard.dart';
+import 'package:gorilla_eats/widgets/googleMaps/mapCards/restaurantcard.dart';
 import 'package:provider/provider.dart';
 
 class MapCards extends StatefulWidget {
