@@ -11,6 +11,7 @@ import 'package:gorilla_eats/data/locations.dart' as gorilla_location;
 const baseUrl = '192.168.0.10:8080';
 const locationsPath = '/locations';
 const maxSearchDistanceMeters = 20.0 * 1609.0;
+const double zoomLevel = 13;
 
 class SearchModel extends ChangeNotifier {
   List<filter_items.FilterItem> _filters;
@@ -56,6 +57,7 @@ class SearchModel extends ChangeNotifier {
     }
 
     await moveCamera();
+    await updateResults();
 
     notifyListeners();
   }
@@ -63,7 +65,7 @@ class SearchModel extends ChangeNotifier {
   Future<void> moveCamera() async {
     if (_controller != null) {
       await _controller.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(zoom: 15, target: _selectedLatLng)));
+          CameraPosition(zoom: zoomLevel, target: _selectedLatLng)));
     }
   }
 
@@ -84,10 +86,17 @@ class SearchModel extends ChangeNotifier {
         )
         .toDouble();
     final radius = distance / 2;
-    final center = LatLng(
-      (northeast.latitude + southwest.latitude) / 2,
-      (northeast.longitude + southwest.longitude) / 2,
-    );
+
+    LatLng center;
+
+    if (_selectedLatLng == null) {
+      center = LatLng(
+        (northeast.latitude + southwest.latitude) / 2,
+        (northeast.longitude + southwest.longitude) / 2,
+      );
+    } else {
+      center = _selectedLatLng;
+    }
 
     var queryParams = {
       'filter.lat': center.latitude.toString(),
