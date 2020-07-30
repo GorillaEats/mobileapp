@@ -57,7 +57,6 @@ class _MapCardsState extends State<MapCards> {
           height: 150,
           child: ListView(
             controller: _scrollController,
-            itemExtent: MediaQuery.of(context).size.width * .9,
             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
             scrollDirection: Axis.horizontal,
             children: widget.locations

@@ -72,141 +72,145 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     RestaurantScreen(location: widget.location)),
           );
         },
-        child: Card(
-          elevation: 2,
-          child: Row(
-            children: <Widget>[
-              SizedBox(
-                width: 20,
-              ),
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: Colors.red[400],
-                  ),
-                  child: Center(
-                    child: Text(
-                      widget.location.veganRating.toString(),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+        child: SizedBox(
+          height: 150,
+          width: MediaQuery.of(context).size.width * .9,
+          child: Card(
+            elevation: 2,
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  width: 20,
+                ),
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.red[400],
+                    ),
+                    child: Center(
+                      child: Text(
+                        widget.location.veganRating.toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(widget.location.name),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                        child: Icon(Icons.brightness_1,
-                            size: 5, color: Colors.grey[500]),
-                      ),
-                      Text(
-                        'Open Now',
-                        style: TextStyle(color: Colors.grey[500]),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(70, 0, 0, 0),
-                        child: Text(
-                          widget.location.numOfItems.toString(),
+                SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(widget.location.name),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                          child: Icon(Icons.brightness_1,
+                              size: 5, color: Colors.grey[500]),
+                        ),
+                        Text(
+                          'Open Now',
                           style: TextStyle(color: Colors.grey[500]),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(2, 0, 5, 3),
-                        child: Icon(Icons.fastfood,
-                            size: 15, color: Colors.grey[500]),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: <Widget>[
-                      _getPrice(widget.location.price),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
-                        child: GestureDetector(
-                          onTap: () {
-                            _launchURL(
-                                'https://maps.google.com/?q=',
-                                widget.location.address +
-                                    ',' +
-                                    widget.location.city +
-                                    ',' +
-                                    widget.location.state +
-                                    ',' +
-                                    widget.location.zipcode);
-                          },
-                          child: SizedBox(
-                            width: 100,
-                            height: 30,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Colors.red[400],
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Directions',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(70, 0, 0, 0),
+                          child: Text(
+                            widget.location.numOfItems.toString(),
+                            style: TextStyle(color: Colors.grey[500]),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(2, 0, 5, 3),
+                          child: Icon(Icons.fastfood,
+                              size: 15, color: Colors.grey[500]),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        _getPrice(widget.location.price),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              _launchURL(
+                                  'https://maps.google.com/?q=',
+                                  widget.location.address +
+                                      ',' +
+                                      widget.location.city +
+                                      ',' +
+                                      widget.location.state +
+                                      ',' +
+                                      widget.location.zipcode);
+                            },
+                            child: SizedBox(
+                              width: 100,
+                              height: 30,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: Colors.red[400],
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Directions',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: GestureDetector(
-                          onTap: () {
-                            _launchURL('tel:', widget.location.telephone);
-                          },
-                          child: SizedBox(
-                            width: 50,
-                            height: 30,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey[500],
-                                  width: 1,
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: GestureDetector(
+                            onTap: () {
+                              _launchURL('tel:', widget.location.telephone);
+                            },
+                            child: SizedBox(
+                              width: 50,
+                              height: 30,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey[500],
+                                    width: 1,
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Call',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 13,
+                                child: Center(
+                                  child: Text(
+                                    'Call',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
