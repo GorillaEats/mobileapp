@@ -305,5 +305,7 @@ class Price extends MultiSelect {
     if (!active) {
       return;
     }
+
+    query['filter.price'] = getDisplayValue();
   }
 }
