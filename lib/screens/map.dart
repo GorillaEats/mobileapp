@@ -14,13 +14,13 @@ class MapScreen extends StatelessWidget {
         body: ChangeNotifierProvider(
           create: (context) => SearchModel(),
           child: Stack(
-              children: [
-                GoogleMaps(),
-                Search(),
-              ],
-            ),
+            children: [
+              GoogleMaps(),
+              Search(),
+            ],
           ),
         ),
-      );
+      ),
+    );
   }
 }

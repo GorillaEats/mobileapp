@@ -110,12 +110,11 @@ class SearchModel extends ChangeNotifier {
       filter.buildQuery(queryParams);
     });
 
-
     Uri uri;
 
-    if(kReleaseMode){
+    if (kReleaseMode) {
       uri = Uri.https(releaseBaseUrl, locationsPath, queryParams);
-    }else if(kDebugMode){
+    } else if (kDebugMode) {
       uri = Uri.http(debugBaseUrl, locationsPath, queryParams);
     }
 
