@@ -6,7 +6,7 @@ import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
 import 'package:gorilla_eats/widgets/mapcards.dart';
-import 'package:gorilla_eats/widgets/restaurantList.dart';
+import 'package:gorilla_eats/widgets/restaurantList/restaurantListButton.dart';
 import 'package:provider/provider.dart';
 
 const double zoomLevel = 15;
@@ -19,6 +19,7 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   static LatLng _initialPosition;
   static List<Location> _nearbyLocations = [];
+  bool _showMap = true;
 
   @override
   void initState() {
@@ -99,35 +100,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
                   if (_nearbyLocations.isNotEmpty)
                     Stack(
                       children: <Widget>[
-                        Container(
-                          alignment: Alignment.bottomRight,
-                          padding: EdgeInsets.fromLTRB(0, 0, 10, 170),
-                          child: SizedBox(
-                            height: 60,
-                            width: 60,
-                            child: RaisedButton(
-                              color: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute<void>(
-                                    builder: (context) => RestaurantList(
-                                        locations: _nearbyLocations),
-                                  ),
-                                );
-                              },
-                              child: Center(
-                                child: Icon(
-                                  Icons.format_list_bulleted,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        restaurantListButton(context, _nearbyLocations),
                         Align(
                           alignment: Alignment.bottomCenter,
                           child: MapCards(locations: _nearbyLocations),
