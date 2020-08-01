@@ -9,6 +9,7 @@ class SearchModel extends ChangeNotifier {
   String _selectedPlace;
   LatLng _selectedLatLng;
   GoogleMapController _controller;
+  bool _listView = false;
 
   SearchModel() {
     _filters = [
@@ -54,8 +55,13 @@ class SearchModel extends ChangeNotifier {
     }
   }
 
+  void updateListView(bool val) {
+    _listView = val;
+  }
+
   List<filter_items.FilterItem> get filters => _filters;
   String get selectedPlace => _selectedPlace;
   LatLng get selectedLatLng => _selectedLatLng;
   GoogleMapController get googleMapController => _controller;
+  bool get listView => _listView;
 }

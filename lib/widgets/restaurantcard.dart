@@ -10,8 +10,9 @@ import 'package:visibility_detector/visibility_detector.dart';
 
 class RestaurantCard extends StatefulWidget {
   final Location location;
+  final bool onMap;
 
-  RestaurantCard({@required this.location});
+  RestaurantCard({@required this.location, this.onMap});
 
   @override
   _RestaurantCardState createState() => _RestaurantCardState();
@@ -55,7 +56,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
     return VisibilityDetector(
       key: Key(widget.location.id),
       onVisibilityChanged: (info) {
-        if (info.visibleFraction > .5) {
+        if (widget.onMap && info.visibleFraction > .5) {
           onScreen = true;
           Provider.of<RestaurantCardSelectedModel>(context, listen: false)
               .updateSelectedCard(widget.location.id);

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:gorilla_eats/screens/restaurantList.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:google_maps_webservice/places.dart';
@@ -153,22 +154,29 @@ class _SearchState extends State<Search> {
                     return _buildFilterItems(context, searchModel);
                   },
                 ),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Align(
-                      alignment: Alignment.bottomCenter,
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        height:
-                            _activelySearching ? constraints.maxHeight : 0.0,
-                        color: Colors.white,
-                        child: _buildPredictionResults(context),
-                      ),
-                    );
-                  },
-                ),
-              )
+              Consumer<SearchModel>(
+                builder: (context, searchModel, child) {
+                  return Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            height: _activelySearching
+                                ? constraints.maxHeight
+                                : 0.0,
+                            color: Colors.white,
+                            child: searchModel.listView
+                                ? RestaurantList(locations: null)
+                                : _buildPredictionResults(context),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -190,7 +198,11 @@ class _SearchState extends State<Search> {
             controller: _textController,
             onSubmitted: (value) => {FocusScope.of(context).unfocus()},
             onChanged: _handleTextChange,
-            onTap: _handleSearchActive,
+            onTap: () {
+              _handleSearchActive();
+              Provider.of<SearchModel>(context, listen: false)
+                  .updateListView(false);
+            },
             textInputAction: TextInputAction.search,
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(

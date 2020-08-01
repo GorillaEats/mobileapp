@@ -19,7 +19,6 @@ class GoogleMaps extends StatefulWidget {
 class _GoogleMapsState extends State<GoogleMaps> {
   static LatLng _initialPosition;
   static List<Location> _nearbyLocations = [];
-  bool _showMap = true;
 
   @override
   void initState() {

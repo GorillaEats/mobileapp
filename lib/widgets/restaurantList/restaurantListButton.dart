@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gorilla_eats/data/locations.dart';
-import 'package:gorilla_eats/screens/restaurantList.dart';
+import 'package:provider/provider.dart';
+import 'package:gorilla_eats/data/models/search.dart';
 
 Widget restaurantListButton(
     BuildContext context, List<Location> _nearbyLocations) {
@@ -17,12 +18,7 @@ Widget restaurantListButton(
           borderRadius: BorderRadius.circular(50),
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute<void>(
-              builder: (context) => RestaurantList(locations: _nearbyLocations),
-            ),
-          );
+          Provider.of<SearchModel>(context, listen: false).updateListView(true);
         },
         child: Center(
           child: Icon(
