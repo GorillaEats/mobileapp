@@ -284,7 +284,7 @@ class Open extends Bool {
 }
 
 class VeganRating extends Select {
-  VeganRating() : super('Vegan Rating', ['3.5+', '4.0+', '4.5+'], -1);
+  VeganRating() : super('Rating', ['3.5+', '4.0+', '4.5+'], -1);
 
   @override
   void buildQuery(Map<String, dynamic> query) {

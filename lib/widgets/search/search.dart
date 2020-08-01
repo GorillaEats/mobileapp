@@ -126,6 +126,11 @@ class _SearchState extends State<Search> {
     });
   }
 
+  Future<bool> _handlePop() async {
+    _handleSearchCancel();
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -163,7 +168,12 @@ class _SearchState extends State<Search> {
                         height:
                             _activelySearching ? constraints.maxHeight : 0.0,
                         color: Colors.white,
-                        child: _buildPredictionResults(context),
+                        child: _activelySearching
+                            ? WillPopScope(
+                                onWillPop: _handlePop,
+                                child: _buildPredictionResults(context),
+                              )
+                            : null,
                       ),
                     );
                   },
