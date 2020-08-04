@@ -8,7 +8,7 @@ part of 'locations.dart';
 
 Location _$LocationFromJson(Map<String, dynamic> json) {
   return Location(
-    id: (json['_id']['\$oid']) as String,
+    id: (json['_id']) as String,
     telephone: (json['telephone']) as String,
     lat: (json['geo']['coordinates'][1] as num)?.toDouble(),
     lng: (json['geo']['coordinates'][0] as num)?.toDouble(),
@@ -19,7 +19,7 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
     veganRating: (json['reviewMeta']['veganRatingTotal'] /
         json['reviewMeta']['veganRatingCount']) as double,
     price: json['priceRange'] as String,
-    numOfItems: json['menuMeta']['numOfItems'] as int,
+    numOfItems: (json['menuId']['items'] as List<dynamic>).length,
     name: json['name'] as String,
   );
 }

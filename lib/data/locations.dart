@@ -1,14 +1,9 @@
-import 'dart:async' show Future;
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'locations.g.dart';
 
 @JsonSerializable()
 class Location {
-  static const connection = 'lib/data/starbucks.json';
-
   final String id;
   final String telephone;
   final double lat;
@@ -38,16 +33,4 @@ class Location {
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
-
-  static Future<List<Location>> getNearbyLocations() async {
-    final jsonString = await rootBundle.loadString(connection);
-    final dynamic decoded = json.decode(jsonString);
-    final locations = <Location>[];
-    for (dynamic item in decoded) {
-      final mapItem = item as Map<String, dynamic>;
-      final locationItem = Location.fromJson(mapItem);
-      locations.add(locationItem);
-    }
-    return locations;
-  }
 }

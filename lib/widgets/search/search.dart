@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gorilla_eats/screens/restaurantList.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/credentials.dart';
+import 'package:gorilla_eats/widgets/restaurantcard.dart';
+import 'package:gorilla_eats/data/locations.dart' as gorilla_location;
 
 // Time of Inactivity before a new session id is created for autocomplete requests
 // Inactivity is defined as not typing in search bar
@@ -28,7 +29,7 @@ class _SearchState extends State<Search> {
   String _sessionId;
   int _lastSessionUse;
   Timer _debounce;
-  bool _activelySearching;
+  bool _activeBox;
   List<Prediction> _predictions;
   Prediction _selectedPrediction;
 
@@ -44,7 +45,7 @@ class _SearchState extends State<Search> {
     _lastSessionUse = DateTime.now().millisecondsSinceEpoch;
     _debounce = Timer(Duration(milliseconds: 0), () {});
     _predictions = [];
-    _activelySearching = false;
+    _activeBox = false;
   }
 
   Future<void> _handleDebounceTimeOut(String value) async {
@@ -87,7 +88,7 @@ class _SearchState extends State<Search> {
       _predictions = [];
       _selectedPrediction = prediction;
       _debounce.cancel();
-      _activelySearching = false;
+      _activeBox = false;
       _textController.text = _selectedPrediction.description;
     });
 
@@ -100,7 +101,7 @@ class _SearchState extends State<Search> {
       _textController.clear();
       _debounce.cancel();
 
-      if (!_activelySearching) {
+      if (!_activeBox) {
         _selectedPrediction = null;
       }
     });
@@ -108,7 +109,7 @@ class _SearchState extends State<Search> {
 
   void _handleSearchActive() {
     setState(() {
-      _activelySearching = true;
+      _activeBox = true;
     });
   }
 
@@ -117,7 +118,7 @@ class _SearchState extends State<Search> {
       FocusScope.of(context).unfocus();
       _predictions = [];
       _debounce.cancel();
-      _activelySearching = false;
+      _activeBox = false;
 
       if (_selectedPrediction != null) {
         _textController.text = _selectedPrediction.description;
@@ -125,6 +126,11 @@ class _SearchState extends State<Search> {
         _textController.clear();
       }
     });
+  }
+
+  Future<bool> _handlePop() async {
+    _handleSearchCancel();
+    return false;
   }
 
   @override
@@ -137,7 +143,7 @@ class _SearchState extends State<Search> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: _activelySearching ? Colors.white : Colors.transparent,
+                  color: _activeBox ? Colors.white : Colors.transparent,
                 ),
                 child: Column(
                   children: [
@@ -148,11 +154,19 @@ class _SearchState extends State<Search> {
                   ],
                 ),
               ),
-              if (!_activelySearching)
-                Consumer<SearchModel>(
-                  builder: (context, searchModel, child) {
-                    return _buildFilterItems(context, searchModel);
-                  },
+              if (!_activeBox)
+                Stack(
+                  children: <Widget>[
+                    Consumer<SearchModel>(
+                      builder: (context, searchModel, child) {
+                        return _buildFilterItems(context, searchModel);
+                      },
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: _buildRestaurantListButton(),
+                    ),
+                  ],
                 ),
               Consumer<SearchModel>(
                 builder: (context, searchModel, child) {
@@ -163,13 +177,24 @@ class _SearchState extends State<Search> {
                           alignment: Alignment.bottomCenter,
                           child: AnimatedContainer(
                             duration: Duration(milliseconds: 300),
-                            height: _activelySearching
-                                ? constraints.maxHeight
-                                : 0.0,
+                            height: _activeBox ? constraints.maxHeight : 0.0,
                             color: Colors.white,
                             child: searchModel.listView
-                                ? RestaurantList(locations: null)
-                                : _buildPredictionResults(context),
+                                ? WillPopScope(
+                                    onWillPop: () async {
+                                      searchModel.updateListView(false);
+                                      await _handlePop();
+                                      return false;
+                                    },
+                                    child: _buildRestaurantList(
+                                        context, searchModel.results),
+                                  )
+                                : _activeBox
+                                    ? WillPopScope(
+                                        onWillPop: _handlePop,
+                                        child: _buildPredictionResults(context),
+                                      )
+                                    : null,
                           ),
                         );
                       },
@@ -209,7 +234,7 @@ class _SearchState extends State<Search> {
               isDense: true,
               contentPadding: EdgeInsets.all(0),
               border: InputBorder.none,
-              prefixIcon: _activelySearching
+              prefixIcon: _activeBox
                   ? SizedBox()
                   : Icon(Icons.search, size: searchBarIconSize),
               prefixIconConstraints: BoxConstraints(
@@ -227,7 +252,7 @@ class _SearchState extends State<Search> {
                   : null,
             ),
           ),
-          if (_activelySearching)
+          if (_activeBox)
             IconButton(
               icon: Icon(Icons.arrow_back, size: searchBarIconSize),
               onPressed: _handleSearchCancel,
@@ -238,8 +263,8 @@ class _SearchState extends State<Search> {
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(18.0)),
         border: Border.all(
-            color: _activelySearching ? Colors.grey[200] : Colors.transparent),
-        boxShadow: _activelySearching
+            color: _activeBox ? Colors.grey[200] : Colors.transparent),
+        boxShadow: _activeBox
             ? null
             : [
                 BoxShadow(
@@ -281,6 +306,30 @@ class _SearchState extends State<Search> {
     );
   }
 
+  Widget _buildRestaurantList(
+      BuildContext context, List<gorilla_location.Location> locations) {
+    return Container(
+      alignment: Alignment.topCenter,
+      child: Container(
+        width: MediaQuery.of(context).size.width * .9,
+        child: ListView.separated(
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                child: RestaurantCard(
+                  location: locations[index],
+                  onMap: false,
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => SizedBox(
+                  height: 0,
+                ),
+            itemCount: locations.length),
+      ),
+    );
+  }
+
   Widget _buildPredictionResults(BuildContext context) {
     return Container(
       child: ListView.separated(
@@ -301,6 +350,34 @@ class _SearchState extends State<Search> {
         separatorBuilder: (context, index) => Divider(
           height: 3.0,
           thickness: 1.0,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRestaurantListButton() {
+    return Container(
+      alignment: Alignment.bottomRight,
+      padding: EdgeInsets.fromLTRB(0, 0, 10, 170),
+      child: SizedBox(
+        height: 60,
+        width: 60,
+        child: RaisedButton(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          onPressed: () {
+            _handleSearchActive();
+            Provider.of<SearchModel>(context, listen: false)
+                .updateListView(true);
+          },
+          child: Center(
+            child: Icon(
+              Icons.format_list_bulleted,
+              color: Colors.black,
+            ),
+          ),
         ),
       ),
     );
