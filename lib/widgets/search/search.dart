@@ -155,17 +155,14 @@ class _SearchState extends State<Search> {
                 ),
               ),
               if (!_activeBox)
-                Stack(
+                Column(
                   children: <Widget>[
                     Consumer<SearchModel>(
                       builder: (context, searchModel, child) {
                         return _buildFilterItems(context, searchModel);
                       },
                     ),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: _buildRestaurantListButton(),
-                    ),
+                    _buildRestaurantListButton(),
                   ],
                 ),
               Consumer<SearchModel>(
@@ -309,7 +306,7 @@ class _SearchState extends State<Search> {
   Widget _buildRestaurantList(
       BuildContext context, List<gorilla_location.Location> locations) {
     return Container(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.center,
       child: Container(
         width: MediaQuery.of(context).size.width * .9,
         child: ListView.separated(
@@ -357,8 +354,9 @@ class _SearchState extends State<Search> {
 
   Widget _buildRestaurantListButton() {
     return Container(
+      height: MediaQuery.of(context).size.height - 116,
+      padding: EdgeInsets.fromLTRB(0, 0, 15, 160),
       alignment: Alignment.bottomRight,
-      padding: EdgeInsets.fromLTRB(0, 0, 10, 170),
       child: SizedBox(
         height: 60,
         width: 60,
