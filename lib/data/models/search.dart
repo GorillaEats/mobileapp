@@ -123,7 +123,6 @@ class SearchModel extends ChangeNotifier {
     if (response.statusCode == 200) {
       dynamic bodyJson = json.decode(response.body);
       var locationsJson = bodyJson['locations'] as List<dynamic>;
-      print('before');
       var locations = locationsJson
           .map((dynamic locationJson) => gorilla_location.Location.fromJson(
               locationJson as Map<String, dynamic>))
