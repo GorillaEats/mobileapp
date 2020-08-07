@@ -30,6 +30,7 @@ class _SearchState extends State<Search> {
   int _lastSessionUse;
   Timer _debounce;
   bool _activeBox;
+  bool _listView = false;
   List<Prediction> _predictions;
   Prediction _selectedPrediction;
 
@@ -176,10 +177,10 @@ class _SearchState extends State<Search> {
                             duration: Duration(milliseconds: 300),
                             height: _activeBox ? constraints.maxHeight : 0.0,
                             color: Colors.white,
-                            child: searchModel.listView
+                            child: _listView
                                 ? WillPopScope(
                                     onWillPop: () async {
-                                      searchModel.updateListView(false);
+                                      _listView = false;
                                       await _handlePop();
                                       return false;
                                     },
@@ -222,8 +223,7 @@ class _SearchState extends State<Search> {
             onChanged: _handleTextChange,
             onTap: () {
               _handleSearchActive();
-              Provider.of<SearchModel>(context, listen: false)
-                  .updateListView(false);
+              _listView = true;
             },
             textInputAction: TextInputAction.search,
             textAlignVertical: TextAlignVertical.center,
@@ -367,8 +367,7 @@ class _SearchState extends State<Search> {
           ),
           onPressed: () {
             _handleSearchActive();
-            Provider.of<SearchModel>(context, listen: false)
-                .updateListView(true);
+            _listView = true;
           },
           child: Center(
             child: Icon(

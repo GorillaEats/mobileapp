@@ -9,7 +9,7 @@ import 'package:gorilla_eats/credentials.dart';
 import 'package:gorilla_eats/data/locations.dart' as gorilla_location;
 
 const releaseBaseUrl = 'www.gorillaeats.com';
-const debugBaseUrl = '192.168.1.221:8080';
+const debugBaseUrl = '192.168.0.10:8080';
 const locationsPath = '/locations';
 const maxSearchDistanceMeters = 20.0 * 1609.0;
 const double zoomLevel = 13;
@@ -19,7 +19,6 @@ class SearchModel extends ChangeNotifier {
   String _selectedPlace;
   LatLng _selectedLatLng;
   GoogleMapController _controller;
-  bool _listView = false;
   List<gorilla_location.Location> _results;
 
   SearchModel() {
@@ -120,6 +119,7 @@ class SearchModel extends ChangeNotifier {
     }
 
     var response = await http.get(uri);
+
     if (response.statusCode == 200) {
       dynamic bodyJson = json.decode(response.body);
       var locationsJson = bodyJson['locations'] as List<dynamic>;
@@ -136,15 +136,9 @@ class SearchModel extends ChangeNotifier {
     }
   }
 
-  void updateListView(bool val) {
-    _listView = val;
-    notifyListeners();
-  }
-
   List<filter_items.FilterItem> get filters => _filters;
   String get selectedPlace => _selectedPlace;
   LatLng get selectedLatLng => _selectedLatLng;
   GoogleMapController get googleMapController => _controller;
-  bool get listView => _listView;
   List<gorilla_location.Location> get results => _results;
 }
