@@ -7,7 +7,6 @@ import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
 import 'package:gorilla_eats/widgets/mapcards.dart';
-import 'package:gorilla_eats/widgets/restaurantList/restaurantListButton.dart';
 
 const double zoomLevel = 15;
 
