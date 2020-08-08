@@ -11,9 +11,12 @@ part of 'menu.dart';
 Item _$ItemFromJson(Map<String, dynamic> json) {
   $checkKeys(json,
       requiredKeys: const ['name', 'category', 'modifications', 'tags']);
+<<<<<<< HEAD
 =======
 Item _$ItemFromJson(Map<String, dynamic> json) {
 >>>>>>> combined items into menu file
+=======
+>>>>>>> made json key required
   return Item(
     name: json['name'] as String,
     category: json['category'] as String,
