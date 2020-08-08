@@ -85,6 +85,9 @@ class ReviewMeta {
 
 @JsonSerializable()
 class Location {
+  @JsonKey(required: true, name: '_id')
+  final String id;
+
   @JsonKey(required: true)
   final Address address;
 
@@ -124,6 +127,7 @@ class Location {
 
 
   Location({
+    this.id,
     this.address,
     this.geo,
     this.lastScraperRun,

@@ -76,6 +76,7 @@ Map<String, dynamic> _$ReviewMetaToJson(ReviewMeta instance) =>
 
 Location _$LocationFromJson(Map<String, dynamic> json) {
   $checkKeys(json, requiredKeys: const [
+    '_id',
     'address',
     'geo',
     'lastScraperRun',
@@ -89,6 +90,7 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
     'url'
   ]);
   return Location(
+    id: json['_id'] as String,
     address: json['address'] == null
         ? null
         : Address.fromJson(json['address'] as Map<String, dynamic>),
@@ -115,6 +117,7 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+      '_id': instance.id,
       'address': instance.address,
       'geo': instance.geo,
       'lastScraperRun': instance.lastScraperRun?.toIso8601String(),
