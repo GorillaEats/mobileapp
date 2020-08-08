@@ -4,9 +4,16 @@ part 'menu.g.dart';
 
 @JsonSerializable()
 class Item{
+  @JsonKey(required: true)
   String name;
+
+  @JsonKey(required: true)
   String category;
+
+  @JsonKey(required: true)
   List<String> modifications;
+
+  @JsonKey(required: true)
   List<String> tags;
 
   Item({this.name, this.category, this.modifications, this.tags});
