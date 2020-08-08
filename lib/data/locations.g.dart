@@ -82,6 +82,8 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
     'menuId',
     'name',
     'openingHours',
+    'priceRange',
+    'restaurandId',
     'reviewMeta',
     'telephone',
     'url'
@@ -102,6 +104,8 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Interval.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    priceRange: json['priceRange'] as String,
+    restaurandId: json['restaurandId'] as String,
     reviewMeta: json['reviewMeta'] == null
         ? null
         : ReviewMeta.fromJson(json['reviewMeta'] as Map<String, dynamic>),
@@ -117,6 +121,8 @@ Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
       'menuId': instance.menuId,
       'name': instance.name,
       'openingHours': instance.openingHours,
+      'priceRange': instance.priceRange,
+      'restaurandId': instance.restaurandId,
       'reviewMeta': instance.reviewMeta,
       'telephone': instance.telephone,
       'url': instance.url,
