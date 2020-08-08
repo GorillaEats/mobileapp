@@ -100,7 +100,9 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
     lastScraperRun: json['lastScraperRun'] == null
         ? null
         : DateTime.parse(json['lastScraperRun'] as String),
-    menuId: json['menuId'],
+    menuId: json['menuId'] == null
+        ? null
+        : Menu.fromJson(json['menuId'] as Map<String, dynamic>),
     name: json['name'] as String,
     openingHours: (json['openingHours'] as List)
         ?.map((e) =>
