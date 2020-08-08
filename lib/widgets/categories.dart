@@ -1,26 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/data/fooditems.dart';
+import 'package:gorilla_eats/data/menu.dart';
 import 'package:gorilla_eats/screens/loading.dart';
 import 'package:gorilla_eats/widgets/foodcard.dart';
 
 class Categories extends StatefulWidget {
+  final Menu menu;
+
+  Categories({this.menu});
+
   @override
   _CategoriesState createState() => _CategoriesState();
 }
 
 class _CategoriesState extends State<Categories> {
-  List<dynamic> _allCategories;
-
-  @override
-  void initState() {
-    super.initState();
-    FoodCategory.getFoods().then((value) {
-      setState(() {
-        _allCategories = value;
-      });
-    });
-  }
-
   Widget categoryHeader(String categoryName) {
     return Column(
       children: <Widget>[
@@ -50,17 +42,14 @@ class _CategoriesState extends State<Categories> {
     );
   }
 
-  Widget createCategory(dynamic category) {
-    final categoryName = category[0].category.toString();
-    final foodItems = category[1] as List<FoodItem>;
-
+  Widget createCategory(String categoryName, List<Item> items) {
     return Column(
       children: <Widget>[
         categoryHeader(categoryName),
         Column(
-          children: foodItems.map((foodItem) {
+          children: item.map((item) {
             return FoodCard(
-              foodItem: foodItem,
+              foodItem: item,
             );
           }).toList(),
         ),
@@ -70,16 +59,24 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, List<Item>> categoryToListOfItems;
+
+    widget.menu.items.forEach((item) {
+      if (categoryToListOfItems.containsKey(item.category)) {
+        categoryToListOfItems[item.category].add(item);
+      } else {
+        categoryToListOfItems[item.category] = [item];
+      }
+    });
+
     return Container(
-      child: _allCategories == null
-          ? LoadingScreen()
-          : Expanded(
-              child: ListView(
-                children: _allCategories
-                    .map((dynamic category) => createCategory(category))
-                    .toList(),
-              ),
-            ),
+      child: Expanded(
+        child: ListView(
+          children: Menu.categoryTypes.map((category) => 
+            createCategory(category, categoryToListOfItems[category]);
+          ).toList()
+        ),
+      ),
     );
   }
 }
