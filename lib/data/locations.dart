@@ -1,6 +1,3 @@
-import 'dart:html';
-
-import 'package:gorilla_eats/widgets/search/filterItems.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'locations.g.dart';
