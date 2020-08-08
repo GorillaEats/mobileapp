@@ -6,6 +6,7 @@ part of 'menu.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+<<<<<<< HEAD
 Item _$ItemFromJson(Map<String, dynamic> json) {
   $checkKeys(json,
       requiredKeys: const ['name', 'category', 'modifications', 'tags']);
@@ -25,6 +26,8 @@ Map<String, dynamic> _$ItemToJson(Item instance) => <String, dynamic>{
       'tags': instance.tags,
     };
 
+=======
+>>>>>>> adding new json classes
 Menu _$MenuFromJson(Map<String, dynamic> json) {
   $checkKeys(json, requiredKeys: const ['items', 'source', 'restaurantId']);
   return Menu(
