@@ -1,7 +1,5 @@
-import 'dart:async' show Future;
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:gorilla_eats/data/menu.dart';
 
 part 'locations.g.dart';
 
