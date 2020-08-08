@@ -1,36 +1,140 @@
+import 'dart:html';
+
+import 'package:gorilla_eats/widgets/search/filterItems.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'locations.g.dart';
 
 @JsonSerializable()
-class Location {
-  final String id;
-  final String telephone;
-  final double lat;
-  final double lng;
-  final String address;
-  final String city;
-  final String state;
-  final String zipcode;
+class Address {
+  @JsonKey(required: true)
+  final String addressLocality;
+
+  @JsonKey(required: true)
+  final String streetAddress;
+
+  @JsonKey(required: true)
+  final String addressRegion;
+
+  @JsonKey(required: true)
+  final String postalCode;
+
+  @JsonKey(required: true)
+  final String addressCountry;
+
+  Address({
+    this.addressLocality,
+    this.streetAddress,
+    this.addressRegion,
+    this.postalCode,
+    this.addressCountry,
+  });
+
+  factory Address.fromJson(Map<String, dynamic> json) =>
+      _$AddressFromJson(json);
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
+}
+
+@JsonSerializable()
+class Geometry {
+  @JsonKey(required: true)
+  final String type;
+
+  @JsonKey(required: true)
+  final List<double> coordinates;
+
+  Geometry({this.type, this.coordinates});
+
+  factory Geometry.fromJson(Map<String, dynamic> json) =>
+      _$GeometryFromJson(json);
+  Map<String, dynamic> toJson() => _$GeometryToJson(this);
+}
+
+@JsonSerializable()
+class Interval {
+  @JsonKey(required: true)
+  final int start;
+
+  @JsonKey(required: true)
+  final int end;
+
+  Interval({this.start, this.end});
+
+  factory Interval.fromJson(Map<String, dynamic> json) =>
+      _$IntervalFromJson(json);
+  Map<String, dynamic> toJson() => _$IntervalToJson(this);
+}
+
+@JsonSerializable()
+class ReviewMeta {
+  @JsonKey(required: true)
+  final int veganRatingTotal;
+
+  @JsonKey(required: true)
+  final int veganRatingCount;
+
+  @JsonKey(ignore: true)
   final double veganRating;
-  final String price;
-  final int numOfItems;
+
+  ReviewMeta({
+    this.veganRatingTotal,
+    this.veganRatingCount,
+  }) : veganRating = veganRatingTotal / veganRatingCount;
+
+  factory ReviewMeta.fromJson(Map<String, dynamic> json) =>
+      _$ReviewMetaFromJson(json);
+  Map<String, dynamic> toJson() => _$ReviewMetaToJson(this);
+}
+
+@JsonSerializable()
+class Location {
+  @JsonKey(required: true)
+  final Address address;
+
+  @JsonKey(required: true)
+  final Geometry geo;
+
+  @JsonKey(required: true)
+  final DateTime lastScraperRun;
+
+  // TODO: menuId will become type Menu
+  @JsonKey(required: true)
+  final dynamic menuId;
+
+  @JsonKey(required: true)
   final String name;
 
-  Location(
-      {this.id,
-      this.telephone,
-      this.lat,
-      this.lng,
-      this.address,
-      this.city,
-      this.state,
-      this.zipcode,
-      this.veganRating,
-      this.price,
-      this.numOfItems,
-      this.name});
+  @JsonKey(required: true)
+  final List<Interval> openingHours;
+
+  @JsonKey(required: true)
+  final String priceRange;
+
+  @JsonKey(required: true)
+  final String restaurandId;
+
+  @JsonKey(required: true)
+  final ReviewMeta reviewMeta;
+
+  @JsonKey(required: true)
+  final String telephone;
+
+  @JsonKey(required: true)
+  final String url;
+
+  Location({
+    this.address,
+    this.geo,
+    this.lastScraperRun,
+    this.menuId,
+    this.name,
+    this.openingHours,
+    this.reviewMeta,
+    this.telephone,
+    this.url,
+  });
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
+  Map<String, dynamic> toJson() => _$LocationToJson(this);
 }
