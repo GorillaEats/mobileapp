@@ -48,7 +48,7 @@ class _CategoriesState extends State<Categories> {
       children: <Widget>[
         categoryHeader(categoryName),
         Column(
-          children: item.map((item) {
+          children: items.map((item) {
             return FoodCard(
               foodItem: item,
             );
@@ -73,10 +73,10 @@ class _CategoriesState extends State<Categories> {
     return Container(
       child: Expanded(
         child: ListView(
-          children: Menu.categoryTypes.map((category) => 
-            createCategory(category, categoryToListOfItems[category]);
-          ).toList()
-        ),
+            children: Menu.categoryTypes
+                .map((category) =>
+                    createCategory(category, categoryToListOfItems[category]))
+                .toList()),
       ),
     );
   }
