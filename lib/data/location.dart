@@ -119,6 +119,10 @@ class Location {
   @JsonKey(required: true)
   final String url;
 
+  @JsonKey(ignore: true)
+  final int numOfItems;
+
+
   Location({
     this.address,
     this.geo,
@@ -131,7 +135,7 @@ class Location {
     this.reviewMeta,
     this.telephone,
     this.url,
-  });
+  }): numOfItems = (menuId['items'] as List<dynamic>).length;
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
