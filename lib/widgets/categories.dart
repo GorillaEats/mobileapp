@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gorilla_eats/data/menu.dart';
-import 'package:gorilla_eats/screens/loading.dart';
 import 'package:gorilla_eats/widgets/foodcard.dart';
 
 class Categories extends StatefulWidget {
   final Menu menu;
 
-  Categories({this.menu});
+  Categories({
+    @required this.menu,
+  });
 
   @override
   _CategoriesState createState() => _CategoriesState();
