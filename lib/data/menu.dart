@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'menu.g.dart';
 
 @JsonSerializable()
-class Item{
+class Item {
   @JsonKey(required: true)
   String name;
 
@@ -25,6 +25,8 @@ class Item{
 
 @JsonSerializable()
 class Menu {
+  static const List<String> categoryTypes = ['Entree', 'Side', 'Dessert'];
+
   @JsonKey(required: true)
   List<Item> items;
 
