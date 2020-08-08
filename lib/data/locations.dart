@@ -126,6 +126,8 @@ class Location {
     this.menuId,
     this.name,
     this.openingHours,
+    this.priceRange,
+    this.restaurandId,
     this.reviewMeta,
     this.telephone,
     this.url,
