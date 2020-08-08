@@ -28,7 +28,7 @@ class Address {
   });
 
   @override
-  String toString(){
+  String toString() {
     return '$streetAddress,$addressLocality,$addressRegion,$postalCode';
   }
 
@@ -130,6 +130,11 @@ class Location {
   @JsonKey(ignore: true)
   final int numOfItems;
 
+  @JsonKey(ignore: true)
+  final double latitude;
+
+  @JsonKey(ignore: true)
+  final double longitude;
 
   Location({
     this.id,
@@ -144,7 +149,9 @@ class Location {
     this.reviewMeta,
     this.telephone,
     this.url,
-  }): numOfItems = (menuId['items'] as List<dynamic>).length;
+  })  : numOfItems = (menuId['items'] as List<dynamic>).length,
+        latitude = geo.coordinates[1],
+        longitude = geo.coordinates[0];
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
