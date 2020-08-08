@@ -15,7 +15,7 @@ class RestaurantScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           RestaurantBanner(location: location),
-          Categories(),
+          Categories(menu: location.menuId),
         ],
       ),
     );
