@@ -16,6 +16,10 @@ class Item {
   @JsonKey(required: true)
   List<String> tags;
 
+  String get subtitle {
+    return '${modifications.length} modification${modifications.length != 1 ? 's' : ''}';
+  }
+
   Item({this.name, this.category, this.modifications, this.tags});
 
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
