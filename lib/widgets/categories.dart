@@ -60,7 +60,7 @@ class _CategoriesState extends State<Categories> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, List<Item>> categoryToListOfItems;
+    var categoryToListOfItems = <String, List<Item>>{};
 
     widget.menu.items.forEach((item) {
       if (categoryToListOfItems.containsKey(item.category)) {
@@ -70,13 +70,18 @@ class _CategoriesState extends State<Categories> {
       }
     });
 
+    final availableCategories = Menu.categoryTypes
+        .where((category) => categoryToListOfItems.containsKey(category))
+        .toList();
+
     return Container(
       child: Expanded(
         child: ListView(
-            children: Menu.categoryTypes
-                .map((category) =>
-                    createCategory(category, categoryToListOfItems[category]))
-                .toList()),
+          children: availableCategories
+              .map((category) =>
+                  createCategory(category, categoryToListOfItems[category]))
+              .toList(),
+        ),
       ),
     );
   }
