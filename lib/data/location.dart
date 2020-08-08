@@ -27,6 +27,11 @@ class Address {
     this.addressCountry,
   });
 
+  @override
+  String toString(){
+    return '$streetAddress,$addressLocality,$addressRegion,$postalCode';
+  }
+
   factory Address.fromJson(Map<String, dynamic> json) =>
       _$AddressFromJson(json);
   Map<String, dynamic> toJson() => _$AddressToJson(this);
