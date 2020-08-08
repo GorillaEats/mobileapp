@@ -116,7 +116,7 @@ class Location {
   final String priceRange;
 
   @JsonKey(required: true)
-  final String restaurandId;
+  final String restaurantId;
 
   @JsonKey(required: true)
   final ReviewMeta reviewMeta;
@@ -145,7 +145,7 @@ class Location {
     this.name,
     this.openingHours,
     this.priceRange,
-    this.restaurandId,
+    this.restaurantId,
     this.reviewMeta,
     this.telephone,
     this.url,
