@@ -1,13 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
-<<<<<<< HEAD
-=======
-import 'package:gorilla_eats/data/item.dart';
->>>>>>> adding new json classes
 
 part 'menu.g.dart';
 
 @JsonSerializable()
-<<<<<<< HEAD
 class Item {
   @JsonKey(required: true)
   String name;
@@ -36,9 +31,6 @@ class Item {
 class Menu {
   static const List<String> categoryTypes = ['Entree', 'Side', 'Dessert'];
 
-=======
-class Menu {
->>>>>>> adding new json classes
   @JsonKey(required: true)
   List<Item> items;
 
