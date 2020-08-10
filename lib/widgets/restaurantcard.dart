@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/location.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:gorilla_eats/screens/restaurant.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +88,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                   ),
                   child: Center(
                     child: Text(
-                      widget.location.veganRating.toString(),
+                      widget.location.reviewMeta.veganRating.toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 17,
@@ -137,20 +137,15 @@ class _RestaurantCardState extends State<RestaurantCard> {
                   ),
                   Row(
                     children: <Widget>[
-                      _getPrice(widget.location.price),
+                      _getPrice(widget.location.priceRange),
                       Padding(
                         padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
                         child: GestureDetector(
                           onTap: () {
                             _launchURL(
-                                'https://maps.google.com/?q=',
-                                widget.location.address +
-                                    ',' +
-                                    widget.location.city +
-                                    ',' +
-                                    widget.location.state +
-                                    ',' +
-                                    widget.location.zipcode);
+                              'https://maps.google.com/?q=',
+                              widget.location.address.toString(),
+                            );
                           },
                           child: SizedBox(
                             width: 100,
