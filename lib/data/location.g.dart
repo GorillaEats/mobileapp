@@ -100,9 +100,13 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
     lastScraperRun: json['lastScraperRun'] == null
         ? null
         : DateTime.parse(json['lastScraperRun'] as String),
+<<<<<<< HEAD
     menuId: json['menuId'] == null
         ? null
         : Menu.fromJson(json['menuId'] as Map<String, dynamic>),
+=======
+    menuId: json['menuId'],
+>>>>>>> [GOR-78] Fixing Location Class and Serialization (#25)
     name: json['name'] as String,
     openingHours: (json['openingHours'] as List)
         ?.map((e) =>
