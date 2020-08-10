@@ -1,5 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
+<<<<<<< HEAD
 import 'package:gorilla_eats/data/menu.dart';
+=======
+>>>>>>> 702538f3a5bae6de8ae42bdc6a21a813aadc6bde
 
 part 'location.g.dart';
 
