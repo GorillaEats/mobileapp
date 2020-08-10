@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:gorilla_eats/data/menu.dart';
 
 part 'location.g.dart';
 
@@ -102,9 +103,8 @@ class Location {
   @JsonKey(required: true)
   final DateTime lastScraperRun;
 
-  // TODO: menuId will become type Menu
   @JsonKey(required: true)
-  final dynamic menuId;
+  final Menu menuId;
 
   @JsonKey(required: true)
   final String name;
@@ -149,7 +149,7 @@ class Location {
     this.reviewMeta,
     this.telephone,
     this.url,
-  })  : numOfItems = (menuId['items'] as List<dynamic>).length,
+  })  : numOfItems = menuId.items.length,
         latitude = geo.coordinates[1],
         longitude = geo.coordinates[0];
 

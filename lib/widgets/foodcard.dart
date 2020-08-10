@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:gorilla_eats/data/fooditems.dart';
+import 'package:gorilla_eats/data/menu.dart';
 
 class FoodCard extends StatefulWidget {
-  final FoodItem foodItem;
+  final Item foodItem;
 
-  FoodCard({@required this.foodItem});
+  FoodCard({
+    @required this.foodItem,
+  });
 
   @override
   _FoodCardState createState() => _FoodCardState();
@@ -14,7 +16,7 @@ class FoodCard extends StatefulWidget {
 class _FoodCardState extends State<FoodCard> {
   bool _isExpanded = false;
 
-  Widget cardHeader(bool _isExpanded, FoodItem foodItem) {
+  Widget cardHeader(bool _isExpanded, Item foodItem) {
     return Card(
       elevation: 0,
       margin: EdgeInsets.fromLTRB(30, 30, 30, 30),
@@ -26,7 +28,7 @@ class _FoodCardState extends State<FoodCard> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
-                child: Text(foodItem.foodName,
+                child: Text(foodItem.name,
                     style: TextStyle(fontWeight: FontWeight.w600)),
               ),
               Text(foodItem.subtitle),
@@ -49,7 +51,7 @@ class _FoodCardState extends State<FoodCard> {
     );
   }
 
-  Widget cardBody(FoodItem foodItem) {
+  Widget cardBody(Item foodItem) {
     return Card(
       elevation: 0,
       child: Padding(
