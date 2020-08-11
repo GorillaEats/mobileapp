@@ -109,7 +109,9 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
             e == null ? null : Interval.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     priceRange: json['priceRange'] as String,
-    restaurantId: json['restaurantId'] as String,
+    restaurantId: json['restaurantId'] == null
+        ? null
+        : Restaurant.fromJson(json['restaurantId'] as Map<String, dynamic>),
     reviewMeta: json['reviewMeta'] == null
         ? null
         : ReviewMeta.fromJson(json['reviewMeta'] as Map<String, dynamic>),
