@@ -166,48 +166,41 @@ class _SearchState extends State<Search> {
                     _buildRestaurantListButton(),
                   ],
                 ),
-              _listView
-                  ? Consumer<SearchModel>(
-                      builder: (context, searchModel, child) {
-                        return Expanded(
-                          child: LayoutBuilder(builder: (context, constraints) {
-                            return Align(
-                              alignment: Alignment.bottomCenter,
-                              child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 300),
-                                  height:
-                                      _activeBox ? constraints.maxHeight : 0.0,
-                                  color: Colors.white,
-                                  child: WillPopScope(
-                                    onWillPop: _handlePop,
-                                    child: _buildRestaurantList(
-                                        context, searchModel.results),
-                                  )),
-                            );
-                          }),
-                        );
-                      },
-                    )
-                  : Consumer<SearchModel>(
-                      builder: (context, searchModel, child) {
-                        return Expanded(
-                          child: LayoutBuilder(builder: (context, constraints) {
-                            return Align(
-                              alignment: Alignment.bottomCenter,
-                              child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 300),
-                                  height:
-                                      _activeBox ? constraints.maxHeight : 0.0,
-                                  color: Colors.white,
+              Consumer<SearchModel>(
+                builder: (context, searchModel, child) {
+                  return Expanded(
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      return Align(
+                        alignment: Alignment.bottomCenter,
+                        child: _listView
+                            ? AnimatedContainer(
+                                duration: Duration(milliseconds: 300),
+                                height:
+                                    _activeBox ? constraints.maxHeight : 0.0,
+                                color: Colors.white,
+                                child: WillPopScope(
+                                  onWillPop: _handlePop,
+                                  child: _buildRestaurantList(
+                                      context, searchModel.results),
+                                ))
+                            : AnimatedContainer(
+                                duration: Duration(milliseconds: 300),
+                                height:
+                                    _activeBox ? constraints.maxHeight : 0.0,
+                                color: Colors.white,
+                                child: WillPopScope(
+                                  onWillPop: _handlePop,
                                   child: WillPopScope(
                                     onWillPop: _handlePop,
                                     child: _buildPredictionResults(context),
-                                  )),
-                            );
-                          }),
-                        );
-                      },
-                    )
+                                  ),
+                                ),
+                              ),
+                      );
+                    }),
+                  );
+                },
+              )
             ],
           ),
         ),
@@ -231,7 +224,7 @@ class _SearchState extends State<Search> {
             onChanged: _handleTextChange,
             onTap: () {
               _handleSearchActive();
-              _listView = true;
+              _listView = false;
             },
             textInputAction: TextInputAction.search,
             textAlignVertical: TextAlignVertical.center,
