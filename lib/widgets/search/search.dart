@@ -166,53 +166,48 @@ class _SearchState extends State<Search> {
                     _buildRestaurantListButton(),
                   ],
                 ),
-              if (_listView)
-                Consumer<SearchModel>(
-                  builder: (context, searchModel, child) {
-                    return Expanded(
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          return Align(
-                            alignment: Alignment.bottomCenter,
-                            child: AnimatedContainer(
-                              duration: Duration(milliseconds: 300),
-                              height: _activeBox ? constraints.maxHeight : 0.0,
-                              color: Colors.white,
-                              child: _listView
-                                  ? WillPopScope(
-                                      onWillPop: () async {
-                                        _listView = false;
-                                        await _handlePop();
-                                        return false;
-                                      },
-                                      child: Column(
-                                        children: <Widget>[
-                                          Consumer<SearchModel>(
-                                            builder:
-                                                (context, searchModel, child) {
-                                              return _buildFilterItems(
-                                                  context, searchModel);
-                                            },
-                                          ),
-                                          _buildRestaurantList(
-                                              context, searchModel.results),
-                                        ],
-                                      ),
-                                    )
-                                  : _activeBox
-                                      ? WillPopScope(
-                                          onWillPop: _handlePop,
-                                          child:
-                                              _buildPredictionResults(context),
-                                        )
-                                      : null,
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
+              _listView
+                  ? Consumer<SearchModel>(
+                      builder: (context, searchModel, child) {
+                        return Expanded(
+                          child: LayoutBuilder(builder: (context, constraints) {
+                            return Align(
+                              alignment: Alignment.bottomCenter,
+                              child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  height:
+                                      _activeBox ? constraints.maxHeight : 0.0,
+                                  color: Colors.white,
+                                  child: WillPopScope(
+                                    onWillPop: _handlePop,
+                                    child: _buildRestaurantList(
+                                        context, searchModel.results),
+                                  )),
+                            );
+                          }),
+                        );
+                      },
+                    )
+                  : Consumer<SearchModel>(
+                      builder: (context, searchModel, child) {
+                        return Expanded(
+                          child: LayoutBuilder(builder: (context, constraints) {
+                            return Align(
+                              alignment: Alignment.bottomCenter,
+                              child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  height:
+                                      _activeBox ? constraints.maxHeight : 0.0,
+                                  color: Colors.white,
+                                  child: WillPopScope(
+                                    onWillPop: _handlePop,
+                                    child: _buildPredictionResults(context),
+                                  )),
+                            );
+                          }),
+                        );
+                      },
+                    )
             ],
           ),
         ),
