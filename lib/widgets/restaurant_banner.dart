@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/location.dart';
 
 class RestaurantBanner extends StatelessWidget {
   final Location location;
@@ -56,7 +56,7 @@ class RestaurantBanner extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(22, 3, 0, 0),
                   child: Text(
-                    location.address,
+                    location.address.streetAddress,
                     style: TextStyle(fontSize: 17, color: Colors.white),
                   ),
                 ),

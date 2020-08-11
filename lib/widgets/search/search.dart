@@ -7,7 +7,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/credentials.dart';
 import 'package:gorilla_eats/widgets/restaurantcard.dart';
-import 'package:gorilla_eats/data/locations.dart' as gorilla_location;
+import 'package:gorilla_eats/data/location.dart' as gorilla_location;
 
 // Time of Inactivity before a new session id is created for autocomplete requests
 // Inactivity is defined as not typing in search bar
@@ -166,40 +166,53 @@ class _SearchState extends State<Search> {
                     _buildRestaurantListButton(),
                   ],
                 ),
-              Consumer<SearchModel>(
-                builder: (context, searchModel, child) {
-                  return Expanded(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        return Align(
-                          alignment: Alignment.bottomCenter,
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 300),
-                            height: _activeBox ? constraints.maxHeight : 0.0,
-                            color: Colors.white,
-                            child: _listView
-                                ? WillPopScope(
-                                    onWillPop: () async {
-                                      _listView = false;
-                                      await _handlePop();
-                                      return false;
-                                    },
-                                    child: _buildRestaurantList(
-                                        context, searchModel.results),
-                                  )
-                                : _activeBox
-                                    ? WillPopScope(
-                                        onWillPop: _handlePop,
-                                        child: _buildPredictionResults(context),
-                                      )
-                                    : null,
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
+              if (_listView)
+                Consumer<SearchModel>(
+                  builder: (context, searchModel, child) {
+                    return Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          return Align(
+                            alignment: Alignment.bottomCenter,
+                            child: AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              height: _activeBox ? constraints.maxHeight : 0.0,
+                              color: Colors.white,
+                              child: _listView
+                                  ? WillPopScope(
+                                      onWillPop: () async {
+                                        _listView = false;
+                                        await _handlePop();
+                                        return false;
+                                      },
+                                      child: Column(
+                                        children: <Widget>[
+                                          Consumer<SearchModel>(
+                                            builder:
+                                                (context, searchModel, child) {
+                                              return _buildFilterItems(
+                                                  context, searchModel);
+                                            },
+                                          ),
+                                          _buildRestaurantList(
+                                              context, searchModel.results),
+                                        ],
+                                      ),
+                                    )
+                                  : _activeBox
+                                      ? WillPopScope(
+                                          onWillPop: _handlePop,
+                                          child:
+                                              _buildPredictionResults(context),
+                                        )
+                                      : null,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
             ],
           ),
         ),

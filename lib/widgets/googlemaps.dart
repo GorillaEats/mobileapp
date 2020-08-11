@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/location.dart';
 import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
@@ -45,13 +45,13 @@ class _GoogleMapsState extends State<GoogleMaps> {
       if (location.id == selected) {
         marker = Marker(
           markerId: MarkerId(location.id),
-          position: LatLng(location.lat, location.lng),
+          position: LatLng(location.latitude, location.longitude),
           icon: BitmapDescriptor.defaultMarkerWithHue(200),
         );
       } else {
         marker = Marker(
           markerId: MarkerId(location.id),
-          position: LatLng(location.lat, location.lng),
+          position: LatLng(location.latitude, location.longitude),
           icon: BitmapDescriptor.defaultMarkerWithHue(10),
           onTap: () {
             model.updateSelectedCard(location.id);

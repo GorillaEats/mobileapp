@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gorilla_eats/data/locations.dart';
+import 'package:gorilla_eats/data/location.dart';
 import 'package:gorilla_eats/widgets/restaurant_banner.dart';
 import 'package:gorilla_eats/widgets/categories.dart';
 
@@ -15,7 +15,7 @@ class RestaurantScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           RestaurantBanner(location: location),
-          Categories(),
+          Categories(menu: location.menuId),
         ],
       ),
     );

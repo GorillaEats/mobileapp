@@ -6,7 +6,7 @@ import 'package:google_maps_webservice/geocoding.dart';
 import 'package:geodesy/geodesy.dart' as geodesy;
 import 'package:gorilla_eats/widgets/search/filterItems.dart' as filter_items;
 import 'package:gorilla_eats/credentials.dart';
-import 'package:gorilla_eats/data/locations.dart' as gorilla_location;
+import 'package:gorilla_eats/data/location.dart' as gorilla_location;
 
 const releaseBaseUrl = 'www.gorillaeats.com';
 const debugBaseUrl = '192.168.1.221:8080';
