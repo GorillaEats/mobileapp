@@ -119,8 +119,6 @@ class SearchModel extends ChangeNotifier {
     }
 
     var response = await http.get(uri);
-    print('response');
-    print(response);
     if (response.statusCode == 200) {
       dynamic bodyJson = json.decode(response.body);
       var locationsJson = bodyJson['locations'] as List<dynamic>;
