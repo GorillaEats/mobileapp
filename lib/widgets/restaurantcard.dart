@@ -108,7 +108,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(widget.location.name),
+                      Text(widget.location.restaurantId.name),
                       Padding(
                         padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                         child: Icon(Icons.brightness_1,
