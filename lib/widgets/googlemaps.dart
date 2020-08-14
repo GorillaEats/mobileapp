@@ -66,38 +66,31 @@ class _GoogleMapsState extends State<GoogleMaps> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RestaurantCardSelectedModel(),
-      child: Container(
-        child: _initialPosition == null
-            ? LoadingScreen()
-            : Consumer<SearchModel>(
-                builder: (context, searchModel, child) {
-                  return Stack(
-                    children: <Widget>[
-                      Consumer<RestaurantCardSelectedModel>(
-                        builder: (context, restaurantCardSelectedModel, child) {
-                          return GoogleMap(
-                            onMapCreated: (controller) =>
-                                _onMapCreated(controller, searchModel),
-                            myLocationEnabled: true,
-                            initialCameraPosition: CameraPosition(
-                              target: _initialPosition,
-                              zoom: zoomLevel,
-                            ),
-                            markers: makeMarkers(
-                              restaurantCardSelectedModel,
-                              restaurantCardSelectedModel.selected,
-                              searchModel.results,
-                            ).values.toSet(),
-                          );
-                        },
+    return Container(
+      child: _initialPosition == null
+          ? LoadingScreen()
+          : Consumer<SearchModel>(
+              builder: (context, searchModel, child) {
+                return Consumer<RestaurantCardSelectedModel>(
+                  builder: (context, restaurantCardSelectedModel, child) {
+                    return GoogleMap(
+                      onMapCreated: (controller) =>
+                          _onMapCreated(controller, searchModel),
+                      myLocationEnabled: true,
+                      initialCameraPosition: CameraPosition(
+                        target: _initialPosition,
+                        zoom: zoomLevel,
                       ),
-                    ],
-                  );
-                },
-              ),
-      ),
+                      markers: makeMarkers(
+                        restaurantCardSelectedModel,
+                        restaurantCardSelectedModel.selected,
+                        searchModel.results,
+                      ).values.toSet(),
+                    );
+                  },
+                );
+              },
+            ),
     );
   }
 }

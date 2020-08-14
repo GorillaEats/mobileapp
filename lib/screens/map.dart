@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
+import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:provider/provider.dart';
 import 'package:gorilla_eats/widgets/search/search.dart';
 import 'package:gorilla_eats/data/models/search.dart';
@@ -13,25 +14,31 @@ class MapScreen extends StatelessWidget {
     return FocusWatcher(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: ChangeNotifierProvider(
-          create: (context) => SearchModel(),
+        body: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<SearchModel>(create: (_) => SearchModel()),
+            ChangeNotifierProvider<RestaurantCardSelectedModel>(
+              create: (_) => RestaurantCardSelectedModel(),
+            )
+          ],
           child: Stack(
             children: [
               GoogleMaps(),
               Consumer<SearchModel>(
                 builder: (context, searchModel, child) {
-                  return Column(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: listButton(searchModel, context),
-                      ),
-                      if (searchModel.results.isNotEmpty)
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: MapCards(locations: searchModel.results),
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Flexible(
+                          flex: 1,
+                          child: listButton(searchModel, context),
                         ),
-                    ],
+                        if (searchModel.results.isNotEmpty)
+                          MapCards(locations: searchModel.results),
+                      ],
+                    ),
                   );
                 },
               ),
