@@ -30,7 +30,6 @@ class _SearchState extends State<Search> {
   int _lastSessionUse;
   Timer _debounce;
   bool _activeSearch;
-  bool _activeList = false;
   List<Prediction> _predictions;
   Prediction _selectedPrediction;
 
@@ -142,30 +141,33 @@ class _SearchState extends State<Search> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: _activeSearch ? Colors.white : Colors.transparent,
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top,
+              Consumer<SearchModel>(
+                builder: (context, searchModel, child) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: _activeSearch || searchModel.listView
+                          ? Colors.white
+                          : Colors.transparent,
                     ),
-                    _buildSearchBar(context),
-                  ],
-                ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.top,
+                        ),
+                        _buildSearchBar(context),
+                      ],
+                    ),
+                  );
+                },
               ),
-              if (!_activeSearch)
-                Column(
-                  children: <Widget>[
-                    Consumer<SearchModel>(
-                      builder: (context, searchModel, child) {
-                        return _buildFilterItems(context, searchModel);
-                      },
-                    ),
-                    _buildRestaurantListButton(),
-                  ],
-                ),
+              Consumer<SearchModel>(
+                builder: (context, searchModel, child) {
+                  if (!_activeSearch || searchModel.listView) {
+                    return _buildFilterItems(context, searchModel);
+                  }
+                  return null;
+                },
+              ),
               Consumer<SearchModel>(
                 builder: (context, searchModel, child) {
                   return Expanded(
@@ -177,11 +179,15 @@ class _SearchState extends State<Search> {
                             children: <Widget>[
                               AnimatedContainer(
                                 duration: Duration(milliseconds: 300),
-                                height:
-                                    _activeList ? constraints.maxHeight : 0.0,
+                                height: searchModel.listView
+                                    ? constraints.maxHeight
+                                    : 0.0,
                                 color: Colors.white,
                                 child: WillPopScope(
-                                  onWillPop: _handlePop,
+                                  onWillPop: () {
+                                    searchModel.updateListView(false);
+                                    return _handlePop();
+                                  },
                                   child: _buildRestaurantList(
                                       context, searchModel.results),
                                 ),
@@ -218,66 +224,73 @@ class _SearchState extends State<Search> {
     const searchBarHeight = 40.0;
     const searchBarIconSize = 20.0;
 
-    return Container(
-      height: searchBarHeight,
-      margin: EdgeInsets.all(10.0),
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          TextField(
-            controller: _textController,
-            onSubmitted: (value) => {FocusScope.of(context).unfocus()},
-            onChanged: _handleTextChange,
-            onTap: () {
-              _handleSearchActive();
-              _activeList = false;
-            },
-            textInputAction: TextInputAction.search,
-            textAlignVertical: TextAlignVertical.center,
-            decoration: InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.all(0),
-              border: InputBorder.none,
-              prefixIcon: _activeSearch
-                  ? SizedBox()
-                  : Icon(Icons.search, size: searchBarIconSize),
-              prefixIconConstraints: BoxConstraints(
-                  minHeight: searchBarHeight, minWidth: searchBarHeight),
-              hintText: 'Enter Location',
-              suffixIcon: _textController.text.isNotEmpty
-                  ? IconButton(
-                      onPressed: _handleSearchClear,
-                      icon: Icon(
-                        Icons.clear,
-                        color:
-                            Theme.of(context).buttonTheme.colorScheme.secondary,
-                      ),
-                    )
-                  : null,
-            ),
+    return Consumer<SearchModel>(
+      builder: (context, searchModel, child) {
+        return Container(
+          height: searchBarHeight,
+          margin: EdgeInsets.all(10.0),
+          child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              TextField(
+                controller: _textController,
+                onSubmitted: (value) => {FocusScope.of(context).unfocus()},
+                onChanged: _handleTextChange,
+                onTap: () {
+                  _handleSearchActive();
+                },
+                textInputAction: TextInputAction.search,
+                textAlignVertical: TextAlignVertical.center,
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.all(0),
+                  border: InputBorder.none,
+                  prefixIcon: _activeSearch
+                      ? SizedBox()
+                      : Icon(Icons.search, size: searchBarIconSize),
+                  prefixIconConstraints: BoxConstraints(
+                      minHeight: searchBarHeight, minWidth: searchBarHeight),
+                  hintText: 'Enter Location',
+                  suffixIcon: _textController.text.isNotEmpty
+                      ? IconButton(
+                          onPressed: _handleSearchClear,
+                          icon: Icon(
+                            Icons.clear,
+                            color: Theme.of(context)
+                                .buttonTheme
+                                .colorScheme
+                                .secondary,
+                          ),
+                        )
+                      : null,
+                ),
+              ),
+              if (_activeSearch)
+                IconButton(
+                  icon: Icon(Icons.arrow_back, size: searchBarIconSize),
+                  onPressed: _handleSearchCancel,
+                ),
+            ],
           ),
-          if (_activeSearch)
-            IconButton(
-              icon: Icon(Icons.arrow_back, size: searchBarIconSize),
-              onPressed: _handleSearchCancel,
-            ),
-        ],
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(18.0)),
-        border: Border.all(
-            color: _activeSearch ? Colors.grey[200] : Colors.transparent),
-        boxShadow: _activeSearch
-            ? null
-            : [
-                BoxShadow(
-                  blurRadius: 3.0,
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 3.0,
-                )
-              ],
-      ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(18.0)),
+            border: Border.all(
+                color: _activeSearch || searchModel.listView
+                    ? Colors.grey[200]
+                    : Colors.transparent),
+            boxShadow: _activeSearch || searchModel.listView
+                ? null
+                : [
+                    BoxShadow(
+                      blurRadius: 3.0,
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 3.0,
+                    )
+                  ],
+          ),
+        );
+      },
     );
   }
 
@@ -354,34 +367,6 @@ class _SearchState extends State<Search> {
         separatorBuilder: (context, index) => Divider(
           height: 3.0,
           thickness: 1.0,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRestaurantListButton() {
-    return Container(
-      height: MediaQuery.of(context).size.height - 116,
-      padding: EdgeInsets.fromLTRB(0, 0, 15, 160),
-      alignment: Alignment.bottomRight,
-      child: SizedBox(
-        height: 60,
-        width: 60,
-        child: RaisedButton(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-          onPressed: () {
-            _handleSearchActive();
-            _activeList = true;
-          },
-          child: Center(
-            child: Icon(
-              Icons.format_list_bulleted,
-              color: Colors.black,
-            ),
-          ),
         ),
       ),
     );

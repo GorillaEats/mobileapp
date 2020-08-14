@@ -6,7 +6,6 @@ import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
-import 'package:gorilla_eats/widgets/mapcards.dart';
 
 const double zoomLevel = 15;
 
@@ -94,20 +93,6 @@ class _GoogleMapsState extends State<GoogleMaps> {
                           );
                         },
                       ),
-                      if (searchModel.results.isNotEmpty)
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: MapCards(locations: searchModel.results),
-                        ),
-                      if (searchModel.results.isNotEmpty)
-                        Stack(
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: MapCards(locations: searchModel.results),
-                            ),
-                          ],
-                        ),
                     ],
                   );
                 },
