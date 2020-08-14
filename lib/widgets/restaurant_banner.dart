@@ -31,7 +31,7 @@ class RestaurantBanner extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                  child: Text(location.name,
+                  child: Text(location.restaurantId.name,
                       style: TextStyle(
                           fontSize: 34,
                           fontWeight: FontWeight.bold,

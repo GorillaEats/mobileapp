@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:gorilla_eats/data/menu.dart';
+import 'package:gorilla_eats/data/restaurant.dart';
 
 part 'location.g.dart';
 
@@ -116,7 +117,7 @@ class Location {
   final String priceRange;
 
   @JsonKey(required: true)
-  final String restaurantId;
+  final Restaurant restaurantId;
 
   @JsonKey(required: true)
   final ReviewMeta reviewMeta;
