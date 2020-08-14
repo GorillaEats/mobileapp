@@ -199,10 +199,7 @@ class _SearchState extends State<Search> {
                                 color: Colors.white,
                                 child: WillPopScope(
                                   onWillPop: _handlePop,
-                                  child: WillPopScope(
-                                    onWillPop: _handlePop,
-                                    child: _buildPredictionResults(context),
-                                  ),
+                                  child: _buildPredictionResults(context),
                                 ),
                               ),
                             ],
