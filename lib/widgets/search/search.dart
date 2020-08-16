@@ -128,11 +128,6 @@ class _SearchState extends State<Search> {
     });
   }
 
-  Future<bool> _handlePop() async {
-    _handleSearchCancel();
-    return false;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -163,9 +158,14 @@ class _SearchState extends State<Search> {
               Consumer<SearchModel>(
                 builder: (context, searchModel, child) {
                   if (!_activeSearch || searchModel.listView) {
-                    return _buildFilterItems(context, searchModel);
+                    return Container(
+                        color: searchModel.listView
+                            ? Colors.white
+                            : Colors.transparent,
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: _buildFilterItems(context, searchModel));
                   }
-                  return null;
+                  return Container();
                 },
               ),
               Consumer<SearchModel>(
@@ -175,34 +175,34 @@ class _SearchState extends State<Search> {
                       builder: (context, constraints) {
                         return Align(
                           alignment: Alignment.bottomCenter,
-                          child: Stack(
-                            children: <Widget>[
-                              AnimatedContainer(
-                                duration: Duration(milliseconds: 300),
-                                height: searchModel.listView
-                                    ? constraints.maxHeight
-                                    : 0.0,
-                                color: Colors.white,
-                                child: WillPopScope(
-                                  onWillPop: () {
-                                    searchModel.updateListView(false);
-                                    return _handlePop();
-                                  },
+                          child: WillPopScope(
+                            onWillPop: () {
+                              _activeSearch
+                                  ? _handleSearchCancel()
+                                  : searchModel.updateListView(false);
+                              return Future.value(false);
+                            },
+                            child: Stack(
+                              children: <Widget>[
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  height: searchModel.listView
+                                      ? constraints.maxHeight
+                                      : 0.0,
+                                  color: Colors.white,
                                   child: _buildRestaurantList(
                                       context, searchModel.results),
                                 ),
-                              ),
-                              AnimatedContainer(
-                                duration: Duration(milliseconds: 300),
-                                height:
-                                    _activeSearch ? constraints.maxHeight : 0.0,
-                                color: Colors.white,
-                                child: WillPopScope(
-                                  onWillPop: _handlePop,
+                                AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  height: _activeSearch
+                                      ? constraints.maxHeight
+                                      : 0.0,
+                                  color: Colors.white,
                                   child: _buildPredictionResults(context),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       },

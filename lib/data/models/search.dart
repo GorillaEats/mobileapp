@@ -9,7 +9,7 @@ import 'package:gorilla_eats/credentials.dart';
 import 'package:gorilla_eats/data/location.dart' as gorilla_location;
 
 const releaseBaseUrl = 'www.gorillaeats.com';
-const debugBaseUrl = '192.168.1.214:8080';
+const debugBaseUrl = '192.168.1.221:8080';
 const locationsPath = '/locations';
 const maxSearchDistanceMeters = 20.0 * 1609.0;
 const double zoomLevel = 13;
@@ -138,6 +138,7 @@ class SearchModel extends ChangeNotifier {
 
   void updateListView(bool val) {
     _listView = val;
+    notifyListeners();
   }
 
   List<filter_items.FilterItem> get filters => _filters;
