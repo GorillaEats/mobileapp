@@ -136,53 +136,56 @@ class _SearchState extends State<Search> {
     return Stack(
       children: [
         Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: _activelySearching ? Colors.white : Colors.transparent,
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top,
+          child: Consumer<SearchModel>(
+            builder: (context, searchModel, child) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: _activelySearching
+                          ? Colors.white
+                          : Colors.transparent,
                     ),
-                    _buildSearchBar(context),
-                  ],
-                ),
-              ),
-              if (!_activelySearching)
-                Consumer<SearchModel>(
-                  builder: (context, searchModel, child) {
-                    return _buildFilterItems(context, searchModel);
-                  },
-                ),
-              Consumer<SearchModel>(builder: (context, searchModel, child) {
-                return _buildExploreButton(context, searchModel);
-              }),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Align(
-                      alignment: Alignment.bottomCenter,
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        height:
-                            _activelySearching ? constraints.maxHeight : 0.0,
-                        color: Colors.white,
-                        child: _activelySearching
-                            ? WillPopScope(
-                                onWillPop: _handlePop,
-                                child: _buildPredictionResults(context),
-                              )
-                            : null,
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.top,
+                        ),
+                        _buildSearchBar(context),
+                      ],
+                    ),
+                  ),
+                  if (!_activelySearching)
+                    _buildFilterItems(context, searchModel),
+                  if (!_activelySearching &&
+                      searchModel.cameraMovedAfterResults)
+                    _buildExploreButton(context, searchModel),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            height: _activelySearching
+                                ? constraints.maxHeight
+                                : 0.0,
+                            color: Colors.white,
+                            child: _activelySearching
+                                ? WillPopScope(
+                                    onWillPop: _handlePop,
+                                    child: _buildPredictionResults(context),
+                                  )
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              );
+            },
           ),
         ),
       ],
