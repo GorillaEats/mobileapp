@@ -120,78 +120,85 @@ class _RestaurantCardState extends State<RestaurantCard> {
                         style: TextStyle(color: Colors.grey[500]),
                       ),
                       Padding(
+                        padding: EdgeInsets.fromLTRB(70, 0, 0, 0),
+                        child: Text(
+                          widget.location.numOfItems.toString(),
+                          style: TextStyle(color: Colors.grey[500]),
+                        ),
+                      ),
+                      Padding(
                         padding: EdgeInsets.fromLTRB(2, 0, 5, 3),
                         child: Icon(Icons.fastfood,
                             size: 15, color: Colors.grey[500]),
                       ),
                     ],
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: <Widget>[
-                  _getPrice(widget.location.priceRange),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        _launchURL(
-                          'https://maps.google.com/?q=',
-                          widget.location.address.toString(),
-                        );
-                      },
-                      child: SizedBox(
-                        width: 100,
-                        height: 30,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: Colors.red[400],
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Directions',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  SizedBox(
+                    height: 20,
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: GestureDetector(
-                      onTap: () {
-                        _launchURL('tel:', widget.location.telephone);
-                      },
-                      child: SizedBox(
-                        width: 50,
-                        height: 30,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey[500],
-                              width: 1,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Call',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 13,
+                  Row(
+                    children: <Widget>[
+                      _getPrice(widget.location.priceRange),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
+                        child: GestureDetector(
+                          onTap: () {
+                            _launchURL(
+                              'https://maps.google.com/?q=',
+                              widget.location.address.toString(),
+                            );
+                          },
+                          child: SizedBox(
+                            width: 100,
+                            height: 30,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Colors.red[400],
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Directions',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        child: GestureDetector(
+                          onTap: () {
+                            _launchURL('tel:', widget.location.telephone);
+                          },
+                          child: SizedBox(
+                            width: 50,
+                            height: 30,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey[500],
+                                  width: 1,
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Call',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

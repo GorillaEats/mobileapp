@@ -50,7 +50,7 @@ class _MapCardsState extends State<MapCards> {
   @override
   Widget build(context) {
     return Container(
-      height: 120,
+      height: 150,
       padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Consumer<RestaurantCardSelectedModel>(
         builder: (context, restaurantCardSelectedModel, child) {
