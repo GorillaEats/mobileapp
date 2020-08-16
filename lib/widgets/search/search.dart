@@ -293,7 +293,10 @@ class _SearchState extends State<Search> {
       margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 3.0),
       height: 30.0,
       child: MaterialButton(
-        onPressed: () => {print('hello world')},
+        onPressed: () {
+          _handleSearchClear();
+          searchModel.updateSelectedPlaceManually();
+        },
         padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
         minWidth: 0.0,
         shape: RoundedRectangleBorder(

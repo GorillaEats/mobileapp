@@ -16,7 +16,6 @@ const double zoomLevel = 13;
 
 class SearchModel extends ChangeNotifier {
   List<filter_items.FilterItem> _filters;
-  String _selectedPlace;
   LatLng _selectedLatLng;
   GoogleMapController _controller;
   List<gorilla_location.Location> _results;
@@ -46,9 +45,12 @@ class SearchModel extends ChangeNotifier {
     _controller = controller;
   }
 
-  Future<void> updateSelectedPlace(String placeID) async {
-    _selectedPlace = placeID;
+  Future<void> updateSelectedPlaceManually() {
+    _selectedLatLng = null;
+    return updateResults();
+  }
 
+  Future<void> updateSelectedPlace(String placeID) async {
     if (placeID != null) {
       final geocoding = GoogleMapsGeocoding(
         apiKey: googlePlacesApiKey,
@@ -139,13 +141,17 @@ class SearchModel extends ChangeNotifier {
     }
   }
 
+  set selectedLatLng(LatLng selectedLatLng) {
+    _selectedLatLng = selectedLatLng;
+    updateResults();
+  }
+
   set cameraMovedAfterResults(bool cameraMoved) {
     _cameraMovedAfterResults = cameraMoved;
     notifyListeners();
   }
 
   List<filter_items.FilterItem> get filters => _filters;
-  String get selectedPlace => _selectedPlace;
   LatLng get selectedLatLng => _selectedLatLng;
   GoogleMapController get googleMapController => _controller;
   List<gorilla_location.Location> get results => _results;
