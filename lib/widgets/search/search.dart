@@ -158,6 +158,9 @@ class _SearchState extends State<Search> {
                     return _buildFilterItems(context, searchModel);
                   },
                 ),
+              Consumer<SearchModel>(builder: (context, searchModel, child) {
+                return _buildExploreButton(context, searchModel);
+              }),
               Expanded(
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -275,6 +278,29 @@ class _SearchState extends State<Search> {
             width: 7.0,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildExploreButton(BuildContext context, SearchModel searchModel) {
+    final disabledColor = Theme.of(context).toggleButtonsTheme.disabledColor;
+    final selectedColor = Theme.of(context).toggleButtonsTheme.selectedColor;
+
+    return Container(
+      margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 3.0),
+      height: 30.0,
+      child: MaterialButton(
+        onPressed: () => {print('hello world')},
+        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        minWidth: 0.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+        color: disabledColor,
+        child: Text(
+          'Search this area',
+          style: TextStyle(color: selectedColor),
+        ),
       ),
     );
   }
