@@ -330,9 +330,12 @@ class _SearchState extends State<Search> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: RestaurantCard(
-                  location: locations[index],
-                  onMap: false,
+                child: Container(
+                  height: 150,
+                  child: RestaurantCard(
+                    location: locations[index],
+                    onMap: false,
+                  ),
                 ),
               );
             },
