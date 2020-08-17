@@ -62,7 +62,10 @@ class _MapCardsState extends State<MapCards> {
             padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
             scrollDirection: Axis.horizontal,
             children: widget.locations
-                .map((location) => RestaurantCard(location: location))
+                .map((location) => RestaurantCard(
+                      location: location,
+                      onMap: true,
+                    ))
                 .toList(),
           );
         },
