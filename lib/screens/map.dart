@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_focus_watcher/flutter_focus_watcher.dart';
-import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:provider/provider.dart';
 import 'package:gorilla_eats/widgets/search/search.dart';
 import 'package:gorilla_eats/data/models/search.dart';
+import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:gorilla_eats/widgets/googlemaps.dart';
 import 'package:gorilla_eats/widgets/listButton.dart';
 import 'package:gorilla_eats/widgets/mapcards.dart';
