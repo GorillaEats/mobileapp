@@ -77,6 +77,8 @@ class _GoogleMapsState extends State<GoogleMaps> {
                       Consumer<RestaurantCardSelectedModel>(
                         builder: (context, restaurantCardSelectedModel, child) {
                           return GoogleMap(
+                            onCameraMoveStarted: () =>
+                                {searchModel.cameraMovedAfterResults = true},
                             onMapCreated: (controller) =>
                                 _onMapCreated(controller, searchModel),
                             myLocationEnabled: true,

@@ -136,50 +136,56 @@ class _SearchState extends State<Search> {
     return Stack(
       children: [
         Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: _activelySearching ? Colors.white : Colors.transparent,
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top,
+          child: Consumer<SearchModel>(
+            builder: (context, searchModel, child) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: _activelySearching
+                          ? Colors.white
+                          : Colors.transparent,
                     ),
-                    _buildSearchBar(context),
-                  ],
-                ),
-              ),
-              if (!_activelySearching)
-                Consumer<SearchModel>(
-                  builder: (context, searchModel, child) {
-                    return _buildFilterItems(context, searchModel);
-                  },
-                ),
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Align(
-                      alignment: Alignment.bottomCenter,
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 300),
-                        height:
-                            _activelySearching ? constraints.maxHeight : 0.0,
-                        color: Colors.white,
-                        child: _activelySearching
-                            ? WillPopScope(
-                                onWillPop: _handlePop,
-                                child: _buildPredictionResults(context),
-                              )
-                            : null,
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.of(context).padding.top,
+                        ),
+                        _buildSearchBar(context),
+                      ],
+                    ),
+                  ),
+                  if (!_activelySearching)
+                    _buildFilterItems(context, searchModel),
+                  if (!_activelySearching &&
+                      searchModel.cameraMovedAfterResults)
+                    _buildExploreButton(context, searchModel),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Align(
+                          alignment: Alignment.bottomCenter,
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            height: _activelySearching
+                                ? constraints.maxHeight
+                                : 0.0,
+                            color: Colors.white,
+                            child: _activelySearching
+                                ? WillPopScope(
+                                    onWillPop: _handlePop,
+                                    child: _buildPredictionResults(context),
+                                  )
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              );
+            },
           ),
         ),
       ],
@@ -275,6 +281,32 @@ class _SearchState extends State<Search> {
             width: 7.0,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildExploreButton(BuildContext context, SearchModel searchModel) {
+    final disabledColor = Theme.of(context).toggleButtonsTheme.disabledColor;
+    final selectedColor = Theme.of(context).toggleButtonsTheme.selectedColor;
+
+    return Container(
+      margin: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 3.0),
+      height: 30.0,
+      child: MaterialButton(
+        onPressed: () {
+          _handleSearchClear();
+          searchModel.updateSelectedPlaceManually();
+        },
+        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        minWidth: 0.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18.0),
+        ),
+        color: disabledColor,
+        child: Text(
+          'Search this area',
+          style: TextStyle(color: selectedColor),
+        ),
       ),
     );
   }
