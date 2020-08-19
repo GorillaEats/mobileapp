@@ -12,7 +12,7 @@ class RestaurantCard extends StatefulWidget {
   final Location location;
   final bool onMap;
 
-  RestaurantCard({@required this.location, this.onMap});
+  RestaurantCard({@required this.location, @required this.onMap});
 
   @override
   _RestaurantCardState createState() => _RestaurantCardState();
