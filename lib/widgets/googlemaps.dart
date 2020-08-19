@@ -7,8 +7,6 @@ import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
 
-const double zoomLevel = 15;
-
 class GoogleMaps extends StatefulWidget {
   @override
   _GoogleMapsState createState() => _GoogleMapsState();
