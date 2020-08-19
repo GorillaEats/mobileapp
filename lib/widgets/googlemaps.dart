@@ -79,7 +79,7 @@ class _GoogleMapsState extends State<GoogleMaps> {
                       myLocationEnabled: true,
                       initialCameraPosition: CameraPosition(
                         target: _initialPosition,
-                        zoom: zoomLevel,
+                        zoom: defaultZoomLevel,
                       ),
                       markers: makeMarkers(
                         restaurantCardSelectedModel,

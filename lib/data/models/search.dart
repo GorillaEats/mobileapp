@@ -12,7 +12,9 @@ const releaseBaseUrl = 'www.gorillaeats.com';
 const debugBaseUrl = '192.168.1.221:8080';
 const locationsPath = '/locations';
 const maxSearchDistanceMeters = 20.0 * 1609.0;
-const double zoomLevel = 13;
+const defaultZoomLevel = 13.0;
+const defaultSearchHeight = 5.0 * 1609.0;
+final gd = geodesy.Geodesy();
 
 class SearchModel extends ChangeNotifier {
   List<filter_items.FilterItem> _filters;
@@ -68,8 +70,22 @@ class SearchModel extends ChangeNotifier {
 
   Future<void> moveCamera() async {
     if (_controller != null) {
-      await _controller.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(zoom: zoomLevel, target: _selectedLatLng)));
+      final selectedLatLng =
+          geodesy.LatLng(_selectedLatLng.latitude, _selectedLatLng.longitude);
+      final southwest = gd.destinationPointByDistanceAndBearing(
+          selectedLatLng, defaultSearchHeight / 2, 180.0);
+      final northeast = gd.destinationPointByDistanceAndBearing(
+          selectedLatLng, defaultSearchHeight / 2, 0.0);
+
+      await _controller.animateCamera(
+        CameraUpdate.newLatLngBounds(
+          LatLngBounds(
+            northeast: LatLng(northeast.latitude, northeast.longitude),
+            southwest: LatLng(southwest.latitude, southwest.longitude),
+          ),
+          10,
+        ),
+      );
     }
   }
 
@@ -78,28 +94,25 @@ class SearchModel extends ChangeNotifier {
       return;
     }
 
-    final visibleRegion = await _controller.getVisibleRegion();
-    final southwest = geodesy.LatLng(
-        visibleRegion.southwest.latitude, visibleRegion.southwest.longitude);
-    final northeast = geodesy.LatLng(
-        visibleRegion.northeast.latitude, visibleRegion.northeast.longitude);
-    final distance = geodesy.Geodesy()
-        .distanceBetweenTwoGeoPoints(
-          southwest,
-          northeast,
-        )
-        .toDouble();
-    final radius = distance / 2;
-
-    LatLng center;
-
+    var center = _selectedLatLng;
+    var radius = defaultSearchHeight / 2;
     if (_selectedLatLng == null) {
+      final visibleRegion = await _controller.getVisibleRegion();
+      final southwest = geodesy.LatLng(
+          visibleRegion.southwest.latitude, visibleRegion.southwest.longitude);
+      final northeast = geodesy.LatLng(
+          visibleRegion.northeast.latitude, visibleRegion.northeast.longitude);
+      final distance = gd
+          .distanceBetweenTwoGeoPoints(
+            southwest,
+            northeast,
+          )
+          .toDouble();
+      radius = distance / 2;
       center = LatLng(
         (northeast.latitude + southwest.latitude) / 2,
         (northeast.longitude + southwest.longitude) / 2,
       );
-    } else {
-      center = _selectedLatLng;
     }
 
     var queryParams = {
