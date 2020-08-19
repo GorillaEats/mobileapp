@@ -49,27 +49,27 @@ class _MapCardsState extends State<MapCards> {
 
   @override
   Widget build(context) {
-    return Consumer<RestaurantCardSelectedModel>(
-      builder: (context, restaurantCardSelectedModel, child) {
-        updateScroll(restaurantCardSelectedModel.selected);
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-            height: 150,
-            child: ListView(
-              shrinkWrap: true,
-              controller: _scrollController,
-              itemExtent: MediaQuery.of(context).size.width * .9,
-              padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
-              scrollDirection: Axis.horizontal,
-              children: widget.locations
-                  .map((location) => RestaurantCard(location: location))
-                  .toList(),
-            ),
-          ),
-        );
-      },
+    return Container(
+      height: 150,
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+      child: Consumer<RestaurantCardSelectedModel>(
+        builder: (context, restaurantCardSelectedModel, child) {
+          updateScroll(restaurantCardSelectedModel.selected);
+          return ListView(
+            shrinkWrap: true,
+            controller: _scrollController,
+            itemExtent: MediaQuery.of(context).size.width * .9,
+            padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
+            scrollDirection: Axis.horizontal,
+            children: widget.locations
+                .map((location) => RestaurantCard(
+                      location: location,
+                      onMap: true,
+                    ))
+                .toList(),
+          );
+        },
+      ),
     );
   }
 }

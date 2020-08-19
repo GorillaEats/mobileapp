@@ -6,7 +6,6 @@ import 'package:gorilla_eats/data/models/restaurantcard.dart';
 import 'package:gorilla_eats/data/models/search.dart';
 import 'package:gorilla_eats/data/userlocation.dart';
 import 'package:gorilla_eats/screens/loading.dart';
-import 'package:gorilla_eats/widgets/mapcards.dart';
 
 class GoogleMaps extends StatefulWidget {
   @override
@@ -65,43 +64,31 @@ class _GoogleMapsState extends State<GoogleMaps> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RestaurantCardSelectedModel(),
-      child: Container(
-        child: _initialPosition == null
-            ? LoadingScreen()
-            : Consumer<SearchModel>(
-                builder: (context, searchModel, child) {
-                  return Stack(
-                    children: <Widget>[
-                      Consumer<RestaurantCardSelectedModel>(
-                        builder: (context, restaurantCardSelectedModel, child) {
-                          return GoogleMap(
-                            onMapCreated: (controller) =>
-                                _onMapCreated(controller, searchModel),
-                            myLocationEnabled: true,
-                            initialCameraPosition: CameraPosition(
-                              target: _initialPosition,
-                              zoom: defaultZoomLevel,
-                            ),
-                            markers: makeMarkers(
-                              restaurantCardSelectedModel,
-                              restaurantCardSelectedModel.selected,
-                              searchModel.results,
-                            ).values.toSet(),
-                          );
-                        },
+    return Container(
+      child: _initialPosition == null
+          ? LoadingScreen()
+          : Consumer<SearchModel>(
+              builder: (context, searchModel, child) {
+                return Consumer<RestaurantCardSelectedModel>(
+                  builder: (context, restaurantCardSelectedModel, child) {
+                    return GoogleMap(
+                      onMapCreated: (controller) =>
+                          _onMapCreated(controller, searchModel),
+                      myLocationEnabled: true,
+                      initialCameraPosition: CameraPosition(
+                        target: _initialPosition,
+                        zoom: defaultZoomLevel,
                       ),
-                      if (searchModel.results.isNotEmpty)
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: MapCards(locations: searchModel.results),
-                        ),
-                    ],
-                  );
-                },
-              ),
-      ),
+                      markers: makeMarkers(
+                        restaurantCardSelectedModel,
+                        restaurantCardSelectedModel.selected,
+                        searchModel.results,
+                      ).values.toSet(),
+                    );
+                  },
+                );
+              },
+            ),
     );
   }
 }
