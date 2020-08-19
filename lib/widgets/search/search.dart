@@ -149,7 +149,7 @@ class _SearchState extends State<Search> {
                         SizedBox(
                           height: MediaQuery.of(context).padding.top,
                         ),
-                        _buildSearchBar(context),
+                        _buildSearchBar(context, searchModel),
                       ],
                     ),
                   );
@@ -217,77 +217,71 @@ class _SearchState extends State<Search> {
     );
   }
 
-  Widget _buildSearchBar(BuildContext context) {
+  Widget _buildSearchBar(BuildContext context, SearchModel searchModel) {
     const searchBarHeight = 40.0;
     const searchBarIconSize = 20.0;
 
-    return Consumer<SearchModel>(
-      builder: (context, searchModel, child) {
-        return Container(
-          height: searchBarHeight,
-          margin: EdgeInsets.all(10.0),
-          child: Stack(
-            alignment: Alignment.centerLeft,
-            children: [
-              TextField(
-                controller: _textController,
-                onSubmitted: (value) => {FocusScope.of(context).unfocus()},
-                onChanged: _handleTextChange,
-                onTap: () {
-                  _handleSearchActive();
-                },
-                textInputAction: TextInputAction.search,
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.all(0),
-                  border: InputBorder.none,
-                  prefixIcon: _activelySearching
-                      ? SizedBox()
-                      : Icon(Icons.search, size: searchBarIconSize),
-                  prefixIconConstraints: BoxConstraints(
-                      minHeight: searchBarHeight, minWidth: searchBarHeight),
-                  hintText: 'Enter Location',
-                  suffixIcon: _textController.text.isNotEmpty
-                      ? IconButton(
-                          onPressed: _handleSearchClear,
-                          icon: Icon(
-                            Icons.clear,
-                            color: Theme.of(context)
-                                .buttonTheme
-                                .colorScheme
-                                .secondary,
-                          ),
-                        )
-                      : null,
-                ),
-              ),
-              if (_activelySearching)
-                IconButton(
-                  icon: Icon(Icons.arrow_back, size: searchBarIconSize),
-                  onPressed: _handleSearchCancel,
-                ),
-            ],
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(18.0)),
-            border: Border.all(
-                color: _activelySearching || searchModel.listView
-                    ? Colors.grey[200]
-                    : Colors.transparent),
-            boxShadow: _activelySearching || searchModel.listView
-                ? null
-                : [
-                    BoxShadow(
-                      blurRadius: 3.0,
-                      color: Colors.grey.withOpacity(0.3),
-                      spreadRadius: 3.0,
+    return Container(
+      height: searchBarHeight,
+      margin: EdgeInsets.all(10.0),
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: [
+          TextField(
+            controller: _textController,
+            onSubmitted: (value) => {FocusScope.of(context).unfocus()},
+            onChanged: _handleTextChange,
+            onTap: () {
+              _handleSearchActive();
+            },
+            textInputAction: TextInputAction.search,
+            textAlignVertical: TextAlignVertical.center,
+            decoration: InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.all(0),
+              border: InputBorder.none,
+              prefixIcon: _activelySearching
+                  ? SizedBox()
+                  : Icon(Icons.search, size: searchBarIconSize),
+              prefixIconConstraints: BoxConstraints(
+                  minHeight: searchBarHeight, minWidth: searchBarHeight),
+              hintText: 'Enter Location',
+              suffixIcon: _textController.text.isNotEmpty
+                  ? IconButton(
+                      onPressed: _handleSearchClear,
+                      icon: Icon(
+                        Icons.clear,
+                        color:
+                            Theme.of(context).buttonTheme.colorScheme.secondary,
+                      ),
                     )
-                  ],
+                  : null,
+            ),
           ),
-        );
-      },
+          if (_activelySearching)
+            IconButton(
+              icon: Icon(Icons.arrow_back, size: searchBarIconSize),
+              onPressed: _handleSearchCancel,
+            ),
+        ],
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(18.0)),
+        border: Border.all(
+            color: _activelySearching || searchModel.listView
+                ? Colors.grey[200]
+                : Colors.transparent),
+        boxShadow: _activelySearching || searchModel.listView
+            ? null
+            : [
+                BoxShadow(
+                  blurRadius: 3.0,
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 3.0,
+                )
+              ],
+      ),
     );
   }
 
