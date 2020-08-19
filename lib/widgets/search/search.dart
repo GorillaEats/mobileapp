@@ -29,7 +29,7 @@ class _SearchState extends State<Search> {
   String _sessionId;
   int _lastSessionUse;
   Timer _debounce;
-  bool _activeSearch;
+  bool _activelySearching;
   List<Prediction> _predictions;
   Prediction _selectedPrediction;
 
@@ -45,7 +45,7 @@ class _SearchState extends State<Search> {
     _lastSessionUse = DateTime.now().millisecondsSinceEpoch;
     _debounce = Timer(Duration(milliseconds: 0), () {});
     _predictions = [];
-    _activeSearch = false;
+    _activelySearching = false;
   }
 
   Future<void> _handleDebounceTimeOut(String value) async {
@@ -88,7 +88,7 @@ class _SearchState extends State<Search> {
       _predictions = [];
       _selectedPrediction = prediction;
       _debounce.cancel();
-      _activeSearch = false;
+      _activelySearching = false;
       _textController.text = _selectedPrediction.description;
     });
 
@@ -101,7 +101,7 @@ class _SearchState extends State<Search> {
       _textController.clear();
       _debounce.cancel();
 
-      if (!_activeSearch) {
+      if (!_activelySearching) {
         _selectedPrediction = null;
       }
     });
@@ -109,7 +109,7 @@ class _SearchState extends State<Search> {
 
   void _handleSearchActive() {
     setState(() {
-      _activeSearch = true;
+      _activelySearching = true;
     });
   }
 
@@ -118,7 +118,7 @@ class _SearchState extends State<Search> {
       FocusScope.of(context).unfocus();
       _predictions = [];
       _debounce.cancel();
-      _activeSearch = false;
+      _activelySearching = false;
 
       if (_selectedPrediction != null) {
         _textController.text = _selectedPrediction.description;
@@ -140,7 +140,7 @@ class _SearchState extends State<Search> {
                 builder: (context, searchModel, child) {
                   return Container(
                     decoration: BoxDecoration(
-                      color: _activeSearch || searchModel.listView
+                      color: _activelySearching || searchModel.listView
                           ? Colors.white
                           : Colors.transparent,
                     ),
@@ -157,7 +157,7 @@ class _SearchState extends State<Search> {
               ),
               Consumer<SearchModel>(
                 builder: (context, searchModel, child) {
-                  if (!_activeSearch || searchModel.listView) {
+                  if (!_activelySearching || searchModel.listView) {
                     return Container(
                         color: searchModel.listView
                             ? Colors.white
@@ -177,7 +177,7 @@ class _SearchState extends State<Search> {
                           alignment: Alignment.bottomCenter,
                           child: WillPopScope(
                             onWillPop: () {
-                              _activeSearch
+                              _activelySearching
                                   ? _handleSearchCancel()
                                   : searchModel.updateListView(false);
                               return Future.value(false);
@@ -195,7 +195,7 @@ class _SearchState extends State<Search> {
                                 ),
                                 AnimatedContainer(
                                   duration: Duration(milliseconds: 300),
-                                  height: _activeSearch
+                                  height: _activelySearching
                                       ? constraints.maxHeight
                                       : 0.0,
                                   color: Colors.white,
@@ -242,7 +242,7 @@ class _SearchState extends State<Search> {
                   isDense: true,
                   contentPadding: EdgeInsets.all(0),
                   border: InputBorder.none,
-                  prefixIcon: _activeSearch
+                  prefixIcon: _activelySearching
                       ? SizedBox()
                       : Icon(Icons.search, size: searchBarIconSize),
                   prefixIconConstraints: BoxConstraints(
@@ -262,7 +262,7 @@ class _SearchState extends State<Search> {
                       : null,
                 ),
               ),
-              if (_activeSearch)
+              if (_activelySearching)
                 IconButton(
                   icon: Icon(Icons.arrow_back, size: searchBarIconSize),
                   onPressed: _handleSearchCancel,
@@ -273,10 +273,10 @@ class _SearchState extends State<Search> {
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(18.0)),
             border: Border.all(
-                color: _activeSearch || searchModel.listView
+                color: _activelySearching || searchModel.listView
                     ? Colors.grey[200]
                     : Colors.transparent),
-            boxShadow: _activeSearch || searchModel.listView
+            boxShadow: _activelySearching || searchModel.listView
                 ? null
                 : [
                     BoxShadow(
