@@ -20,7 +20,7 @@ class SearchModel extends ChangeNotifier {
   LatLng _selectedLatLng;
   GoogleMapController _controller;
   List<gorilla_location.Location> _results;
-  bool _listView = false;
+  bool _listView;
 
   SearchModel() {
     _filters = [
@@ -30,6 +30,8 @@ class SearchModel extends ChangeNotifier {
     ];
 
     _results = [];
+
+    _listView = false;
   }
 
   void search() {}
