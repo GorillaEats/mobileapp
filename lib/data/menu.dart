@@ -13,7 +13,7 @@ class Item {
   @JsonKey(required: true)
   List<String> modifications;
 
-  @JsonKey(required: true)
+  @JsonKey(required: false)
   List<String> tags;
 
   String get subtitle {

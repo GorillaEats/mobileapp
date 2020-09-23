@@ -7,8 +7,7 @@ part of 'menu.dart';
 // **************************************************************************
 
 Item _$ItemFromJson(Map<String, dynamic> json) {
-  $checkKeys(json,
-      requiredKeys: const ['name', 'category', 'modifications', 'tags']);
+  $checkKeys(json, requiredKeys: const ['name', 'category', 'modifications']);
   return Item(
     name: json['name'] as String,
     category: json['category'] as String,
