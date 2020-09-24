@@ -22,7 +22,7 @@ class _CategoriesState extends State<Categories> {
           child: Padding(
             padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
             child: Text(
-              categoryName,
+              categoryName + "s",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 17,
